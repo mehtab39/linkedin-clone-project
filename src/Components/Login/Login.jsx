@@ -1,6 +1,23 @@
 import styled from "styled-components";
+import { useDispatch} from "react-redux"
+import { signInWithGoogle} from "../../redux/actions/userActions"
+import { useAuth } from "../../contexts/AuthContext"
+import {Navigate } from 'react-router-dom'
 
 export const Login=(props)=>{
+    const {currentUser} = useAuth()
+    
+    const dispatch = useDispatch();
+
+    const signInGoogle = ()=>{
+        dispatch(signInWithGoogle())
+      }
+        
+ {
+    if(currentUser) return <Navigate  to="/home"/>
+ }
+    
+
     return (
         <Container>
             <Nav>
@@ -20,7 +37,7 @@ export const Login=(props)=>{
                     <img src="/images/login-hero.svg" alt="" />
                 </Hero>
                 <Form>
-                    <Google>
+                    <Google onClick={signInGoogle}>
                         <img src="/images/google.svg" alt="" />
                         Sign in with Google
                     </Google>
