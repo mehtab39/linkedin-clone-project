@@ -11,7 +11,7 @@ const init_state = {
     errorMessage: null,
 }
 
-export const postReducer = (state = init_state, {
+export const connectionReducer = (state = init_state, {
     type,
     payload
 }) => {

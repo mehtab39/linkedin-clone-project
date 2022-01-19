@@ -2,10 +2,25 @@ import styled from "styled-components";
 import {BsThreeDots} from "react-icons/bs";
 import {Header} from "../Header/Header";
 import {PostModal} from "./PostModal";
-import {useState} from "react";
+import {useState, useEffect} from "react";
+import { useDispatch } from "react-redux";
+import { getNewArticles, updateTheArticles } from "../../redux/actions/postActions";
+import { useSelector } from "react-redux";
+import { useAuth } from "../../contexts/AuthContext";
+import ReactPlayer from "react-player";
 
 export const Main=()=>{
-
+    const dispatch = useDispatch()
+    useEffect(() => {
+       dispatch(getNewArticles())
+    }, [])
+     const {currentUser, profile} = useAuth()
+    const {  loading, posts, ids } = useSelector((state) => ({
+		loading: state.postState.loading,
+		posts: state.postState.articles,
+        ids: state.postState.ids,
+      }));
+       
     const [showModal,setShowModal]=useState("close");
 
     const handleClick =(e)=>{
@@ -25,6 +40,34 @@ export const Main=()=>{
                     break;
         }
     }
+    function likeHandler(event, postIndex, id) {
+		event.preventDefault();
+		let currentLikes = posts[postIndex].likes.count;
+		let whoLiked = posts[postIndex].likes.whoLiked;
+		let user = currentUser.email;
+		let userIndex = whoLiked.indexOf(user);
+
+		if (userIndex >= 0) {
+			currentLikes--;
+			whoLiked.splice(userIndex, 1);
+		} else if (userIndex === -1) {
+			currentLikes++;
+			whoLiked.push(user);
+		}
+
+		const payload = {
+			update: {
+				likes: {
+					count: currentLikes,
+					whoLiked: whoLiked,
+				},
+			},
+			id: id,
+		};
+
+		dispatch(updateTheArticles(payload))
+}
+
 
     return <Container>
 
@@ -33,7 +76,7 @@ export const Main=()=>{
         <ShareBox>
             Share
         <div className="Mid1">
-            <img src="/images/user.svg" alt="" />
+        {currentUser?.photoURL ? <img src={currentUser?.photoURL} alt="" /> : <img src="/images/user.svg" alt="" />} 
             <button onClick={handleClick}>Start a post</button>
         </div>
 
@@ -57,45 +100,47 @@ export const Main=()=>{
         </div>
         </ShareBox>
         <div>
-            <Article>
-                <SharedActor>
-                    <a>
-                        <img src="images/user.svg" alt="" />
-                        <div>
-                            <span>Title</span>
-                            <span>Info</span>
-                            <span>Date</span>
-                        </div>
-                    </a>
-                    <button>
+        <Content>
+				{loading && <img src="/images/spin-loader.gif" alt="" />}
+				{posts.length > 0 &&
+					posts.map((article, key) => (
+						<Article key={key}>
+							<SharedActor>
+								<a>
+									{article.actor.image ? <img src={article.actor.image} alt="" /> : <img src="/images/user.svg" alt="" />}
+									<div>
+										<span>{article?.actor?.title}</span>
+										<span>{article?.actor?.description}</span>
+										<span>{article?.actor?.date?.toDate().toLocaleDateString()}</span>
+									</div>
+								</a>
+                                <button>
                     <BsThreeDots/>
                     </button>
-                </SharedActor>
-
-                <Description>
-                    Description
-                </Description>
-                <SharedImg>
-                    <a>
-                        <img src="/images/login-hero.svg" alt="" />
-                    </a>
-                </SharedImg>
-                <SocialCounts>
-                    <li>
-                        <button>
-                            <img src="/images/Like1.png" alt="" />
-                            <img src="/images/clap.png" alt="" />
-                            <span>75</span>
-                        </button>
-                    </li>
-                    <li>
-                        <a>
-                            2 comments
-                        </a>
-                    </li>
-                </SocialCounts>
-                <SocialActions>
-                <button>
+							</SharedActor>
+							<Description>{article.description}</Description>
+							<SharedImg>
+								<a>{!article.sharedImg && article.video ? <ReactPlayer width={"100%"} url={article.video} /> : article.sharedImg && <img src={article.sharedImg} alt="" />}</a>
+							</SharedImg>
+							<SocialCounts>
+								{posts[key].likes.count > 0 && (
+									<>
+										<li>
+											<button>
+												<img src="https://static-exp1.licdn.com/sc/h/d310t2g24pvdy4pt1jkedo4yb" alt="" />
+												<span>{posts[key].likes.count}</span>
+											</button>
+										</li>
+										<li>
+											<a>{article.comments}  comments </a>
+										</li>
+									</>
+								)}
+							</SocialCounts>
+							<SocialActions>
+			
+                
+                <button onClick={(event) => likeHandler(event, key, ids[key])} className={posts[key].likes.whoLiked.indexOf(currentUser.email) >= 0 ? "active" : null}>
                 <img src="/images/Like1.png" alt="" />
                 <span>Like</span>
                 </button>
@@ -112,7 +157,11 @@ export const Main=()=>{
                     <span>Send</span>
                 </button>
                 </SocialActions>
-            </Article>
+						
+						</Article>
+					))}
+			</Content>
+    
         </div>
         <PostModal showModal={showModal} handleClick={handleClick}/>
     </Container>
@@ -299,6 +348,12 @@ const SocialCounts = styled.ul`
         }
     }
 `;
+const Content = styled.div`
+	text-align: center;
+	& > img {
+		width: 30px;
+	}
+`;
 
 const SocialActions = styled.div`
     button > img {
@@ -310,6 +365,12 @@ const SocialActions = styled.div`
     margin: 0;
     min-height: 40px; 
     padding: 4px 8px;
+    button.active {
+		span {
+			color: #0a66c2;
+			font-weight: 600;
+		}
+    }
 
     button {
     display: inline-flex;
