@@ -2,13 +2,26 @@ import styled from "styled-components";
 import { useDispatch } from "react-redux"
 import { useAuth } from "../../contexts/AuthContext"
 import { logout } from "../../redux/actions/userActions";
-import { Navigate } from "react-router-dom";
+import { useNavigate  } from "react-router-dom";
+import { useEffect } from "react";
 
 export const Header = (props) => {
+  const navigate = useNavigate()
+  const {currentUser} = useAuth()
+  useEffect(() => {
+      checkUser()
+  }, [currentUser]);
+  const checkUser = ()=>{
+      if(!currentUser){
+          navigate("/sign")
+      }
+  }
   const dispatch = useDispatch()
-    const {currentUser} = useAuth()
+   
     const handleLogout = ()=>{
-        dispatch(logout())
+          navigate('/sign')
+          dispatch(logout()) 
+          window.location.reload()   
     }
    
   return (

@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { useDispatch} from "react-redux"
 import { signInWithGoogle} from "../../redux/actions/userActions"
 import { useAuth } from "../../contexts/AuthContext"
-import {Navigate } from 'react-router-dom'
+import {useNavigate } from 'react-router-dom'
+import { useEffect } from "react";
 
 export const Login=(props)=>{
     const {currentUser} = useAuth()
@@ -12,11 +13,17 @@ export const Login=(props)=>{
     const signInGoogle = ()=>{
         dispatch(signInWithGoogle())
       }
-        
- {
-    if(currentUser) return <Navigate  to="/home"/>
- }
-    
+      const navigate = useNavigate();
+      useEffect(() => {
+          checkUser()
+      }, [currentUser]);
+      const checkUser = ()=>{
+          if(currentUser){
+              navigate("/home")
+          }
+      }
+
+
 
     return (
         <Container>

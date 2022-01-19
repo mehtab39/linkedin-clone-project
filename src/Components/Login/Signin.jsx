@@ -1,6 +1,43 @@
 import styled from "styled-components";
-
+import React, { useRef, useState, useEffect } from "react"
+import { signin,signInWithGoogle} from "../../redux/actions/userActions"
+import { useAuth } from "../../contexts/AuthContext"
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 export const Sign=(props)=>{
+    const { login, currentUser } = useAuth()
+    const emailRef = useRef()
+    const passwordRef = useRef()
+    const [error, setError] = useState("")
+    const dispatch = useDispatch();
+
+    const navigate = useNavigate();
+    useEffect(() => {
+        checkUser()
+    }, [currentUser]);
+    const checkUser = ()=>{
+        if(currentUser){
+            navigate("/home")
+        }
+    }
+
+  function   handleSubmit(e) {
+      e.preventDefault()
+      try {
+        setError("")
+        dispatch(signin(emailRef.current.value, passwordRef.current.value))
+
+     
+      } catch {
+       
+        setError("Failed to log in")
+        console.log(error)
+      }
+
+    }
+    const signInGoogle = ()=>{
+      dispatch(signInWithGoogle())
+    }
     return (<>
         
             <Logo>
@@ -10,17 +47,18 @@ export const Sign=(props)=>{
             </Logo>
         <Container>
             <Incontainer>
-            <heading>Sign in</heading>
+            <h3>Sign in</h3>
             <p>Stay updated on your professional world</p>
-
+            {error && <p>{error}</p>}
             <Form>
-                <input type="text" placeholder="Email or Phone" />
-                <input type="text" placeholder="Password" />
-                <button className="agreebtn">Sign in </button>
+           
+                <input type="email" ref={emailRef} required placeholder="Enter Email" />
+                <input type="password" ref={passwordRef} required placeholder="Password" />
+                <button onClick={handleSubmit} className="agreebtn">Sign in </button>
                 <span>
                     <hr/>
                 </span>
-                <button className="glbtn">
+                <button onClick={signInGoogle} className="glbtn">
                 <img src="/images/google.svg" alt="" /> 
                     Sign in with google</button>
             </Form>

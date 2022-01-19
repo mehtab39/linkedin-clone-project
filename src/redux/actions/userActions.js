@@ -52,13 +52,14 @@ export const signin_loading = () => {
     }
       
   
-  export const signin = (email, password, login) => async(dispatch) => {
+  export const signin = (email, password) => async(dispatch) => {
       dispatch(signin_loading())
        try{
-            await login(email, password)
+           await auth.signInWithEmailAndPassword(email, password)
             dispatch(setUser())
        }
        catch(err){
+             console.log(err);
              dispatch(signin_failiure(err));
        }
   }

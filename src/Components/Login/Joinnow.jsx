@@ -1,23 +1,35 @@
 import styled from "styled-components";
-import React, { useRef, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { useDispatch} from "react-redux"
 import { createAccount, signInWithGoogle} from "../../redux/actions/userActions"
 import { useAuth } from "../../contexts/AuthContext"
+import { useNavigate } from "react-router-dom";
 
 export const Joinnow=()=>{
+    const navigate = useNavigate();
+   
     // bring loading state from redux useSelector
+    //loading will be used to disable signout button
 
     const emailRef = useRef()
     const passwordRef = useRef()
-    const { signup } = useAuth()
+    const { signup , currentUser } = useAuth()
     const [error, setError] = useState("")
-  
+    useEffect(() => {
+        checkUser()
+    }, [currentUser]);
+    const checkUser = ()=>{
+        if(currentUser){
+            navigate("/home")
+        }
+    }
 
     const dispatch = useDispatch();
 
     const signInGoogle = ()=>{
         dispatch(signInWithGoogle())
       }
+     
 
     async function handleSubmit(e) {
       e.preventDefault()
