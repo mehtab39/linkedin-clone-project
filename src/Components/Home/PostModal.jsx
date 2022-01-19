@@ -8,8 +8,24 @@ import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/AuthContext";
 import { addNewPost } from "../../redux/actions/postActions";
 
+
 export const PostModal=({handleClick,showModal})=>{
     const [editorText,setEditorText]=useState("");
+
+    const [shareImage,setShareImage]=useState("");
+    const [videoLink,setVideoLink]=useState("");
+    const [assetArea,setAssetArea]=useState("");
+
+    const handleChange=(e)=>{
+        const image=e.target.files[0];
+
+        if(image === "" || image===undefined){
+            alert(`not an image, the file is a ${typeof(image)}`)
+            return;
+        }
+        setShareImage(image);
+    }
+
     const {currentUser, profile} = useAuth()
 	const [imageFile, setImageFile] = useState("");
 	const [videoFile, setVideoFile] = useState("");
@@ -57,8 +73,18 @@ export const PostModal=({handleClick,showModal})=>{
 	}
     const dispatch = useDispatch()
 
+
+    const switchAssetArea=(area)=>{
+        setShareImage("");
+        setVideoLink("");
+        setAssetArea(area);
+    }
+
     const Reset=(e)=>{
         setEditorText("");
+        setShareImage("");
+        setVideoLink("");
+        setAssetArea("")
         handleClick(e);
     }
 
@@ -81,7 +107,11 @@ export const PostModal=({handleClick,showModal})=>{
                     <>
                 <textarea value={editorText}
                 onChange={(e)=>setEditorText(e.target.value)} placeholder="What do you want to talk about?" autoFocus={true}/>
-               {assetArea === "image" ? ( <UploadImage>
+
+                {
+                    assetArea === "image" ?
+                (<UploadImage>
+
                     <input type="file" accept='image/gif, image/jpeg, image/png'
                     name="image" 
                     id="file" style={{display:"none"}}
@@ -90,6 +120,7 @@ export const PostModal=({handleClick,showModal})=>{
                     <p>
                         <label htmlFor="file" >Select an image to share</label>
                     </p>
+
                     {imageFile && <img src={URL.createObjectURL(imageFile)} alt=""/>}
                 </UploadImage>)
                 : (
@@ -108,6 +139,7 @@ export const PostModal=({handleClick,showModal})=>{
       		)
       	)}
           </>
+
                 </Editor>
             </SharedContent>
             <ShareCreation>
