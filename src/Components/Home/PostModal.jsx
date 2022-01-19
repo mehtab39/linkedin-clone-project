@@ -12,26 +12,12 @@ import { addNewPost } from "../../redux/actions/postActions";
 export const PostModal=({handleClick,showModal})=>{
     const [editorText,setEditorText]=useState("");
 
-    const [shareImage,setShareImage]=useState("");
-    const [videoLink,setVideoLink]=useState("");
-    const [assetArea,setAssetArea]=useState("");
-
-    const handleChange=(e)=>{
-        const image=e.target.files[0];
-
-        if(image === "" || image===undefined){
-            alert(`not an image, the file is a ${typeof(image)}`)
-            return;
-        }
-        setShareImage(image);
-    }
-
     const {currentUser, profile} = useAuth()
 	const [imageFile, setImageFile] = useState("");
 	const [videoFile, setVideoFile] = useState("");
 	const [assetArea, setAssetArea] = useState("");
 
-	const reset = (event) => {
+	const Reset = (event) => {
 		setEditorText("");
 		setImageFile("");
 		setVideoFile("");
@@ -49,12 +35,7 @@ export const PostModal=({handleClick,showModal})=>{
 		setImageFile(image);
 	}
 
-	function switchAssetArea(area) {
-		setImageFile("");
-		setVideoFile("");
-		setAssetArea(area);
-	}
-
+	
 	function postArticle(event) {
 		event.preventDefault();
 		if (event.target !== event.currentTarget) {
@@ -69,24 +50,18 @@ export const PostModal=({handleClick,showModal})=>{
             userProfile: profile.id
 		};
 		dispatch(addNewPost(payload));
-		reset(event);
+		Reset(event);
 	}
     const dispatch = useDispatch()
 
 
     const switchAssetArea=(area)=>{
-        setShareImage("");
-        setVideoLink("");
+        setImageFile("");
+        setVideoFile("");
         setAssetArea(area);
     }
 
-    const Reset=(e)=>{
-        setEditorText("");
-        setShareImage("");
-        setVideoLink("");
-        setAssetArea("")
-        handleClick(e);
-    }
+ 
 
     return <>
     { showModal==="open" &&
