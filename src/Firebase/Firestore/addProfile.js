@@ -1,6 +1,7 @@
 import { db } from "../firebase";
 
 
+
 const initialProfile = (uuid, email, profileimage) => ({
     first_name: "",
     last_name: "",
