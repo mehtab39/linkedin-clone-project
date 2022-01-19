@@ -3,13 +3,32 @@ import {useState} from "react";
 import {BsFillChatTextFill} from "react-icons/bs";
 import {MdPhotoSizeSelectActual} from "react-icons/md";
 import {AiFillYoutube} from "react-icons/ai";
+
+// import ReactPlayer from "react-player"
+
 import ReactPlayer from "react-player";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/AuthContext";
 import { addNewPost } from "../../redux/actions/postActions";
 
+
 export const PostModal=({handleClick,showModal})=>{
     const [editorText,setEditorText]=useState("");
+
+    const [shareImage,setShareImage]=useState("");
+//     const [videoLink,setVideoLink]=useState("");
+//     const [assetArea,setAssetArea]=useState("");
+
+//     const handleChange=(e)=>{
+//         const image=e.target.files[0];
+
+//         if(image === "" || image===undefined){
+//             alert(`not an image, the file is a ${typeof(image)}`)
+//             return;
+//         }
+//         setShareImage(image);
+//     }
+
     const {currentUser, profile} = useAuth()
 	const [imageFile, setImageFile] = useState("");
 	const [videoFile, setVideoFile] = useState("");
@@ -57,8 +76,18 @@ export const PostModal=({handleClick,showModal})=>{
 	}
     const dispatch = useDispatch()
 
+
+    const switchAssetArea=(area)=>{
+        setShareImage("");
+        setVideoLink("");
+        setAssetArea(area);
+    }
+
     const Reset=(e)=>{
         setEditorText("");
+        setShareImage("");
+        setVideoLink("");
+        setAssetArea("")
         handleClick(e);
     }
 
@@ -80,7 +109,10 @@ export const PostModal=({handleClick,showModal})=>{
                 <Editor>
                 <textarea value={editorText}
                 onChange={(e)=>setEditorText(e.target.value)} placeholder="What do you want to talk about?" autoFocus={true}/>
-                <UploadImage>
+
+                {
+                    assetArea === "image" ?
+                (<UploadImage>
                     <input type="file" accept='image/gif, image/jpeg, image/png'
                     name="image" 
                     id="file" style={{display:"none"}}
@@ -90,7 +122,18 @@ export const PostModal=({handleClick,showModal})=>{
                         <label htmlFor="file" >Select an image to share</label>
                     </p>
                     {shareImage && <img src={URL.createObjectURL(shareImage)} alt=""/>}
-                </UploadImage>
+                     </UploadImage>) :
+                    assetArea === "media" &&
+                   ( <>
+                    <input type="text" placeholder="Please input a videoLink" value={videoLink} onChange={(e)=>setVideoLink(e.target.value)}/>
+
+                    {videoLink && (<ReactPlayer width={"100%"} url={videoLink}/>
+                    
+                    )}
+
+                    </>)
+               
+            }
                 </Editor>
             </SharedContent>
             <ShareCreation>
