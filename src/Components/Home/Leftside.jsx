@@ -1,17 +1,22 @@
 import styled from "styled-components";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const Leftside = (props) => {
+  const {currentUser} = useAuth();
+
+ 
   return (
+
     <Container>
       <ArtCard>
         <UserInfo>
           <CardBackground />
           <a>
-            <Photo />
-            <Link>Welcome, there!</Link>
+            <Photo bg={(currentUser?.photoURL)?(currentUser?.photoURL):("/images/photo.svg")} />
+            <Link>Welcome!</Link>
           </a>
           <a>
-            <AddPhotoText>Add a photo</AddPhotoText>
+            <AddPhotoText>{(currentUser?.displayName)?currentUser?.displayName:"Update your profile"}</AddPhotoText>
           </a>
         </UserInfo>
         <Widget>
@@ -82,22 +87,22 @@ const CardBackground = styled.div`
   height: 54px;
   margin: -12px -12px 0;
 `;
-
 const Photo = styled.div`
-  box-shadow: none;
-  background-image: url("/images/photo.svg");
-  width: 72px;
-  height: 72px;
-  box-sizing: border-box;
-  background-clip: content-box;
-  background-color: white;
-  background-position: center;
-  background-size: 60%;
-  background-repeat: no-repeat;
-  border: 2px solid white;
-  margin: -38px auto 12px;
-  border-radius: 50%;
+box-shadow: none;
+background: url(${props => props.bg});
+width: 72px;
+height: 72px;
+box-sizing: border-box;
+background-clip: content-box;
+background-color: white;
+background-position: center;
+background-size: 60%;
+background-repeat: no-repeat;
+border: 2px solid white;
+margin: -38px auto 12px;
+border-radius: 50%;
 `;
+
 
 const Link = styled.div`
   font-size: 16px;

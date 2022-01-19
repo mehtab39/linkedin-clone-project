@@ -3,24 +3,79 @@ import {useState} from "react";
 import {BsFillChatTextFill} from "react-icons/bs";
 import {MdPhotoSizeSelectActual} from "react-icons/md";
 import {AiFillYoutube} from "react-icons/ai";
-import ReactPlayer from "react-player"
+
+// import ReactPlayer from "react-player"
+
+import ReactPlayer from "react-player";
+import { useDispatch } from "react-redux";
+import { useAuth } from "../../contexts/AuthContext";
+import { addNewPost } from "../../redux/actions/postActions";
+
 
 export const PostModal=({handleClick,showModal})=>{
-    
     const [editorText,setEditorText]=useState("");
+
     const [shareImage,setShareImage]=useState("");
-    const [videoLink,setVideoLink]=useState("");
-    const [assetArea,setAssetArea]=useState("");
+//     const [videoLink,setVideoLink]=useState("");
+//     const [assetArea,setAssetArea]=useState("");
 
-    const handleChange=(e)=>{
-        const image=e.target.files[0];
+//     const handleChange=(e)=>{
+//         const image=e.target.files[0];
 
-        if(image === "" || image===undefined){
-            alert(`not an image, the file is a ${typeof(image)}`)
-            return;
-        }
-        setShareImage(image);
-    }
+//         if(image === "" || image===undefined){
+//             alert(`not an image, the file is a ${typeof(image)}`)
+//             return;
+//         }
+//         setShareImage(image);
+//     }
+
+    const {currentUser, profile} = useAuth()
+	const [imageFile, setImageFile] = useState("");
+	const [videoFile, setVideoFile] = useState("");
+	const [assetArea, setAssetArea] = useState("");
+
+	const reset = (event) => {
+		setEditorText("");
+		setImageFile("");
+		setVideoFile("");
+		setAssetArea("");
+		handleClick(event);
+	};
+
+	function handleImage(event) {
+		let image = event.target.files[0];
+
+		if (image === "" || image === undefined) {
+			alert(`Not an image. This file is: ${typeof imageFile}`);
+			return;
+		}
+		setImageFile(image);
+	}
+
+	function switchAssetArea(area) {
+		setImageFile("");
+		setVideoFile("");
+		setAssetArea(area);
+	}
+
+	function postArticle(event) {
+		event.preventDefault();
+		if (event.target !== event.currentTarget) {
+			return;
+		}
+
+		const payload = {
+			image: imageFile,
+			video: videoFile,
+			description: editorText,
+			user: currentUser,
+            userProfile: profile.id
+		};
+		dispatch(addNewPost(payload));
+		reset(event);
+	}
+    const dispatch = useDispatch()
+
 
     const switchAssetArea=(area)=>{
         setShareImage("");
@@ -48,8 +103,8 @@ export const PostModal=({handleClick,showModal})=>{
             </Header>
             <SharedContent>
                 <UserInfo>
-                    <img src="/images/user.svg" alt="" />
-                    <span>Name</span>
+                    <img src={(currentUser?.photoURL)?(currentUser?.photoURL):("/images/user.svg")} alt="" />
+                    <span>{currentUser.displayName ? currentUser.displayName : "Name"}</span>
                 </UserInfo>
                 <Editor>
                 <textarea value={editorText}
@@ -98,7 +153,7 @@ export const PostModal=({handleClick,showModal})=>{
                     </AssetButton>
                     </ShareComment>
                 </AttachAsset>
-                <PostButton disabled={!editorText ? true : false}>
+                <PostButton disabled={!editorText ? true : false} onClick={(event) => postArticle(event)}>
                     Post
                 </PostButton>   
             </ShareCreation>
@@ -160,8 +215,6 @@ const Header=styled.div`
         }
 
     }
-
-
 `;
 const SharedContent=styled.div`
 
@@ -269,3 +322,63 @@ const UploadImage = styled.div`
         width: 100%;
     }
 `;
+
+
+
+
+
+// 						<SharedContent>
+// 							<UserInfo>
+// 								{currentUser.photoURL ? <img src={currentUser.photoURL} alt="" /> : <img src="/images/user.svg" alt="" />}
+// 								<span>{currentUser.displayName ? currentUser.displayName : "Name"}</span>
+// 							</UserInfo>
+// 							<Editor>
+// 								<textarea value={editorText} onChange={(event) => setEditorText(event.target.value)} placeholder="What do you want to talk about?" autoFocus={true} />
+
+// 								{assetArea === "image" ? (
+// 									<UploadImage>
+// 										<input type="file" accept="image/gif, image/jpeg, image/png" name="image" id="imageFile" onChange={handleImage} style={{ display: "none" }} />
+// 										<p>
+// 											<label htmlFor="imageFile">Select an image to share</label>
+// 										</p>
+// 										{imageFile && <img src={URL.createObjectURL(imageFile)} alt="" />}
+// 									</UploadImage>
+// 								) : (
+// 									assetArea === "video" && (
+// 										<>
+// 											<input
+// 												type="text"
+// 												name="video"
+// 												id="videoFile"
+// 												value={videoFile}
+// 												placeholder="Enter the video link"
+// 												onChange={(event) => setVideoFile(event.target.value)}
+// 											/>
+// 											{videoFile && <ReactPlayer width={"100%"} url={videoFile} />}
+// 										</>
+// 									)
+// 								)}
+// 							</Editor>
+// 						</SharedContent>
+// 						<ShareCreation>
+// 							<AttachAsset>
+// 								<AssetButton onClick={() => switchAssetArea("image")}>
+// 									<img src="/images/share-image.svg" alt="" />
+// 								</AssetButton>
+// 								<AssetButton onClick={() => switchAssetArea("video")}>
+// 									<img src="/images/share-video.svg" alt="" />
+// 								</AssetButton>
+// 							</AttachAsset>
+// 							<ShareComment>
+// 								<AssetButton>
+// 									<img src="/images/share-comment.svg" alt="" />
+// 									<span>Anyone</span>
+// 								</AssetButton>
+// 							</ShareComment>
+
+
+
+
+ 
+
+

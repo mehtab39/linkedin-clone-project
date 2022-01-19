@@ -25,11 +25,11 @@ export const setpost_success = () => {
     };
   };
 
-  export const addNewPost = (form, id)=>(dispatch) => {
-        dispatch(setpost_loading)
+  export const addNewPost = (payload)=>(dispatch) => {
+        dispatch(setpost_loading())
         try{
-          addPost(form, id)
-          dispatch(setpost_success)
+          addPost(payload)
+          dispatch(setpost_success())
         }
         catch(e){
           dispatch(setpost_failiure(e))

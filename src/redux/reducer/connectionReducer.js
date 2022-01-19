@@ -1,8 +1,7 @@
-
 import {
-    PROFILE_SUCCESS,
-    PROFILE_LOADING,
-    PROFILE_FAILIURE 
+    CONNECTION_SUCCESS,
+    CONNECTION_LOADING,
+    CONNECTION_FAILIURE 
 } from "../actions/actionTypes";
 
 
@@ -17,19 +16,21 @@ export const postReducer = (state = init_state, {
     payload
 }) => {
     switch (type) {
-        case PROFILE_LOADING:
+        case CONNECTION_LOADING:
+            console.log("hi");
             return {
+       
       ...state,
       loading: true
             }
- case PROFILE_FAILIURE:
+ case CONNECTION_FAILIURE:
      return {
     ...state,
           error: true,
           loading: false,
           errorMessage: payload,
   };
-  case PROFILE_SUCCESS:
+  case CONNECTION_SUCCESS:
       return {
           ...state,
           loading: false,
