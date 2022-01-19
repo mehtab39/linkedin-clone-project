@@ -12,7 +12,7 @@ const init_state = {
     errorMessage: null,
 }
 
-export const postReducer = (state = init_state, {
+export const profileReducer = (state = init_state, {
     type,
     payload
 }) => {

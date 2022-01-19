@@ -78,27 +78,44 @@ export const PostModal=({handleClick,showModal})=>{
                     <span>{currentUser.displayName ? currentUser.displayName : "Name"}</span>
                 </UserInfo>
                 <Editor>
+                    <>
                 <textarea value={editorText}
                 onChange={(e)=>setEditorText(e.target.value)} placeholder="What do you want to talk about?" autoFocus={true}/>
-                <UploadImage>
+               {assetArea === "image" ? ( <UploadImage>
                     <input type="file" accept='image/gif, image/jpeg, image/png'
                     name="image" 
                     id="file" style={{display:"none"}}
-                    onChange={handleChange}
+                    onChange={handleImage}
                     />
                     <p>
                         <label htmlFor="file" >Select an image to share</label>
                     </p>
-                    {shareImage && <img src={URL.createObjectURL(shareImage)} alt=""/>}
-                </UploadImage>
+                    {imageFile && <img src={URL.createObjectURL(imageFile)} alt=""/>}
+                </UploadImage>)
+                : (
+      		assetArea === "video" && (
+      			<>
+      				<input
+      					type="text"
+      					name="video"
+      					id="videoFile"
+      					value={videoFile}
+      					placeholder="Enter the video link"
+      					onChange={(event) => setVideoFile(event.target.value)}
+      				/>
+      				{videoFile && <ReactPlayer width={"100%"} url={videoFile} />}
+      			</>
+      		)
+      	)}
+          </>
                 </Editor>
             </SharedContent>
             <ShareCreation>
                 <AttachAsset>
-                    <AssetButton>
+                    <AssetButton  onClick={() => switchAssetArea("image")}>
                         <MdPhotoSizeSelectActual/>
                     </AssetButton>
-                    <AssetButton>
+                    <AssetButton  onClick={() => switchAssetArea("video")}>
                         <AiFillYoutube/>
                     </AssetButton>
                     <ShareComment>
@@ -279,63 +296,5 @@ const UploadImage = styled.div`
         width: 100%;
     }
 `;
-
-
-
-
-
-// 						<SharedContent>
-// 							<UserInfo>
-// 								{currentUser.photoURL ? <img src={currentUser.photoURL} alt="" /> : <img src="/images/user.svg" alt="" />}
-// 								<span>{currentUser.displayName ? currentUser.displayName : "Name"}</span>
-// 							</UserInfo>
-// 							<Editor>
-// 								<textarea value={editorText} onChange={(event) => setEditorText(event.target.value)} placeholder="What do you want to talk about?" autoFocus={true} />
-
-// 								{assetArea === "image" ? (
-// 									<UploadImage>
-// 										<input type="file" accept="image/gif, image/jpeg, image/png" name="image" id="imageFile" onChange={handleImage} style={{ display: "none" }} />
-// 										<p>
-// 											<label htmlFor="imageFile">Select an image to share</label>
-// 										</p>
-// 										{imageFile && <img src={URL.createObjectURL(imageFile)} alt="" />}
-// 									</UploadImage>
-// 								) : (
-// 									assetArea === "video" && (
-// 										<>
-// 											<input
-// 												type="text"
-// 												name="video"
-// 												id="videoFile"
-// 												value={videoFile}
-// 												placeholder="Enter the video link"
-// 												onChange={(event) => setVideoFile(event.target.value)}
-// 											/>
-// 											{videoFile && <ReactPlayer width={"100%"} url={videoFile} />}
-// 										</>
-// 									)
-// 								)}
-// 							</Editor>
-// 						</SharedContent>
-// 						<ShareCreation>
-// 							<AttachAsset>
-// 								<AssetButton onClick={() => switchAssetArea("image")}>
-// 									<img src="/images/share-image.svg" alt="" />
-// 								</AssetButton>
-// 								<AssetButton onClick={() => switchAssetArea("video")}>
-// 									<img src="/images/share-video.svg" alt="" />
-// 								</AssetButton>
-// 							</AttachAsset>
-// 							<ShareComment>
-// 								<AssetButton>
-// 									<img src="/images/share-comment.svg" alt="" />
-// 									<span>Anyone</span>
-// 								</AssetButton>
-// 							</ShareComment>
-
-
-
-
- 
 
 
