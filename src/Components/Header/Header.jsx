@@ -1,6 +1,16 @@
 import styled from "styled-components";
+import { useDispatch } from "react-redux"
+import { useAuth } from "../../contexts/AuthContext"
+import { logout } from "../../redux/actions/userActions";
+import { Navigate } from "react-router-dom";
 
 export const Header = (props) => {
+  const dispatch = useDispatch()
+    const {currentUser} = useAuth()
+    const handleLogout = ()=>{
+        dispatch(logout())
+    }
+   
   return (
     <Container>
       <Content>
@@ -56,13 +66,13 @@ export const Header = (props) => {
 
             <User>
               <a>
-                <img src="/images/user.svg" alt="" />
+               <img src= {currentUser?.photoURL ? currentUser?.photoURL:"/images/user.svg"} alt="" />
                 <span>Me</span>
                 <img src="/images/down-icon.svg" alt="" />
               </a>
 
               <SignOut>
-                <a>Sign Out</a>
+                <a onClick={handleLogout}>Sign Out</a>
               </SignOut>
             </User>
 
@@ -79,7 +89,7 @@ export const Header = (props) => {
         </Nav>
       </Content>
     </Container>
-  );
+  )
 };
 
 const Container = styled.div`

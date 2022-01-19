@@ -5,6 +5,7 @@ import {Home} from "./Components/Home/Home";
 import {Joinnow} from "./Components/Login/Joinnow";
 import { Sign } from './Components/Login/Signin';
 
+
 function App() {
   return (
     <div className="App">
@@ -14,6 +15,7 @@ function App() {
         </Route>
         <Route path="/join" element={<Joinnow/>}></Route>
         <Route path="/sign" element={<Sign/>}></Route>
+
      </Routes>
     </div>
   );

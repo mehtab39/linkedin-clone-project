@@ -1,29 +1,59 @@
 import styled from "styled-components";
+import React, { useRef, useState } from "react"
+import { useDispatch} from "react-redux"
+import { createAccount, signInWithGoogle} from "../../redux/actions/userActions"
+import { useAuth } from "../../contexts/AuthContext"
 
 export const Joinnow=()=>{
+    // bring loading state from redux useSelector
+
+    const emailRef = useRef()
+    const passwordRef = useRef()
+    const { signup } = useAuth()
+    const [error, setError] = useState("")
+  
+
+    const dispatch = useDispatch();
+
+    const signInGoogle = ()=>{
+        dispatch(signInWithGoogle())
+      }
+
+    async function handleSubmit(e) {
+      e.preventDefault()
+      try {
+        setError("")
+        dispatch(createAccount(emailRef.current.value, passwordRef.current.value, signup))
+
+       } catch {
+        setError("Failed to create an account")
+      }
+    }
     return <>
      <Container>
             <Logo>
             <a href="/">
-                    <img src="/images/login-logo.svg" alt="" />
+           <img src="/images/login-logo.svg" alt="" />
             </a>
             </Logo>
             <Heading>Make the most of your professional life</Heading>
             <Form >
+            {error && <p>{error}</p>}
                 <InsideForm>
+
                 <label htmlFor="">Email or phone number</label>
-                <input type="text" />
-                <p>Error</p>
-                <label htmlFor="">Password (6 or more characters</label>
-                <input type="text" />
+                <input type="email" ref={emailRef} required />
+                <label htmlFor="">Password (6 or more characters)</label>
+                <input type="password" ref={passwordRef} required />
 
                 <p className="txt">By clicking Agree & Join, you agree to the LinkedIn <span className="blue">User Agreement, Privacy Policy</span>, and <span className="blue">Cookie Policy.</span></p>
 
-                <button className="agreebtn">Agree & Join</button>
+                <button onClick={handleSubmit} className="agreebtn">Agree & Join</button>
 
-                <button className="glbtn">
+                <button onClick={signInGoogle} className="glbtn">
                 <img src="/images/google.svg" alt="" /> 
                     Join with Google</button>
+
 
                 <p className="txt1">Already on LinkedIn? <span className="blue">Sign in</span></p>
 
@@ -159,5 +189,6 @@ const Heading=styled.p`
 
     }
 `;
+
 
 

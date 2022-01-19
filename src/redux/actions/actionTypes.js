@@ -1,0 +1,27 @@
+// USER ACTION TYPES
+export const SET_USER = 'SET_USER';
+export const GET_USER = 'GET_USER';
+export const SIGN_OUT = 'SIGN_OUT';
+export const SIGN_UP = 'SIGN_UP';
+export const SIGN_IN = 'SIGN_IN';
+export const SIGNIN_LOADING = 'SIGNIN_LOADING';
+export const SIGNIN_FAILIURE = 'SIGNIN_FAILIURE';
+export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS';
+export const SIGNOUT_SUCCESS = 'SIGNIN_SUCCESS';
+
+
+
+// POST ACTION TYPE
+
+export const SET_POST = 'SET_POST';
+export const GET_POST = 'GET_POST';
+export const REMOVE_POST = 'REMOVE_POST';
+export const SETPOST_SUCCESS = 'SETPOST_SUCCESS';
+export const SETPOST_LOADING = 'SETPOST_LOADING';
+export const SETPOST_FAILIURE = 'SETPOST_FAILIURE';
+
+//PROFILE ACTION TYPE
+
+export const PROFILE_SUCCESS = 'GET_PROFILE';
+export const PROFILE_LOADING = 'PROFILE_LOADING';
+export const PROFILE_FAILIURE = 'GETPROFILE_FAILIURE';
