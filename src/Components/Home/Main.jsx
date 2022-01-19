@@ -2,8 +2,30 @@ import styled from "styled-components";
 import {BsThreeDots} from "react-icons/bs";
 import {Header} from "../Header/Header";
 import {PostModal} from "./PostModal";
+import {useState} from "react";
 
 export const Main=()=>{
+
+    const [showModal,setShowModal]=useState("close");
+
+    const handleClick =(e)=>{
+        e.preventDefault();
+        if(e.target!==e.currentTarget){
+            return;
+        }
+        switch(showModal){
+            case "open":
+                setShowModal("close");
+                break;
+            case "close":
+                setShowModal("open");
+                break;
+            default:
+                    setShowModal("close");
+                    break;
+        }
+    }
+
     return <Container>
 
         <Header/>
@@ -12,7 +34,7 @@ export const Main=()=>{
             Share
         <div className="Mid1">
             <img src="/images/user.svg" alt="" />
-            <button>Start a post</button>
+            <button onClick={handleClick}>Start a post</button>
         </div>
 
         <div className="Mid2">
@@ -92,7 +114,7 @@ export const Main=()=>{
                 </SocialActions>
             </Article>
         </div>
-        <PostModal/>
+        <PostModal showModal={showModal} handleClick={handleClick}/>
     </Container>
 }
 
