@@ -1,15 +1,16 @@
 import styled from "styled-components"
 import {useState} from "react";
 import {BsFillChatTextFill} from "react-icons/bs";
-
 import {MdPhotoSizeSelectActual} from "react-icons/md";
-
 import {AiFillYoutube} from "react-icons/ai";
+import ReactPlayer from "react-player"
 
 export const PostModal=({handleClick,showModal})=>{
     
     const [editorText,setEditorText]=useState("");
     const [shareImage,setShareImage]=useState("");
+    const [videoLink,setVideoLink]=useState("");
+    const [assetArea,setAssetArea]=useState("");
 
     const handleChange=(e)=>{
         const image=e.target.files[0];
@@ -21,9 +22,17 @@ export const PostModal=({handleClick,showModal})=>{
         setShareImage(image);
     }
 
+    const switchAssetArea=(area)=>{
+        setShareImage("");
+        setVideoLink("");
+        setAssetArea(area);
+    }
+
     const Reset=(e)=>{
-        console.log("dsfgdsjf")
         setEditorText("");
+        setShareImage("");
+        setVideoLink("");
+        setAssetArea("")
         handleClick(e);
     }
 
@@ -45,7 +54,10 @@ export const PostModal=({handleClick,showModal})=>{
                 <Editor>
                 <textarea value={editorText}
                 onChange={(e)=>setEditorText(e.target.value)} placeholder="What do you want to talk about?" autoFocus={true}/>
-                <UploadImage>
+
+                {
+                    assetArea === "image" ?
+                (<UploadImage>
                     <input type="file" accept='image/gif, image/jpeg, image/png'
                     name="image" 
                     id="file" style={{display:"none"}}
@@ -55,7 +67,18 @@ export const PostModal=({handleClick,showModal})=>{
                         <label htmlFor="file" >Select an image to share</label>
                     </p>
                     {shareImage && <img src={URL.createObjectURL(shareImage)} alt=""/>}
-                </UploadImage>
+                     </UploadImage>) :
+                    assetArea === "media" &&
+                   ( <>
+                    <input type="text" placeholder="Please input a videoLink" value={videoLink} onChange={(e)=>setVideoLink(e.target.value)}/>
+
+                    {videoLink && (<ReactPlayer width={"100%"} url={videoLink}/>
+                    
+                    )}
+
+                    </>)
+               
+            }
                 </Editor>
             </SharedContent>
             <ShareCreation>
