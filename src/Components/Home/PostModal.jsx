@@ -79,7 +79,18 @@ export const PostModal=({handleClick,showModal})=>{
                 </UserInfo>
                 <Editor>
                 <textarea value={editorText}
-                onChange={(e)=>setEditorText(e.target.value)} placeholder="What do you want to talk about?" autoFocus={true}></textarea>
+                onChange={(e)=>setEditorText(e.target.value)} placeholder="What do you want to talk about?" autoFocus={true}/>
+                <UploadImage>
+                    <input type="file" accept='image/gif, image/jpeg, image/png'
+                    name="image" 
+                    id="file" style={{display:"none"}}
+                    onChange={handleChange}
+                    />
+                    <p>
+                        <label htmlFor="file" >Select an image to share</label>
+                    </p>
+                    {shareImage && <img src={URL.createObjectURL(shareImage)} alt=""/>}
+                </UploadImage>
                 </Editor>
             </SharedContent>
             <ShareCreation>
@@ -118,13 +129,14 @@ const Container=styled.div`
     z-index: 9999;
     color:black;
     background-color:rgba(0, 0, 0, 0.8);
+    animation: fadeIn 0.3s;
 `;
 
 const Content = styled.div`
   
-    width: 1001;
+    width: 100%;
     max-width: 552px; background-color: white;
-    max-height: 901;
+    max-height: 90%;
     overflow: initial;
     border-radius: 5px;
     position: relative; 
@@ -237,7 +249,7 @@ const PostButton = styled.button`
     border-radius: 20px;
     padding-left:16px;
     padding-right:16px;
-    background:#0a66c2;
+    background:${(props)=>props.disabled ? "rgba(0,0,0,0.8)":"#0a66c2"};
     color:white;
     &:hover {
         background:#004182;
@@ -260,6 +272,14 @@ const Editor=styled.div`
     }
 
 `;
+
+const UploadImage = styled.div`
+    text-align:center;
+    img {
+        width: 100%;
+    }
+`;
+
 
 
 
