@@ -13,6 +13,7 @@ export const Login=(props)=>{
     const signInGoogle = ()=>{
         dispatch(signInWithGoogle())
       }
+
       const navigate = useNavigate();
       useEffect(() => {
           checkUser()
