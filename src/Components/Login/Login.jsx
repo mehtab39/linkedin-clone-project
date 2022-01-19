@@ -13,9 +13,9 @@ export const Login=(props)=>{
         dispatch(signInWithGoogle())
       }
         
- {
+ 
     if(currentUser) return <Navigate  to="/home"/>
- }
+ 
     
 
     return (
