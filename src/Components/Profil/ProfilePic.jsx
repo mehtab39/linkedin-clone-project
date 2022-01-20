@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from "styled-components";
 import { useAuth } from "../../contexts/AuthContext"
-const ProfilePic = () => {
+const ProfilePic = ({handleClick}) => {
     const {currentUser} = useAuth()
   return (
     <Container>
@@ -9,7 +9,7 @@ const ProfilePic = () => {
          <img src="/images/cover.jpeg" alt=""/>
       </Cover>
       <EditCover>
-          <img src="/images/pen.png" alt=""/>
+          <img onClick={handleClick} src="/images/pen.png" alt=""/>
       </EditCover>
       <UserProfile>
           <button>

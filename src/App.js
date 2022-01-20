@@ -14,8 +14,6 @@ function App() {
     <div className="App">
      <Routes>
         <Route path="/" element={<Login/>} ></Route>
-   
- 
         <Route path="/join" element={<Joinnow/>}></Route>
         <Route path="/sign" element={<Sign/>}></Route>
         <Route
@@ -26,7 +24,7 @@ function App() {
             </PrivateRoute>
           }
         />
-         <Route
+        <Route
          path="/home"
           element={
             <PrivateRoute>
