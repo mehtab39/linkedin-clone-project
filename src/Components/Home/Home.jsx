@@ -2,8 +2,11 @@ import styled from "styled-components";
 import {Leftside} from "./Leftside";
 import {Main} from "./Main";
 import {Rightside} from "./Rightside";
+import { useAuth } from "../../contexts/AuthContext"
 
 export const Home = (props) => {
+
+
   return (
     <Container>
       <Layout>

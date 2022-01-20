@@ -1,3 +1,5 @@
+import { fetchConnections, fetchPending, fetchSent } from "../../Firebase/Firestore/connections";
+import { fetchSuggestions } from "../../Firebase/Firestore/getSuggestions";
 import { fetchProfile, updateProfile } from "../../Firebase/Firestore/updateProfile";
 import {
   PROFILE_SUCCESS,
@@ -36,10 +38,10 @@ export const profile_success = () => {
   }
 
   export const updateData = (collection, data, id)=>(dispatch)=>{
-    dispatch(profile_loading)
+    dispatch(profile_loading())
     try{
       updateProfile(collection, data, id)
-    dispatch(profile_success)
+    dispatch(profile_success())
     }
     catch(e){
       dispatch(profile_failiure(e))
@@ -48,8 +50,54 @@ export const profile_success = () => {
 
 
   
+export const suggestions = (id, setData)=>(dispatch)=>{
+  dispatch(profile_loading())
+  try{
+    fetchSuggestions( id, setData);
+    dispatch(profile_success())
+  }
+  catch(e){
+    dispatch(profile_failiure(e))
+  }
+}
+
+  
+export const connections = (id, setData)=>(dispatch)=>{
+  dispatch(profile_loading())
+  try{
+    fetchConnections( id, setData);
+    dispatch(profile_success())
+  }
+  catch(e){
+    dispatch(profile_failiure(e))
+  }
+}
+
+ 
+export const pending = (id, setData)=>(dispatch)=>{
+  dispatch(profile_loading())
+  try{
+    fetchPending( id, setData);
+    dispatch(profile_success())
+  }
+  catch(e){
+    dispatch(profile_failiure(e))
+  }
+}
 
 
+
+
+export const sentRequests = (id, setData)=>(dispatch)=>{
+  dispatch(profile_loading())
+  try{
+    fetchSent( id, setData);
+    dispatch(profile_success())
+  }
+  catch(e){
+    dispatch(profile_failiure(e))
+  }
+}
 
 
 

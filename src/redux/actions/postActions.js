@@ -1,9 +1,13 @@
 
-import { addPost } from "../../Firebase/Firestore/addPost";
+import { db } from "../../Firebase/firebase";
+import { addPost, getArticles, updateArticle } from "../../Firebase/Firestore/addPost";
 import {
   SETPOST_SUCCESS,
   SETPOST_LOADING,
-  SETPOST_FAILIURE 
+  SETPOST_FAILIURE, 
+  GETPOST_SUCCESS,
+  GETPOST_LOADING,
+  GETPOST_FAILIURE
 } 
 from "./actionTypes"
 
@@ -25,17 +29,73 @@ export const setpost_success = () => {
     };
   };
 
-  export const addNewPost = (form, id)=>(dispatch) => {
-        dispatch(setpost_loading)
-        try{
-          addPost(form, id)
-          dispatch(setpost_success)
-        }
-        catch(e){
-          dispatch(setpost_failiure(e))
-        }
-  }
 
+  
+export const getpost_success = (payload, id) => {
+  return {
+    type: GETPOST_SUCCESS,
+    payload: [payload, id]
+  };
+};
+export const getpost_failiure = (error) => {
+  return {
+     type: GETPOST_FAILIURE,
+     payload: error
+  };
+};
+export const getpost_loading = () => {
+  return {
+     type: GETPOST_LOADING,
+  };
+};
+
+  
+  export const addNewPost = (payload)=>(dispatch) => {
+    dispatch(setpost_loading())
+    try{
+      addPost(payload)
+      dispatch(setpost_success())
+    }
+    catch(e){
+      dispatch(setpost_failiure(e))
+    }
+}
+
+
+
+export const getNewArticles = ()=>(dispatch) => {
+  dispatch(getpost_loading())
+  try{
+      let payload;
+      let id;
+      db.collection("articles")
+        .orderBy("actor.date", "desc")
+        .onSnapshot((snapshot) => {
+          payload = snapshot.docs.map((doc) => doc.data());
+          id = snapshot.docs.map((doc) => doc.id);
+          dispatch(getpost_success(payload, id))
+         
+        });
+      }
+  catch(e){
+    dispatch(getpost_failiure(e))
+  }
+}
+
+
+export const updateTheArticles = (payload)=>(dispatch) => {
+  dispatch(setpost_loading())
+  try{
+    updateArticle(payload)
+    dispatch(setpost_success())
+  }
+  catch(e){
+    dispatch(setpost_failiure(e))
+  }
+}
+ 
+  
+  
 
   
 
@@ -45,16 +105,3 @@ export const setpost_success = () => {
 
 
 
-
-
-
-// import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
-// const washingtonRef = doc(db, "cities", "DC");
-// // Atomically add a new region to the "regions" array field.
-// await updateDoc(washingtonRef, {
-//     regions: arrayUnion("greater_virginia")
-// });
-// // Atomically remove a region from the "regions" array field.
-// await updateDoc(washingtonRef, {
-//     regions: arrayRemove("east_coast")
-// });
