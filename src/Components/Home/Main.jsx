@@ -153,23 +153,23 @@ export const Main=()=>{
 							<SocialActions>
 			
                 
-                <button onClick={(event) => likeHandler(event, key, ids[key])} className={posts[key].likes.whoLiked.indexOf(currentUser.email) >= 0 ? "active" : null}>
-                <img src="/images/Like1.png" alt="" />
-                <span>Like</span>
-                </button>
-                <button>
-                    <img src="images/comment.png" alt="" />
-                    <span>Comment</span>
-                </button>
-                <button>
-                    <img src="images/share.png" alt="" />
-                    <span>Share</span>
-                </button>
-                <button>
-                    <img src="images/send.png" alt="" />
-                    <span>Send</span>
-                </button>
-                </SocialActions>
+                            <button onClick={(event) => likeHandler(event, key, ids[key])} className={posts[key].likes.whoLiked.indexOf(currentUser.email) >= 0 ? "active" : null}>
+                            <img src="/images/Like1.png" alt="" />
+                            <span>Like</span>
+                            </button>
+                            <button>
+                                <img src="images/comment.png" alt="" />
+                                <span>Comment</span>
+                            </button>
+                            <button>
+                                <img src="images/share.png" alt="" />
+                                <span>Share</span>
+                            </button>
+                            <button>
+                                <img src="images/send.png" alt="" />
+                                <span>Send</span>
+                            </button>
+                            </SocialActions>
 						
 						</Article>
 					))}
@@ -353,7 +353,9 @@ const SocialCounts = styled.ul`
         font-size:12px;
         button {
             display:flex;
-
+            border: none;
+            background-color: white;
+            font-size: 12px;
             img {
                 width:30px;
             }
@@ -374,7 +376,7 @@ const SocialActions = styled.div`
     }
     align-items: center;
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     margin: 0;
     min-height: 40px; 
     padding: 4px 8px;
@@ -388,9 +390,11 @@ const SocialActions = styled.div`
     button {
     display: inline-flex;
     align-items: center;
+    
     padding: 8px; 
     color: #0a66c2;
-    
+    border: none;
+    background-color: white;
         @media (min-width: 768px) { I
             span{
                 margin-left: 8px;
