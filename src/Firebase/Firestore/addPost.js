@@ -1,6 +1,7 @@
 import { storage, db, timestamp } from "../firebase"
 
-
+import "firebase/firestore";
+import firebase from "firebase/app"
 export const addPost = (payload) =>{
 		if (payload.image !== "") {
 
@@ -17,9 +18,9 @@ export const addPost = (payload) =>{
 					db.collection("articles").add({
 						actor: {
 							description: payload.user.email,
-							title: payload.user.displayName,
+							title: payload.user.displayName || payload.username,
 							date: timestamp(),
-							image: payload.user.photoURL,
+							image: payload.userImage,
 						},
 						video: payload.video,
 						sharedImg: downloadURL,
@@ -29,7 +30,7 @@ export const addPost = (payload) =>{
 						},
 						comments: 0,
 						description: payload.description,
-            userProfile: payload.userProfile
+                        userProfile: payload.userProfile
 					});
 				
 				}
@@ -39,9 +40,9 @@ export const addPost = (payload) =>{
 			db.collection("articles").add({
 				actor: {
 					description: payload.user.email,
-					title: payload.user.displayName,
+					title: payload.user.displayName || payload.username,
 					date: timestamp(),
-					image: payload.user.photoURL,
+					image: payload.userImage,
 				},
 				video: payload.video,
 				sharedImg: "",
@@ -58,10 +59,10 @@ export const addPost = (payload) =>{
 		
 			db.collection("articles").add({
 				actor: {
-					description: payload.user.email,
-					title: payload.user.displayName,
+					description: payload.userTitle || payload.user.email,
+					title: payload.user.displayName || payload.username,
 					date: timestamp(),
-					image: payload.user.photoURL,
+					image: payload.userImage,
 				},
 				video: "",
 				sharedImg: "",
@@ -87,4 +88,59 @@ export const addPost = (payload) =>{
        db.collection("articles").doc(payload.id).update(payload.update);
     };
 
+	
+	export const sendLikeNotification = async (user, post) => {
+		try{
+			const fromRef = db.collection("profile").doc(user);
+			const toRef = db.collection("profile").doc(post.userProfile);
+			const doc = await fromRef.get();
+			const fromName = doc.data().username;
+			const payload = {
+		           type: "like",
+		           whoLiked : fromName,
+				   postTitle: post.description,
+				   postImage: post.sharedImg || ""
+			}
+			const resTo = await toRef.update({
+				notifications: firebase.firestore.FieldValue.arrayUnion(payload)
+			});
+			sendActivity(user, post)
+			}
+			catch(e){
+				console.log('e:', e)
+				return
+		
+			}
+		
+	 };
 
+
+
+	 export const sendActivity = async (user, post) => {
+		try{
+			const fromRef = db.collection("profile").doc(user);
+			const payload = {
+		           type: "like",
+				   postTitle: post.description,
+				   postImage: post.sharedImg || ""
+			}
+			const resFrom = await fromRef.update({
+				activity: firebase.firestore.FieldValue.arrayUnion(payload)
+			});
+			}
+			catch(e){
+				console.log('e:', e)
+				return
+		
+			}
+		
+	 };
+
+	 export const deleteMyPost = async(id) => {
+		const res = await db.collection("articles").doc(id).delete();
+		 console.log(res);
+		 return
+		
+	 };
+ 
+	 

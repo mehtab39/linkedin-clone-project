@@ -47,7 +47,10 @@ export const PostModal=({handleClick,showModal})=>{
 			video: videoFile,
 			description: editorText,
 			user: currentUser,
-            userProfile: profile.id
+            username: profile.username,
+            userProfile: profile.id,
+            userImage: profile.profile_img,
+            userTitle: profile.job_title
 		};
 		dispatch(addNewPost(payload));
 		Reset(event);

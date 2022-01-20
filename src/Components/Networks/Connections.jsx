@@ -3,14 +3,16 @@ import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/AuthContext";
 import { deleteConnection } from "../../redux/actions/connectionAction";
 import { connections } from "../../redux/actions/profileAction";
-
+import styled from "styled-components"
 
 export const Connections = () => {
-    const {currentUser, profile} = useAuth()
+    const { profile} = useAuth()
     const dispatch = useDispatch()
     const [data, setData] = useState([]);
     const getConnections = ()=>{
-            dispatch(connections(profile.id, setData)); 
+        if(profile){
+            dispatch(connections(profile?.id, setData)); 
+        }
     }
    
     const handleRemove = (id)=>{
@@ -19,18 +21,18 @@ export const Connections = () => {
     useEffect(()=>{
         getConnections()
     }, [profile])
-    return (
+    return profile ? (
         <div>
             <h2>Your connections</h2>
             {data.map((el)=>{
                 return <div key={el.id}>
                   <img src={el?.profile_img}/>
                   <p>{el.email}</p>
-                <button onClick={handleRemove}>Remove connection</button>
+                <button onClick={()=>handleRemove(el.id)}>Remove connection</button>
                 </div>
             })
 }
         
         </div>
-    )
+    ): <div>wait</div>
 }

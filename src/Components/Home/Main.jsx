@@ -4,12 +4,13 @@ import {Header} from "../Header/Header";
 import {PostModal} from "./PostModal";
 import {useState, useEffect} from "react";
 import { useDispatch } from "react-redux";
-import { getNewArticles, updateTheArticles } from "../../redux/actions/postActions";
+import { getNewArticles, updateTheArticles, likeNotification , deletePost} from "../../redux/actions/postActions";
 import { useSelector } from "react-redux";
 import { useAuth } from "../../contexts/AuthContext";
 import ReactPlayer from "react-player";
 
 export const Main=()=>{
+    const [showRemove, setShowRemove] = useState(false)
     const dispatch = useDispatch()
     useEffect(() => {
        dispatch(getNewArticles())
@@ -20,6 +21,8 @@ export const Main=()=>{
 		posts: state.postState.articles,
         ids: state.postState.ids,
       }));
+
+      
        
     const [showModal,setShowModal]=useState("close");
 
@@ -40,13 +43,20 @@ export const Main=()=>{
                     break;
         }
     }
+    const removeHandler = (id) =>{
+        
+      if (window.confirm("Do you want to delete this post") == true) {
+          dispatch(deletePost(id))
+        } else {
+           return;
+        }
+    }
     function likeHandler(event, postIndex, id) {
 		event.preventDefault();
 		let currentLikes = posts[postIndex].likes.count;
 		let whoLiked = posts[postIndex].likes.whoLiked;
 		let user = currentUser.email;
 		let userIndex = whoLiked.indexOf(user);
-
 		if (userIndex >= 0) {
 			currentLikes--;
 			whoLiked.splice(userIndex, 1);
@@ -54,6 +64,8 @@ export const Main=()=>{
 			currentLikes++;
 			whoLiked.push(user);
 		}
+
+      
 
 		const payload = {
 			update: {
@@ -64,8 +76,8 @@ export const Main=()=>{
 			},
 			id: id,
 		};
-
-		dispatch(updateTheArticles(payload))
+		dispatch(updateTheArticles(payload));
+        dispatch(likeNotification(profile.id, posts[postIndex]))  
 }
 
 
@@ -114,8 +126,9 @@ export const Main=()=>{
 										<span>{article?.actor?.date?.toDate().toLocaleDateString()}</span>
 									</div>
 								</a>
-                                <button>
-                    <BsThreeDots/>
+                                <button >
+                     <BsThreeDots onClick={()=>setShowRemove(!showRemove)}/>
+                    {article?.userProfile === profile?.id &&  showRemove && <div onClick={() => removeHandler(ids[key])}>Remove</div>}
                     </button>
 							</SharedActor>
 							<Description>{article.description}</Description>

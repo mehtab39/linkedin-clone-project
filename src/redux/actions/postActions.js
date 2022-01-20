@@ -1,6 +1,6 @@
 
 import { db } from "../../Firebase/firebase";
-import { addPost, getArticles, updateArticle } from "../../Firebase/Firestore/addPost";
+import { addPost, updateArticle, sendLikeNotification, deleteMyPost } from "../../Firebase/Firestore/addPost";
 import {
   SETPOST_SUCCESS,
   SETPOST_LOADING,
@@ -87,6 +87,30 @@ export const updateTheArticles = (payload)=>(dispatch) => {
   dispatch(setpost_loading())
   try{
     updateArticle(payload)
+    dispatch(setpost_success())
+  }
+  catch(e){
+    dispatch(setpost_failiure(e))
+  }
+}
+
+
+
+export const likeNotification = (from, to)=>(dispatch) => {
+  dispatch(setpost_loading())
+  try{
+    sendLikeNotification(from, to)
+    dispatch(setpost_success())
+  }
+  catch(e){
+    dispatch(setpost_failiure(e))
+  }
+}
+
+export const deletePost = (id)=>(dispatch) => {
+  dispatch(setpost_loading())
+  try{
+    deleteMyPost(id);
     dispatch(setpost_success())
   }
   catch(e){

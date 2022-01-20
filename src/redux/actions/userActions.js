@@ -68,7 +68,7 @@ export const signin_loading = () => {
     dispatch(signin_loading())
      try{
            const data =  await signup(email, password);
-          if(data) createProfile(data.user.uid, data.user?.email, "")
+          if(data) createProfile(data.user)
           dispatch(setUser())
      }
      catch(err){
@@ -82,7 +82,7 @@ export const signInWithGoogle = () => (dispatch) => {
         auth.signInWithPopup(googleProvider)
         .then((res)=> {
              const user = res.user;
-             profileExist(user.uid ,user.email, user.providerData[0].photoURL)
+             profileExist(user)
              dispatch(setUser())
      })
     }

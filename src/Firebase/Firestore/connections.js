@@ -25,6 +25,7 @@ export const sendConnectionHandle = async (from, to) => {
 }
 
 export const fetchConnections = async(id, setData)=>{
+    console.log('id:', id)
     await  db.collection("profile")
         .where("connections", "array-contains-any", [id])
         .get()
@@ -33,7 +34,7 @@ export const fetchConnections = async(id, setData)=>{
             id: doc.id,
             ...doc.data(),
         })); 
-        console.log("my connections are:",data);
+        
         setData(data);
     
     })
@@ -87,6 +88,7 @@ export const fetchConnections = async(id, setData)=>{
                 waiting: firebase.firestore.FieldValue.arrayRemove(from),
                 connections: firebase.firestore.FieldValue.arrayUnion(from)
             });
+            acceptRequestNotification(from, to);
         }
         catch(e){
             console.log('e:', e)
@@ -94,6 +96,7 @@ export const fetchConnections = async(id, setData)=>{
     
         }
     }
+
 
     export const deletePendingConnection = async (from, to) => {
         console.log('from, to:', from, to)
@@ -138,7 +141,7 @@ export const fetchConnections = async(id, setData)=>{
             const fromRef = db.collection("profile").doc(from);
             const toRef = db.collection("profile").doc(to);
             const resFrom = await fromRef.update({
-                connections: firebase.firestore.FieldValue.arrayRemove(to)
+                  connections: firebase.firestore.FieldValue.arrayRemove(to)
           });
             const resTo = await toRef.update({
                  connections: firebase.firestore.FieldValue.arrayRemove(from)
@@ -153,35 +156,28 @@ export const fetchConnections = async(id, setData)=>{
     
     
 
+  
+export const acceptRequestNotification = async(from, to) =>{
+    try{
+    const fromRef = db.collection("profile").doc(from);
+    const toRef = db.collection("profile").doc(to);
+    const doc = await fromRef.get();
+    const fromName = doc.data().username;
+    const fromImage = doc.data().profile_img;
+    const payload = {
+        type: "acceptRequest",
+        image: fromImage,
+        description: `Congratulations, ${fromName} accepted your invitation, you and ${fromName} are now connections`
+    }
+    const resTo = await toRef.update({
+        notifications: firebase.firestore.FieldValue.arrayUnion(payload)
+    });
+    }
+    catch(e){
+        console.log('e:', e)
+        return
 
+    }
 
+}
 
-    //   acceptPendingConnection, deleteP
-
-// export const sendConnectionHandle = async (from, to) => {
-//     const fromUser = doc(db, "profile", from);
-//     const toUser = doc(db, "profile", to);
-
-//     await updateDoc(fromUser, {
-//         waiting: arrayUnion(to)
-//     });
-//     await updateDoc(toUser, {
-//         waiting: arrayUnion(from)
-//     });
-
-// }
-
-
-
-// // Atomically remove a region from the "regions" array field.
-// await updateDoc(washingtonRef, {
-//     regions: arrayRemove("east_coast")
-//  });
-
-
-
-// const washingtonRef = doc(db, "cities", "DC");
-
-// await updateDoc(washingtonRef, {
-//     regions: arrayUnion("greater_virginia")
-// });

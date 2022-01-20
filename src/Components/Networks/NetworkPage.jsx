@@ -1,15 +1,11 @@
-import { Connections } from "./Connections"
 import { Suggestions } from "./Suggestions"
 import { Pending } from "./Pending"
-import { Sent } from "./Sent"
 import { useAuth } from "../../contexts/AuthContext"
 import { useEffect } from "react"
-
+import styled from "styled-components"
 
 export const NetworkPage = () => {
-    const {currentUser, profile} = useAuth()
-    console.log('currentUser:', currentUser)
-    console.log('profile:', profile)
+    const {profile} = useAuth()
     const check = ()=>{
         if(profile){
             console.log("got profile")
@@ -20,11 +16,18 @@ export const NetworkPage = () => {
     }, [profile], [])
    
     return profile ? (
-        <div>
+        <NetworkPageMain>
             <Suggestions/>
-            <Connections/>
             <Pending/>
-            <Sent/>
-        </div>
+        </NetworkPageMain>
     ): <div>Something went wrong...Please wait</div>
 }
+
+
+const NetworkPageMain = styled.div`
+text-align: center;
+    img{
+         height: 50px;
+         width: 50px
+     }
+`

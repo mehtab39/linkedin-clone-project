@@ -31,12 +31,12 @@ export const Pending = () => {
             <hr/>
            <div>
             {data.map((el)=>{
-                return <div key={el.id}>
-                    <div>
+         return <ChildDiv key={el.id}>
+                 <div>
                   <img src={el?.profile_img}/>
                   </div>
                   <div>
-                  <p>{el.email}</p>
+                  <p>{el.username}</p>
                   <p>{el.title}</p>
                   </div>
                   <div>
@@ -46,7 +46,7 @@ export const Pending = () => {
                   <button onClick={()=>handleDelete(el.id)}>Ignore</button>
                   </div>
                   <hr/>
-                </div>
+                </ChildDiv>
 
             })
         }
@@ -60,10 +60,10 @@ export const Pending = () => {
 const ParentDiv = styled.div`
      width: 50%;
      background-color: grey;
-
-      div{
-         dispay: inline-block
-         
-        
-     }
+     margin-top: 10%
 `
+
+const ChildDiv = styled.div`
+    dispay: grid;
+    grid-template-column: 15% 55% 15% 15%
+    `
