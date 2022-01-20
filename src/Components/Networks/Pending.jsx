@@ -10,9 +10,9 @@ export const Pending = () => {
     const dispatch = useDispatch()
     const [data, setData] = useState([]);
     const getPending = ()=>{
-            dispatch(pending(profile.id, setData)); 
+         dispatch(pending(profile.id, setData)); 
     }
- 
+    console.log(data)
     const handleAccept = (toUser)=>{
         const fromUser = profile.id;
         dispatch(acceptPending(fromUser, toUser))
@@ -27,26 +27,23 @@ export const Pending = () => {
     }, [profile])
     return (
         <ParentDiv>
-            <h2>Invitations</h2>
-            <hr/>
+            <h1>Invitations</h1>
            <div>
             {data.map((el)=>{
-         return <ChildDiv key={el.id}>
+             return  <ChildDiv key={el.id}>
+                  <div>
+                   <Image src={el.profile_img ?  el.profile_img : "/images/user.svg"} />
+                 </div>
+                 <User>
+                   <p>{el.first_name} {el.last_name}</p>
+                  <p>{el.job_title}</p>
+                 </User>
                  <div>
-                  <img src={el?.profile_img}/>
+                  <RemoveBtn onClick={()=>handleDelete(el.id)}>Ignore</RemoveBtn>
+                  <ActiveBtn onClick={()=>handleAccept(el.id)}>Accept</ActiveBtn>
+
                   </div>
-                  <div>
-                  <p>{el.username}</p>
-                  <p>{el.title}</p>
-                  </div>
-                  <div>
-                  <button onClick={()=>handleAccept(el.id)}>Accept</button>
-                  </div>
-                  <div>
-                  <button onClick={()=>handleDelete(el.id)}>Ignore</button>
-                  </div>
-                  <hr/>
-                </ChildDiv>
+            </ChildDiv>
 
             })
         }
@@ -58,12 +55,74 @@ export const Pending = () => {
 
 
 const ParentDiv = styled.div`
-     width: 50%;
-     background-color: grey;
-     margin-top: 10%
+    //  margin-top: 10%;
+    //  dispay: flex;
+    // flex-direction: column;
 `
 
 const ChildDiv = styled.div`
-    dispay: grid;
-    grid-template-column: 15% 55% 15% 15%
+padding: 10px;
+   display: flex;
+   box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px 0px 0px 0px;
+      justify-content: space-between;
+        width: 40%;
+        div{
+            display: flex;   
+        }
     `
+
+    const Image = styled.img `
+     cursor: pointer;
+    height: 70px;
+    border-radius: 100%;
+    /* border: 1px solid black;   */
+
+
+ `
+ const User = styled.div`
+ /* border: 1px solid black;   */
+         text-align: left;
+         height: 70px;
+         margin-left: 15px;
+         display: flex;
+         width: 45%;
+         flex-direction: column;
+         p{
+             padding: 2px;
+             margin-top: 10px;
+         }
+ `
+
+
+ const RemoveBtn = styled.button`
+   background-color: whitesmoke;
+   padding: 10px;
+   cursor: pointer;
+ border: none;
+  width: 85px;
+margin: 20px;
+  height: 36px;
+ margin-right: 30px;
+ &:hover {
+        /* opacity: 0.5;   */
+        background-color: lightgrey;
+ border-radius: 3px;
+
+
+     }
+ `
+ const ActiveBtn = styled.button`
+ border: 1px solid #126BC4;
+    border-radius: 20px;
+    color: #126BC4;
+    font-weight: bold;
+    background-color: #fff;
+    padding: 10px;
+    width: 100px;
+    margin-top: 20px;
+    cursor: pointer;
+    height: 36px;
+   &:hover {
+       background-color: #e2edfa;  
+     }
+ `

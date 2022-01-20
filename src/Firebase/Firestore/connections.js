@@ -3,8 +3,22 @@ import {
 } from "../firebase";
 import "firebase/firestore";
 import firebase from "firebase/app"
+export const fetchSuggestions = (id, setData)=>{
 
+    db.collection("profile")
+    .where("userUID", "!=", id)
+    .limit(12)
+    .get()
+    .then((querySnapshot) => {
+    const data = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+    })); 
+    console.log(data);
+    setData(data);
 
+})
+}
 
 export const sendConnectionHandle = async (from, to) => {
     try{
@@ -25,7 +39,6 @@ export const sendConnectionHandle = async (from, to) => {
 }
 
 export const fetchConnections = async(id, setData)=>{
-    console.log('id:', id)
     await  db.collection("profile")
         .where("connections", "array-contains-any", [id])
         .get()
@@ -34,15 +47,14 @@ export const fetchConnections = async(id, setData)=>{
             id: doc.id,
             ...doc.data(),
         })); 
-        
         setData(data);
-    
     })
     
     }
 
 
     export const fetchPending = async(id, setData)=>{
+        console.log('id:', id)
         // we will find all profiles whose waiting has this id
        await db.collection("profile")
           .where("waiting", "array-contains-any", [id])
@@ -73,7 +85,6 @@ export const fetchConnections = async(id, setData)=>{
       })
       
      }
-
 
       export const acceptPendingConnection = async (from, to) => {
         try{

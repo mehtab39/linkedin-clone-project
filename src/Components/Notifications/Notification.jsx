@@ -47,7 +47,7 @@ export const Notification = () => {
                     : 
                     <>
                      {el.postImage!=="" && <Image src={ el.postImage}/>}
-                     {el.whoLiked} likes your post {el.postTitle} 
+                     {el.whoLiked} likes your post "{el.postTitle}"
                     </>}
                </div>
                <hr/>

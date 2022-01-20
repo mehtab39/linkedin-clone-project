@@ -3,6 +3,7 @@ import { Pending } from "./Pending"
 import { useAuth } from "../../contexts/AuthContext"
 import { useEffect } from "react"
 import styled from "styled-components"
+import { RightConnection } from "./RightConnection"
 
 export const NetworkPage = () => {
     const {profile} = useAuth()
@@ -17,17 +18,18 @@ export const NetworkPage = () => {
    
     return profile ? (
         <NetworkPageMain>
-            <Suggestions/>
+            <RightConnection/>
             <Pending/>
+            <Suggestions/>
         </NetworkPageMain>
     ): <div>Something went wrong...Please wait</div>
 }
 
 
 const NetworkPageMain = styled.div`
-text-align: center;
-    img{
-         height: 50px;
-         width: 50px
-     }
+// text-align: center;
+//     img{
+//          height: 50px;
+//          width: 50px
+//      }
 `

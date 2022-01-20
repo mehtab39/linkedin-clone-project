@@ -20,14 +20,11 @@ export const Sign=(props)=>{
             navigate("/home")
         }
     }
-
-  function   handleSubmit(e) {
+  function handleSubmit(e) {
       e.preventDefault()
       try {
         setError("")
-        dispatch(signin(emailRef.current.value, passwordRef.current.value))
-
-     
+        dispatch(signin(emailRef.current.value, passwordRef.current.value)) 
       } catch {
        
         setError("Failed to log in")

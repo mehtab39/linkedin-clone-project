@@ -1,6 +1,5 @@
-import { fetchConnections, fetchPending, fetchSent } from "../../Firebase/Firestore/connections";
-import { fetchSuggestions } from "../../Firebase/Firestore/getSuggestions";
-import { fetchProfile, updateProfile } from "../../Firebase/Firestore/updateProfile";
+import { fetchConnections, fetchPending, fetchSent, fetchSuggestions  } from "../../Firebase/Firestore/connections";
+import { fetchProfile, updateProfile } from "../../Firebase/Firestore/addProfile";
 import {
   PROFILE_SUCCESS,
   PROFILE_LOADING,

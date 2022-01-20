@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react"
 import { Navigate } from "react-router-dom"
 import { auth } from "../Firebase/firebase"
-import { getProfile } from "../Firebase/Firestore/updateProfile"
+import { getProfile } from "../Firebase/Firestore/addProfile"
 const AuthContext = React.createContext()
 
 export function useAuth() {
@@ -9,7 +9,6 @@ export function useAuth() {
 }
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState()
-  const [pass, setpass] = useState(false)
   const [profile, setProfile] = useState()
   const [loading, setLoading] = useState(true)
 
@@ -29,9 +28,7 @@ export function AuthProvider({ children }) {
  
   useEffect(() => {
     if(currentUser){
-      setLoading(true)
       getProfile(currentUser.uid, setProfile) 
-      setLoading(false)
     }
    
   }, [currentUser])

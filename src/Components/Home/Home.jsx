@@ -3,19 +3,20 @@ import {Leftside} from "./Leftside";
 import {Main} from "./Main";
 import {Rightside} from "./Rightside";
 import { useAuth } from "../../contexts/AuthContext"
-
+import {Loader} from "../Loader/Loader"
 export const Home = (props) => {
 
+const {profile} = useAuth()
 
-  return (
-    <Container>
+  return  profile ?  (<Container>
       <Layout>
         <Leftside />
         <Main />
         <Rightside />
       </Layout>
     </Container>
-  );
+  ) : <Loader />
+
 };
 
 const Container = styled.div`

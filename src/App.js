@@ -9,12 +9,15 @@ import { Sent } from './Components/Networks/Sent';
 import { Connections } from './Components/Networks/Connections';
 import PrivateRoute from './Components/Privateroute';
 import { Notification } from './Components/Notifications/Notification';
+import { Loader } from './Components/Loader/Loader';
+import { PageNotFoundError } from './Components/PageNotFound/PageNotFound';
 
 
 function App() {
   return (
     <div className="App">
      <Routes>
+    
       <Route path="/" element={<Login/>} ></Route>
       <Route path="/join" element={<Joinnow/>}></Route>
       <Route path="/sign" element={<Sign/>}></Route>
@@ -59,6 +62,7 @@ function App() {
             </PrivateRoute>
           }
         />
+         <Route path='*' element={<PageNotFoundError/>} />
       </Routes>
 
     

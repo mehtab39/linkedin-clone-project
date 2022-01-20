@@ -1,21 +1,4 @@
-// Suggestions
-// suggest CONNECTION of people who are
-// != current user && ! in the connection, pending and waiting array
 
-
-// sending request
-// append userid pending + append another user id waiting 
-// send notifications to another person
-
-
-
-// accepting request
-// append  connection array in both users 
-// pop waiting of one and pending of another
-// send notifications to first person
-
-
-//have to add connection reducer an actionTypes
 import { sendConnectionHandle, deleteMyConnection, acceptPendingConnection, deletePendingConnection, deleteSentConnection } from "../../Firebase/Firestore/connections";
 import {
     CONNECTION_SUCCESS,
