@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from "styled-components";
 import { useAuth } from "../../contexts/AuthContext"
-const ProfilePic = () => {
+const ProfilePic = ({handleClick}) => {
     const {currentUser} = useAuth()
     console.log(currentUser)
   return (
@@ -9,6 +9,9 @@ const ProfilePic = () => {
       <Cover>
          <img src="/images/cover.jpeg" alt=""/>
       </Cover>
+      <EditCover>
+          <img onClick={handleClick} src="/images/pen.png" alt=""/>
+      </EditCover>
       <UserProfile>
           <img src= {currentUser?.photoURL ? currentUser?.photoURL:"/images/user.svg"} alt="" />
       </UserProfile>
@@ -17,17 +20,13 @@ const ProfilePic = () => {
         <Email>{(currentUser?.email)?currentUser?.email:"Update your Email"}</Email>
           <Location>
                Location <p>Contact Info</p>
-
           </Location>
       </Details>
-      <EditCover>
-          <img src="/images/pen.png" alt=""/>
-      </EditCover>
     </Container>
   )
 }
 const Container = styled.div`
-  max-width: 55%;
+  max-width: 100%;
   height: 70%;
   border-radius:30px;
   @media (max-width: 768px) {
