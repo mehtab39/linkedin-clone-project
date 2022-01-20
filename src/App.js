@@ -4,6 +4,7 @@ import {Routes,Route} from "react-router-dom";
 import {Home} from "./Components/Home/Home";
 import {Joinnow} from "./Components/Login/Joinnow";
 import { Sign } from './Components/Login/Signin';
+import Profile from './Components/Profil/Profile';
 
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
         </Route>
         <Route path="/join" element={<Joinnow/>}></Route>
         <Route path="/sign" element={<Sign/>}></Route>
-
+        <Route path="/profile" element={<Profile/>}></Route>
      </Routes>
     </div>
   );
