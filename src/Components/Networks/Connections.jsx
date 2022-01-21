@@ -41,7 +41,7 @@ export const Connections = () => {
               <p>{el.job_title}</p>
              </User>
              <div>
-             <RemoveBtn onClick={()=>handleRemove(el.id)}>Remove connection</RemoveBtn>
+             <RemoveBtn onClick={()=>handleRemove(el.id)}>Remove</RemoveBtn>
             
         
               </div>
