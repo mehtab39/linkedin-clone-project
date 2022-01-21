@@ -44,6 +44,7 @@ export const profile_success = () => {
     dispatch(profile_success())
     }
     catch(e){
+      console.log(e);
       dispatch(profile_failiure(e))
     }
   }
