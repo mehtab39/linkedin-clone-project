@@ -32,7 +32,7 @@ export const getProfile = async (UID, setProfile)=>{
 
 
 
-export const updateProfile = async (collection,data,id) =>{
-    const Ref = db.collection(collection).doc(id);
+export const updateProfile = async (data,id) =>{
+    const Ref = db.collection("profile").doc(id);
     const res = await Ref.update(data);
 }

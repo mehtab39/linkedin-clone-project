@@ -2,6 +2,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { useAuth } from "../../contexts/AuthContext";
 import { useDispatch } from "react-redux";
+import { updateData } from "../../redux/actions/profileAction";
 // import { useSelector } from "react-redux";
 
 const obj={
@@ -24,7 +25,7 @@ export const FormModal=({setFlag})=>{
     const {profile} = useAuth();
     const dispatch = useDispatch()
     const [form,setForm]=useState(obj)
-    // const [data,setData]=useState([])
+
 
     const handleChange=(e)=>
     {
@@ -32,7 +33,6 @@ export const FormModal=({setFlag})=>{
 
         if(name==="skills"||name==="education"||name==="experience")
         {
-            // console.log(name,value);
             form[name].push(value);
         }else{
 
@@ -46,7 +46,7 @@ export const FormModal=({setFlag})=>{
         console.log(form);
       e.preventDefault()
 
-      dispatch("profile", form, profile.id);
+      dispatch(updateData(form, profile.id));
       console.log(profile);
 
     }

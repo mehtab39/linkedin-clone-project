@@ -37,10 +37,11 @@ export const profile_success = () => {
         }
   }
 
-  export const updateData = (collection, data, id)=>(dispatch)=>{
+  export const updateData = ( data, id)=>(dispatch)=>{
     dispatch(profile_loading())
     try{
-      updateProfile(collection, data, id)
+      updateProfile(data, id)
+      console.log('data, id:', data, id)
     dispatch(profile_success())
     }
     catch(e){
