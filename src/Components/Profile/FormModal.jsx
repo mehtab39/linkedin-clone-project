@@ -35,7 +35,7 @@ export const FormModal=({setFlag})=>{
 
         if(name==="skills"||name==="education"||name==="experience")
         {
-            value=[...form[name],value];
+            value=name.push(value)
         }
 
         setForm({...form,[name]:value})
