@@ -7,6 +7,7 @@ import { Sign } from './Components/Login/Signin';
 import { NetworkPage } from './Components/Networks/NetworkPage';
 import PrivateRoute from './Components/Privateroute';
 import Profile from './Components/Profile/Profile';
+import {FormModal} from './Components/Profile/FormModal';
 
 
 function App() {
@@ -33,6 +34,7 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route path="form" element={<FormModal/>}></Route>
       </Routes>
      
     </div>

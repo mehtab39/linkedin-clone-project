@@ -1,7 +1,13 @@
 import React from 'react'
 import styled from "styled-components";
 import { useAuth } from "../../contexts/AuthContext"
-const ProfilePic = ({handleClick}) => {
+import { FormModal } from './FormModal';
+import {useState} from "react";
+
+const ProfilePic = () => {
+
+  const [flag,setFlag]=useState(false);
+
     const {currentUser} = useAuth()
     console.log(currentUser)
   return (
@@ -10,7 +16,7 @@ const ProfilePic = ({handleClick}) => {
          <img src="/images/cover.jpeg" alt=""/>
       </Cover>
       <EditCover>
-          <img onClick={handleClick} src="/images/pen.png" alt=""/>
+          <img onClick={()=>{setFlag(true)}} src="/images/pen.png" alt=""/>
       </EditCover>
       <UserProfile>
           <img src= {currentUser?.photoURL ? currentUser?.photoURL:"/images/user.svg"} alt="" />
@@ -22,6 +28,7 @@ const ProfilePic = ({handleClick}) => {
                Location <p>Contact Info</p>
           </Location>
       </Details>
+      {flag? <FormModal setFlag={setFlag}/> : ""}
     </Container>
   )
 }
