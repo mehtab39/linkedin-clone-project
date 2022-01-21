@@ -18,18 +18,24 @@ export const NetworkPage = () => {
    
     return profile ? (
         <NetworkPageMain>
+            <div>
             <RightConnection/>
-            <Pending/>
-            <Suggestions/>
+            </div>
+            <LeftConnection>
+              <Pending/>
+              <Suggestions/>
+            </LeftConnection>
         </NetworkPageMain>
     ): <div>Something went wrong...Please wait</div>
 }
 
 
 const NetworkPageMain = styled.div`
-// text-align: center;
-//     img{
-//          height: 50px;
-//          width: 50px
-//      }
+   display: grid;
+   grid-template-columns: 20% 80%
 `
+
+const LeftConnection = styled.div`
+    display: flex;
+    flex-direction: column
+    `

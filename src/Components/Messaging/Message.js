@@ -1,12 +1,22 @@
 import {Header} from "../Header/Header";
 import {Rightside} from "../Home/Rightside"
+import "./Message.css"
 import styled from "styled-components";
 import {BiDotsHorizontalRounded} from "react-icons/bi";
 import {FaRegEdit} from "react-icons/fa";
+import {useState, useEffect, useRef} from "react"
 import {BsSearch} from "react-icons/bs"
+import { useAuth } from "../../contexts/AuthContext";
 import {RiListSettingsFill} from "react-icons/ri";
-import {AiFillVideoCamera} from "react-icons/ai";
+import { getMessages, sendTheMessage } from "../../redux/actions/messageAction";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { ChatMessage } from "./Chat";
+import { useParams } from "react-router-dom";
+import { connections } from "../../redux/actions/profileAction";
 
+
+// this arr will come from profile.lastmessages
 let arr=[{
     name:"Pummy",
     img:"/images/send.png",
@@ -46,7 +56,57 @@ let arr=[{
 }]
 
 export const Message=()=>{
-    return <>
+
+
+    // const [Connections, setConnections] = useState([]);
+    // const getConnections = ()=>{
+    //     if(profile){
+    //         dispatch(connections(profile?.id, setConnections)); 
+    //     }
+    // }
+    // useEffect(()=>{
+    //     getConnections()
+    // }, [profile]);
+
+    // const navigate = useNavigate()
+    // const handleMessage = (to) =>{
+    //     const URL = "../../messages/" + to;
+    //     navigate(URL)
+    // }
+
+
+    const {id} = useParams()
+    const {profile} = useAuth()
+    const dispatch = useDispatch();
+    const { loading,messages } = useSelector((state) => ({
+		loading: state.messageState.loading,
+        messages: state.messageState.messages,
+      }));
+
+      const recieveMessage =  ()=>{
+          if(profile?.id){
+            dispatch(getMessages(profile?.id, id))
+          }
+      }
+      console.log(messages)
+    useEffect(()=>{
+        recieveMessage()
+    },[profile])
+  
+const dummy = useRef();
+const [formValue, setFormValue] = useState('');
+ 
+
+  const sendMessage = async (e) => {
+    e.preventDefault();
+    if(profile.id){
+        dispatch(sendTheMessage(formValue,profile?.id, id )) 
+        setFormValue('');
+        dummy.current.scrollIntoView({ behavior: 'smooth' });
+    }
+   
+  }
+    return  profile?.id ? (<>
         <Header/>
         <Container>
             <Msg>
@@ -65,8 +125,8 @@ export const Message=()=>{
                     </Input>
                     <hr/>
                     <Inbox>
-                        {arr.map(e=>(
-                            <Div>
+                        {arr.map((e, i)=>(
+                            <Div key={i}>
                             <div className="ImgDiv">
                                 <img src="/images/send.png" alt=""/>
                             </div>
@@ -77,6 +137,9 @@ export const Message=()=>{
                     </Inbox>
                 </LeftMsg>
                 <RightMsg>
+
+
+                (<>
                     <Title>
                         <div className="idiv">
                             <img src="/images/send.png" alt=""/>
@@ -84,22 +147,32 @@ export const Message=()=>{
                         <p>Name</p>
                         <div className="icon">
                             <BiDotsHorizontalRounded/>
-                            <AiFillVideoCamera/>
                         </div>
                     </Title>
-                    <Box>
-                        <Display>
 
-                        </Display>
-                        <Text></Text>
-                    </Box>
+    <main className="chatDiv">
+
+      {messages && messages.map((msg, i) => <ChatMessage key={i} message={msg} profile={profile} />)}
+
+      <span ref={dummy}></span>
+
+    </main>
+
+    <form className="chatForm" onSubmit={sendMessage}>
+
+      <input className="msgInput" value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="type a message" />
+      <button className="msgBtn" type="submit" disabled={!formValue}>Send</button>
+
+    </form>
+  </>)
+                 
                 </RightMsg>
             </Msg>
             <Right>
             <Rightside/>
             </Right>
         </Container>
-    </>
+    </>) : <>Ok</>
 }
 
 const Container=styled.div`
@@ -217,4 +290,6 @@ const Title=styled.div`
 
 const Box=styled.div``;
 const Display=styled.div``;
-const Text=styled.div``; 
+const Text=styled.div`
+  text-align: center;
+`; 

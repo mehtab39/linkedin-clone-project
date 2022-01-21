@@ -37,6 +37,7 @@ export const profile_success = () => {
   }
 
   export const updateData = (collection, data, id)=>(dispatch)=>{
+    // updateData("profile", data={form}, profile.id)
     dispatch(profile_loading())
     try{
       updateProfile(collection, data, id)

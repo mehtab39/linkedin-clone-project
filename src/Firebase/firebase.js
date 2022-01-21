@@ -2,6 +2,9 @@ import firebase from "firebase/app"
 import 'firebase/firestore';
 import "firebase/auth";
 import 'firebase/storage'
+import 'firebase/analytics';
+
+
 const app = firebase.initializeApp({
   apiKey: "AIzaSyBf-t-uGmRlH8II070765faPi8W3eXY0_s",
   authDomain: "linkedin-masai.firebaseapp.com",
@@ -12,6 +15,7 @@ const app = firebase.initializeApp({
   appId: "1:752677092839:web:20024c08d0c85305a7d142",
   measurementId: "G-QF1H2B9ET4"
 })
+export const analytics = firebase.analytics();
 export const db = firebase.firestore();
 export const timestamp = ()=> {return firebase.firestore.FieldValue.serverTimestamp()}
 export const storage = firebase.storage()

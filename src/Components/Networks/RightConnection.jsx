@@ -8,6 +8,7 @@ export const RightConnection = () => {
         <>
           <h2>Manage my network</h2>
           <p>Your connections</p>
+          <p>Your invitees</p>
           <p>Pages</p>
           <p>People I follow</p>
           <p>Groups</p>

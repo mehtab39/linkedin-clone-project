@@ -4,6 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { deleteConnection } from "../../redux/actions/connectionAction";
 import { connections } from "../../redux/actions/profileAction";
 import styled from "styled-components"
+import { Navigate, useNavigate } from "react-router-dom";
 
 export const Connections = () => {
     const { profile} = useAuth()
@@ -14,13 +15,22 @@ export const Connections = () => {
             dispatch(connections(profile?.id, setData)); 
         }
     }
-   
+    useEffect(()=>{
+        getConnections()
+    }, [profile]);
+
+    const navigate = useNavigate()
+    const handleMessage = (to) =>{
+        const URL = "../../messages/" + to;
+        navigate(URL)
+    }
+  
+
     const handleRemove = (id)=>{
           dispatch(deleteConnection(profile.id, id))
     }
-    useEffect(()=>{
-        getConnections()
-    }, [profile])
+
+
     return profile ? (
         <div>
         <Heading>Your connections</Heading>
@@ -36,8 +46,7 @@ export const Connections = () => {
              </User>
              <div>
              <RemoveBtn onClick={()=>handleRemove(el.id)}>Remove connection</RemoveBtn>
-            
-        
+             <button onClick={()=>handleMessage(el.id)}>Remove connection</button>
               </div>
         </ChildDiv>
         

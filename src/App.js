@@ -11,6 +11,7 @@ import PrivateRoute from './Components/Privateroute';
 import { Notification } from './Components/Notifications/Notification';
 import { Loader } from './Components/Loader/Loader';
 import { PageNotFoundError } from './Components/PageNotFound/PageNotFound';
+import { Message } from './Components/Messaging/Message';
 
 
 function App() {
@@ -50,6 +51,14 @@ function App() {
           element={
             <PrivateRoute>
            <Home/>
+            </PrivateRoute>
+          }
+        />
+            <Route
+         path="/messages/:id"
+          element={
+            <PrivateRoute>
+           <Message/>
             </PrivateRoute>
           }
         />
