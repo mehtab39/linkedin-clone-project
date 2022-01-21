@@ -4,6 +4,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { deleteConnection } from "../../redux/actions/connectionAction";
 import { connections } from "../../redux/actions/profileAction";
 import styled from "styled-components"
+import {Header} from "../Header/Header"
 
 export const Connections = () => {
     const { profile} = useAuth()
@@ -21,7 +22,8 @@ export const Connections = () => {
     useEffect(()=>{
         getConnections()
     }, [profile])
-    return profile ? (
+    return <Container>
+     profile ? (
         <div>
         <Heading>Your connections</Heading>
         <div>
@@ -47,10 +49,12 @@ export const Connections = () => {
         
         </div>
         ):<div>Something went wrong...Please wait</div>
+        </Container>
         
 }
 
 
+const Container= styled.div``;
 
 const Heading = styled.h1`
     text-align: center;

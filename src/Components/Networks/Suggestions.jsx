@@ -23,73 +23,82 @@ export const Suggestions = () => {
     useEffect(()=>{
         getSuggestions()
     }, [])
+
     return (
-        <div>
-            <h2>People you may know</h2>
-            <ParentDiv>
-      {data.map((el)=>{
-       return( <Card key={el.userUID}>
-          <Image src={el.profile_img ?  el.profile_img : "/images/user.svg"} />
-          <h1>{el?.username}</h1>
-          <Name>{el.first_name} {el.last_name}</Name>
-          <p>{el.job_title}</p>
-          <p> <Button onClick={()=>handleConnect(el.id)}>{sendingRequest === el.id ? "Pending" : "Connect"}</Button></p>
-        </Card>)
- })
-}
-</ParentDiv>              
-        </div>
+      <Container>
+
+        <h2>People you may know</h2>
+        <ParentDiv>
+            {data.map((el)=>{
+            return( <Card key={el.userUID}>
+            <Image>
+            <img src={el.profile_img ?  el.profile_img : "/images/user.svg"} alt="" />
+            </Image>
+            <h1>{el?.username}</h1>
+            {/* <Name>{el.first_name} {el.last_name}</Name> */}
+            <p>{el.job_title}</p>
+            <Button onClick={()=>handleConnect(el.id)}>{sendingRequest === el.id ? "Pending" : "Connect"}</Button>
+                    </Card>)
+              })
+            }
+        </ParentDiv>              
+      </Container>
     )
 }
 
 
+const Container = styled.div`
+  
+  margin-top:5% ;
+  box-sizing: border-box;
+  background-color:#fff;
+  border-radius:5px;
+  height:100%;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  h2 {
+    padding:10px;
+  }
+`;
+
 const ParentDiv= styled.div`
- display: grid;
-  grid-template-columns: 20% 20% 20% 20%;
-  grid-gap: 3%;
- justify-content: center;
- div{
-     min-width: 200px;
-     max-width: 200px;
-     min-height: 220px;
-     max-height: 220px;
-     padding: 3%;
-     position: relative;
-     color: black;
-  
- }
- @media (max-width: 900px) {
-    grid-template-columns: 40% 40%;
-    grid-gap: 0.5%;
- }
- @media (max-width: 700px) {
-      flex: 1 46%;
-    }
- @media (max-width: 500px) {
-    display: flex;
-    flex-direction: column;
-
- }
+  display: grid;
+  width:90%;
+  /* height: 100%; */
+  margin: auto;
+  grid-template-columns: 22.5% 22.5% 22.5% 22.5%;
+  grid-gap: 2%;
+  box-sizing: border-box;
 `
 
-const Name = styled.p`
-   
-   font-size: 22px;
-
-`
+// const Name = styled.p`
+//   text-align: center;
+//   font-size: 12px;
+// `
 const Card  = styled.div`
+    padding: 15%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    margin: auto;
-    text-align: center;
     font-family: arial;
-   
-  `
+    box-sizing: border-box;
+    border-radius:5px;
+    justify-content:space-between;
+    /* height: 100%; */
+    h1{
+      text-align: center;
+    }
+    p{
+      font-size:12px;
+      text-align: center;
+    }
+`;
   
- const Image = styled.img `
-    height: 70px;
-    border-radius: 100%;
-    z-index: 1000
- `
+ const Image = styled.div `
+  width: 60%;
+  margin: auto;
+  img{
+    border-radius:50%;
+    width: 100%;
+  }
+`;
  
   
   const Button = styled.button`
@@ -97,16 +106,16 @@ const Card  = styled.div`
     color: white;
     background-color: blue
   }
-  border: 1px solid #126BC4;
+    border: 1px solid #126BC4;
     border-radius: 20px;
     color: #126BC4;
-    font-weight: bold;
     background-color: #fff;
-    padding: 10px;
-    width: 100px;
-    margin-top: 20px;
-    cursor: pointer;
-    height: 36px;
+    width: 60%;
+    height: 20%;
+    display: flex;
+    margin: auto;
+    justify-content:center;
+    padding-top: 5px;
    &:hover {
        background-color: #e2edfa;  
      }
