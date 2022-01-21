@@ -58,18 +58,25 @@ const ParentDiv = styled.div`
     //  margin-top: 10%;
     //  dispay: flex;
     // flex-direction: column;
+    background-color:#fff;
+    box-sizing: border-box;
+    padding: 2%;
+    border-radius:4px;
 `
 
 const ChildDiv = styled.div`
-padding: 10px;
-   display: flex;
-   box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px 0px 0px 0px;
-      justify-content: space-between;
-        width: 40%;
-        div{
-            display: flex;   
-        }
-    `
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px 0px 0px 0px;
+    border-radius: 5px;
+    width: 100%;
+    box-sizing: border-box;
+
+    div{
+        display: flex;   
+    }
+`
 
     const Image = styled.img `
      cursor: pointer;
