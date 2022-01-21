@@ -1,9 +1,9 @@
 import "./Message.css"
-export const ChatMessage = ({message,  profile}) => {
+export const ChatMessage = ({message,  profile, user}) => {
     const messageClass = message.sentBy == profile?.id ? 'sent' : 'received';
     return (<>
       <div className={`message ${messageClass}`}>
-        <img src='https://api.adorable.io/avatars/23/abott@adorable.png' />
+        <img src={messageClass==="sent" ? profile.profile_img : user.profile_img } />
         <p>{message.msg}</p>
       </div>
     </>)

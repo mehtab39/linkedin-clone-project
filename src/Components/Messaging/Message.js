@@ -3,171 +3,103 @@ import {Rightside} from "../Home/Rightside"
 import "./Message.css"
 import styled from "styled-components";
 import {BiDotsHorizontalRounded} from "react-icons/bi";
-import {FaRegEdit} from "react-icons/fa";
 import {useState, useEffect, useRef} from "react"
-import {BsSearch} from "react-icons/bs"
 import { useAuth } from "../../contexts/AuthContext";
-import {RiListSettingsFill} from "react-icons/ri";
 import { getMessages, sendTheMessage } from "../../redux/actions/messageAction";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { ChatMessage } from "./Chat";
 import { useParams } from "react-router-dom";
 import { connections } from "../../redux/actions/profileAction";
+import { LeftMessage } from "./LeftMessage";
 
+const goToBottom = ()=>{
+    document.getElementsByClassName('chatDiv')[0].scrollTop = document.getElementsByClassName('chatDiv')[0].scrollHeight;
+}
 
-// this arr will come from profile.lastmessages
-let arr=[{
-    name:"Pummy",
-    img:"/images/send.png",
-    date:"20/01/2022"
-},{
-    name:"Pummy",
-    img:"/images/send.png",
-    date:"20/01/2022"
-},{
-    name:"Pummy",
-    img:"/images/send.png",
-    date:"20/01/2022"
-},{
-    name:"Pummy",
-    img:"/images/send.png",
-    date:"20/01/2022"
-},{
-    name:"Pummy",
-    img:"/images/send.png",
-    date:"20/01/2022"
-},{
-    name:"Pummy",
-    img:"/images/send.png",
-    date:"20/01/2022"
-},{
-    name:"Pummy",
-    img:"/images/send.png",
-    date:"20/01/2022"
-},{
-    name:"Pummy",
-    img:"/images/send.png",
-    date:"20/01/2022"
-},{
-    name:"Pummy",
-    img:"/images/send.png",
-    date:"20/01/2022"
-}]
 
 export const Message=()=>{
+    const {id} = useParams();
+    const [chatter, setChatter] = useState({});
+    const {profile} = useAuth();
+    
+    const getConnections = ()=>{
+        if(profile){
+            dispatch(connections(profile?.id, setMyConnections)); 
+        }
+    }
+    useEffect(()=>{
+        getConnections()
+    }, [profile]);
 
-
-    // const [Connections, setConnections] = useState([]);
-    // const getConnections = ()=>{
-    //     if(profile){
-    //         dispatch(connections(profile?.id, setConnections)); 
-    //     }
-    // }
-    // useEffect(()=>{
-    //     getConnections()
-    // }, [profile]);
-
-    // const navigate = useNavigate()
-    // const handleMessage = (to) =>{
-    //     const URL = "../../messages/" + to;
-    //     navigate(URL)
-    // }
-
-
-    const {id} = useParams()
-    const {profile} = useAuth()
     const dispatch = useDispatch();
+     const [myConnections, setMyConnections] = useState([]);
+  
+     const chatFunction = (params)=>{
+        console.log('params:', params)
+        if(profile?.id){
+        if(params) setChatter(params);
+        else if(id) setChatter(id);
+        dispatch(getMessages(profile.id, params?.id || chatter)) 
+        dummy.current.scrollIntoView({ behavior: 'smooth' });
+        goToBottom()
+        }
+    }
+     
     const { loading,messages } = useSelector((state) => ({
 		loading: state.messageState.loading,
         messages: state.messageState.messages,
       }));
 
-      const recieveMessage =  ()=>{
-          if(profile?.id){
-            dispatch(getMessages(profile?.id, id))
-          }
-      }
-      console.log(messages)
+    
     useEffect(()=>{
-        recieveMessage()
-    },[profile])
+        if(myConnections.length > 0 && id==undefined){
+            goToBottom()
+            chatFunction(myConnections[0])
+        } 
+    },[myConnections])
   
+  
+     
+   
 const dummy = useRef();
 const [formValue, setFormValue] = useState('');
- 
-
-  const sendMessage = async (e) => {
+ const sendMessage = async (e) => {
     e.preventDefault();
     if(profile.id){
-        dispatch(sendTheMessage(formValue,profile?.id, id )) 
+        dispatch(sendTheMessage(formValue, profile, chatter )) 
         setFormValue('');
-        dummy.current.scrollIntoView({ behavior: 'smooth' });
     }
    
   }
-    return  profile?.id ? (<>
+    return  profile?.id && (myConnections.length>0) ? (<>
         <Header/>
         <Container>
             <Msg>
-                <LeftMsg>
-                    <Head>
-                        <p>Messaging</p>
-                        <div>
-                            <BiDotsHorizontalRounded/>
-                            <FaRegEdit/>
-                        </div>
-                    </Head>
-                    <Input>
-                        <BsSearch/>
-                        <input type="text" placeholder="Search messages" />
-                        <RiListSettingsFill/>
-                    </Input>
-                    <hr/>
-                    <Inbox>
-                        {arr.map((e, i)=>(
-                            <Div key={i}>
-                            <div className="ImgDiv">
-                                <img src="/images/send.png" alt=""/>
-                            </div>
-                            <div>{e.name}</div>
-                            <div>{e.date}</div>
-                            </Div>
-                        ))}
-                    </Inbox>
-                </LeftMsg>
-                <RightMsg>
-
-
-                (<>
-                    <Title>
+               <LeftMessage myConnections={myConnections}  chatFunction={chatFunction}/>
+ <RightMsg>
+    <Title>
                         <div className="idiv">
                             <img src="/images/send.png" alt=""/>
                         </div>
-                        <p>Name</p>
+                        <p>{chatter.username? chatter.username : id }</p>
                         <div className="icon">
                             <BiDotsHorizontalRounded/>
                         </div>
-                    </Title>
-
+    </Title>
     <main className="chatDiv">
-
-      {messages && messages.map((msg, i) => <ChatMessage key={i} message={msg} profile={profile} />)}
-
-      <span ref={dummy}></span>
-
+     {messages && messages.map((msg, i) => <ChatMessage key={i} message={msg} profile={profile} user={chatter} />)}
+     <span ref={dummy}></span>
     </main>
 
-    <form className="chatForm" onSubmit={sendMessage}>
-
-      <input className="msgInput" value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="type a message" />
+    <div className="chatForm">
+    <form onSubmit={sendMessage}>
+      <input className="msgInput" value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="Write a message..." />
       <button className="msgBtn" type="submit" disabled={!formValue}>Send</button>
-
     </form>
-  </>)
-                 
-                </RightMsg>
-            </Msg>
+    </div>
+</RightMsg>
+  </Msg>
             <Right>
             <Rightside/>
             </Right>
@@ -196,87 +128,22 @@ const Right=styled.div`
     margin-top: 8%;
 `;
 
-const LeftMsg=styled.div`
-    width: 45%;
-    border-radius: 4px;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px 0px 0px 0px;
-`;
+
 
 const RightMsg=styled.div`
     width:55%;
+    height: 500px;
     border-radius: 4px;
     box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px 0px 0px 0px;
 `;
 
-const Head=styled.div`
-    display: flex;
-    padding:10px;
-    justify-content: space-between;
-
-    p{
-        font-weight: 400;
-        font-size: 15px;
-    }
-
-    div{
-        width: 25%;
-        display: flex;
-        justify-content: space-between;
-
-    }
-`;
-
-const Input=styled.div`
-    padding: 4px;
-    display: flex;
-    justify-content: space-between;
-    padding:10px;
-    align-items: center;
-
-    input{
-        flex-grow: 1;
-        height: 25px;
-        background-color:#eef3f8;
-        border: none;
-        border-radius: 3px;
-        margin: 5px;
-        outline-color:rgba(0,0,0,0.4);
-        padding-left: 10px;
-    }
-
-`;
-
-const Inbox = styled.div`
-    overflow: scroll;
-    height: 400px;
-`;
-
-const Div = styled.div`
-    display: flex;
-    padding: 10px;
-    justify-content: space-between;
-    box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px 0px 0px 0px;
-    width: 90%;
-    margin: auto;
-    margin-top:2%;
-    height: 50px;
-
-    .ImgDiv{
-        width:10%;
-        border-radius:50%;
-        background-color:rgba(0,0,0,0.3);
-    }
-
-    img{
-        width: 100%;
-    }
-`;
 
 const Title=styled.div`
     display: flex;
     justify-content: space-between;
     padding: 10px;
-
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px 0px 0px 0px;
+   
 
     .idiv{
         width:5%;
@@ -285,11 +152,14 @@ const Title=styled.div`
     img{
         width:100%;
     }
+    p{
+        text-transform: uppercase;
+        color: black;
+        font-weight: bold;
+        margin-top: 4px;
+    }
     
 `;
 
-const Box=styled.div``;
-const Display=styled.div``;
-const Text=styled.div`
-  text-align: center;
-`; 
+
+

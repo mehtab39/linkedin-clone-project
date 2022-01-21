@@ -37,27 +37,30 @@ export const message_success = (data) => {
     };
   };
 
+  const generateId = (from, to) =>{
+    return (from > to ? to+ "-" + from : from+"-"+to )
+  }
+
   export const getMessages = (from, to)=> async(dispatch) => {
     dispatch(message_loading())
     try{
-        const docid  =to > from ? from+ "-" +to :to+"-"+from 
+        const docid  = generateId(from, to)
+       
         const querySnap =  await db.collection('chatrooms')
         .doc(docid)
         .collection('messages')
-        .orderBy('createdAt',"asc")
+        .orderBy('createdAt',"desc")
         .get()
-        
+        console.log(querySnap)
        const allmsg = querySnap?.docs?.map(docsnap=>{
-            console.log('docsnap:', docsnap)
             return {
-                ...docsnap.data(),
-                createdAt:docsnap.data().createdAt.toDate()
+                ...docsnap.data()
             }
         })
         dispatch(message_success(allmsg))
     }
     catch(e){
-      console.log('e:', e)
+      console.log('p:', e)
       dispatch(message_failiure(e))
     }
 }
@@ -65,21 +68,21 @@ export const message_success = (data) => {
 export const sendTheMessage = (value, from, to )=>(dispatch) => {
     dispatch(message_loading())
     try{
-      const msg = value;
       const mymsg = {
-          msg,
-          sentBy:from,
-          sentTo:to,
+          msg: value,
+          sentBy: from.id || from,
+          sentToUsername: to.username || "",
+          sentTo:  to.id || to,
           createdAt:new Date()
       }
-     const docid  = from > to ? to+ "-" + from : from+"-"+to 
+      console.log(mymsg)
+     const docid  = generateId(mymsg.sentBy, mymsg.sentTo)
      db.collection('chatrooms')
      .doc(docid)
      .collection('messages')
      .add({...mymsg,createdAt:timestamp()})
       dispatch(send_success())
-      dispatch(getMessages(from, to))
-     
+      dispatch(getMessages(mymsg.sentBy, mymsg.sentTo))
     }
     catch(e){
       dispatch(message_failiure(e))

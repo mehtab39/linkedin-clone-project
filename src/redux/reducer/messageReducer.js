@@ -39,14 +39,8 @@ case MESSAGE_SUCCESS:
       errorMessage: "",
        messages : payload
   }
-  case MESSAGE_SUCCESS:
-
-  return {
-      ...state,
-      loading: false,
-      error: false,
-      errorMessage: "",
-  }
+ 
+  
             default:
                 return state;
     }

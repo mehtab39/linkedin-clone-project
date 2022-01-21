@@ -55,6 +55,14 @@ function App() {
           }
         />
             <Route
+         path="/messages"
+          element={
+            <PrivateRoute>
+           <Message/>
+            </PrivateRoute>
+          }
+        />
+         <Route
          path="/messages/:id"
           element={
             <PrivateRoute>
