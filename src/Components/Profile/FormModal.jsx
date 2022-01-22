@@ -3,20 +3,12 @@ import styled from "styled-components";
 import { useAuth } from "../../contexts/AuthContext";
 import { useDispatch } from "react-redux";
 import { updateData } from "../../redux/actions/profileAction";
-// import { useSelector } from "react-redux";
+
 
 const obj={
-    first_name: "",
-    last_name: "",
-    username: "",
-    address: "",
-    company: "",
     experience: [],
     education: [],
     skills: [],
-    profile_summary: "",
-    job_title: "",
-    resume_path: "",
 }
 
 
@@ -43,11 +35,8 @@ export const FormModal=({setFlag})=>{
   
     const handleSubmit=(e)=>
     {
-        console.log(form);
       e.preventDefault()
-
       dispatch(updateData(form, profile.id));
-      console.log(profile);
 
     }
  

@@ -3,29 +3,27 @@ import styled from "styled-components";
 import { useAuth } from "../../contexts/AuthContext"
 import { FormModal } from './FormModal';
 import {useState} from "react";
-
-const ProfilePic = () => {
-
+const ProfilePic = ({data}) => {
+  console.log('data:', data)
+  const {profile} = useAuth()
   const [flag,setFlag]=useState(false);
-
-    const {currentUser} = useAuth()
-    console.log(currentUser)
   return (
     <Container>
       <Cover>
          <img src="/images/cover.jpeg" alt=""/>
       </Cover>
       <EditCover>
-          <img onClick={()=>{setFlag(true)}} src="/images/pen.png" alt=""/>
+       {profile.id == data.id &&   <img style={{cursor:"pointer"}} onClick={()=>{setFlag(true)}} src="/images/pen.png" alt=""/>}
       </EditCover>
       <UserProfile>
-          <img src= {currentUser?.photoURL ? currentUser?.photoURL:"/images/user.svg"} alt="" />
+          <img src= {data?.profile_img ? data?.profile_img:"/images/user.svg"} alt="" />
       </UserProfile>
       <Details>
-        <Name>{(currentUser?.displayName)?currentUser?.displayName:"Update your profile"}</Name>
-        <Email>{(currentUser?.email)?currentUser?.email:"Update your Email"}</Email>
+        <Name>{(data?.first_name)? (<p> {data?.first_name} {data?.last_name} </p>): profile.id == data.id ? "Update your data" : ""}</Name>
+        <Position><b>{(data?.job_title)?data?.job_title:""}</b></Position>
           <Location>
-               Location <p>Contact Info</p>
+               <p>{(data?.address)?data?.address:""}</p>
+               <p>Contact Info</p>
           </Location>
       </Details>
       {flag? <FormModal setFlag={setFlag}/> : ""}
@@ -83,7 +81,7 @@ color: rgba(0, 0, 0, 0.9);
 margin-left:3.5%;
 padding-top:180px;
 `;
-const Email = styled.div`
+const Position = styled.div`
 color: #0a66c2;
 margin-left:3.5%;
 `;

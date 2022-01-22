@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-export const About=()=>{
+export const About=({data})=>{
     return <Abt>
         <Div>
             <Head>
             <Title>About</Title>      
             </Head>
-            <Text>Write about yourself</Text>
+            <Text>{data?.profile_summary? data?.profile_summary:  "Write about yourself"}</Text>
         </Div>
     </Abt>
 }
