@@ -5,6 +5,9 @@ import { deleteConnection } from "../../redux/actions/connectionAction";
 import { connections } from "../../redux/actions/profileAction";
 import styled from "styled-components"
 import { Navigate, useNavigate } from "react-router-dom";
+import {Header} from "../Header/Header"
+import {Rightside} from "../Home/Rightside";
+
 
 export const Connections = () => {
     const { profile} = useAuth()
@@ -24,15 +27,18 @@ export const Connections = () => {
         const URL = "../../messages/" + to;
         navigate(URL)
     }
-  
+ 
 
     const handleRemove = (id)=>{
           dispatch(deleteConnection(profile.id, id))
     }
 
-
-    return profile ? (
-        <div>
+    return <Container>
+        <Header/>
+    { profile ? (
+         <Main>
+         <Rightside/>
+        <Box>
         <Heading>Your connections</Heading>
         <div>
         {data.map((el)=>{
@@ -45,8 +51,10 @@ export const Connections = () => {
               <p>{el.job_title}</p>
              </User>
              <div>
-             <RemoveBtn onClick={()=>handleRemove(el.id)}>Remove connection</RemoveBtn>
-             <button onClick={()=>handleMessage(el.id)}>Remove connection</button>
+
+             <RemoveBtn onClick={()=>handleRemove(el.id)}>Remove</RemoveBtn>
+             <button onClick={()=>handleMessage(el.id)}>Message</button>
+
               </div>
         </ChildDiv>
         
@@ -54,26 +62,38 @@ export const Connections = () => {
         }
         </div>
         
-        </div>
-        ):<div>Something went wrong...Please wait</div>
+        </Box>
+        </Main>
+        ):<div>Something went wrong...Please wait</div>}
+        </Container>
+        
         
 }
 
 
+const Container= styled.div`
+    width: 90%;
+    margin: auto;
+`;
 
 const Heading = styled.h1`
     text-align: center;
     `
 
 const ChildDiv = styled.div`
-padding: 10px;
-display: flex;
-box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px 0px 0px 0px;
-justify-content: space-between;
-width: 40%;
-div{
-display: flex;   
-}
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: rgba(0, 0, 0, 0.15) 0px 0px 0px 1px, rgba(0, 0, 0, 0.2) 0px 0px 0px 0px;
+    border-radius: 5px;
+    width: 90%;
+    margin:auto;
+    box-sizing: border-box;
+
+    div{
+        display: flex;   
+    } 
+
 `
 
 const Image = styled.img `
@@ -98,18 +118,28 @@ p{
 }
 `
 const RemoveBtn = styled.button`
-border: 1px solid #126BC4;
-border-radius: 20px;
-color: #126BC4;
-font-weight: bold;
-background-color: #fff;
-padding: 10px;
-width: 180px;
-margin-top: 20px;
-cursor: pointer;
-height: 36px;
-&:hover {
-background-color: #e2edfa;  
+background-color: whitesmoke;
+   padding: 10px;
+   cursor: pointer;
+ border: none;
+  width: 85px;
+margin: 20px;
+ margin-right: 30px;
+ &:hover {
+        /* opacity: 0.5;   */
+        background-color: lightgrey;
+        border-radius: 3px;  
 }
 `
 
+
+const Box= styled.div`
+    width: 70%;
+    background-color: #fff;
+`;
+
+const Main= styled.div`
+    display: flex;
+    margin-top:5%;
+    justify-content: space-between;
+`;

@@ -4,7 +4,9 @@ import styled from "styled-components"
 
 export const RightConnection = () => {
     const {profile} = useAuth()
-    return profile ? (
+
+    return <Container>
+    {profile ? (
         <>
           <h2>Manage my network</h2>
           <p>Your connections</p>
@@ -16,7 +18,13 @@ export const RightConnection = () => {
           <p>Pages</p>
           </>
           
-    ):<></>
+    ):<></>}
+    </Container>
 
 }
    
+const Container=styled.div`
+    display :flex ;
+    flex-direction: column;
+    width:20%;
+`;
