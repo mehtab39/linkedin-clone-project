@@ -2,11 +2,11 @@ import styled from "styled-components";
 import { useDispatch} from "react-redux"
 import { signInWithGoogle} from "../../redux/actions/userActions"
 import { useAuth } from "../../contexts/AuthContext"
-import {useNavigate } from 'react-router-dom'
+import {Link, useNavigate } from 'react-router-dom'
 import { useEffect } from "react";
-
+import { useSelector } from "react-redux";
 export const Login=(props)=>{
-    const {currentUser} = useAuth()
+    const {user} = useAuth()
     
     const dispatch = useDispatch();
 
@@ -15,14 +15,24 @@ export const Login=(props)=>{
       }
 
       const navigate = useNavigate();
-      useEffect(() => {
-          checkUser()
-      }, [currentUser]);
-      const checkUser = ()=>{
-          if(currentUser){
-              navigate("/home")
-          }
-      }
+
+      const { loading,error, errorMessage } = useSelector((state) => ({
+        loading: state.userState.loading,
+        error: state.userState.error,
+        errorMessage: state.userState.errorMessage
+      }));
+    useEffect(() => {
+        checkUser()
+    }, [user]);
+    const checkUser = ()=>{
+        if(user){
+            navigate("/home")
+        }
+        if(error){
+            alert(errorMessage)
+        }
+    }
+     
 
 
 
@@ -32,12 +42,14 @@ export const Login=(props)=>{
                 <a href="/">
                     <img src="/images/login-logo.svg" alt="" />
                 </a>
-                <div>
-                    <Join>Join now</Join>
+                <LinkDiv>
+                   <Join> <Link to="../join"  style={{textDecoration: 'none'}}>Join now</Link></Join>
                     <SignIn>
+                    <Link to="../sign"  style={{textDecoration: 'none'}}>
                         Sign In
+                    </Link>
                     </SignIn>
-                </div>
+                </LinkDiv>
             </Nav>
             <Section>
                 <Hero>
@@ -57,6 +69,8 @@ export const Login=(props)=>{
 
 const Container=styled.div`
     padding:0px;
+    max-height: 100vh;
+    overflow: hidden;
 `;
 const Nav=styled.nav`
     max-width:1128px;
@@ -68,7 +82,7 @@ const Nav=styled.nav`
     justify-content:space-between;
     flex-wrap:nowrap;
 
-    & > a {
+    & > p {
         width:135px;
         height:34px;
         @media(max-width:768px){
@@ -78,7 +92,7 @@ const Nav=styled.nav`
 
 `;
 
-const Join=styled.a`
+const Join=styled.p`
     font-size:16px;
     padding:10px 12px;
     text-decoration: none;
@@ -93,14 +107,14 @@ const Join=styled.a`
     }
 `;
 
-const SignIn=styled.a`
+const SignIn=styled.p`
     box-shadow: inset 0 0 0 1px #0a66c2;
     color: #0a66c2;
     border-radius:24px;
     transition-duration: 167ms;
     font-size:16px;
     font-weight:600;
-    line-height: 40px;
+    line-height: 20px;
     padding:10px 24px;
     text-align:center;
     background-color:rgba(0, 0, 0, 0);
@@ -193,3 +207,7 @@ const Google=styled.button`
         color:rgba(0, 0, 0, 0.75);
     }
 `;
+
+const LinkDiv = styled.div`
+      display: flex;
+`

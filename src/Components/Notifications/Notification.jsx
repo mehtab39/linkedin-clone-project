@@ -3,12 +3,19 @@ import { useEffect, useState } from "react"
 import styled from "styled-components";
 import {Header} from "../Header/Header";
 import {Rightside} from "../Home/Rightside";
+import { useSelector } from "react-redux";
 
 
 export const Notification = () => {
     const [notifications, setNotifications] = useState([])
-    const {currentUser, profile} = useAuth()
-    console.log(profile);
+    const { loading, error, isAuth, profile, user} = useSelector((state) => ({
+        isAuth: state.userState.isAuth,
+        loading: state.profileState.loading,
+        profile: state.profileState.profile,
+        error: state.profileState.error,
+        user: state.userState.user, 
+      }));
+    
     const check = ()=>{
         if(profile){
             setNotifications(profile.notifications)   

@@ -1,32 +1,35 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useAuth } from "../../contexts/AuthContext";
-import { sendConnection } from "../../redux/actions/connectionAction";
-import { suggestions } from "../../redux/actions/profileAction";
+import { sendConnection, suggestions } from "../../redux/actions/connectionAction";
 import styled from "styled-components"
-
+import { useSelector } from "react-redux";
+import {useAuth} from "../../contexts/AuthContext"
 
 export const Suggestions = () => {
-    const {currentUser, profile} = useAuth();
-    const [sendingRequest, setSendingRequest]=useState(0)
- 
-    const dispatch = useDispatch()
-    const [data, setData] = useState([]);
+  const {user, profile} = useAuth();
+  const [sendingRequest, setSendingRequest]=useState(0);
+  const dispatch = useDispatch()
+  const { loading,data, error,  } = useSelector((state) => ({
+      loading: state.connectionState.loading,
+      error: state.profileState.error,
+      data: state.connectionState.suggestions,
+    }));
     const getSuggestions = ()=>{
-           dispatch(suggestions(currentUser.uid, setData));
-    }
+      dispatch(suggestions(user.uid));
+}
+
     const handleConnect = (toUser)=>{
-         const fromUser = profile.id;
-         setSendingRequest(toUser);
-          dispatch(sendConnection(fromUser, toUser))
+        const fromUser = profile.id;
+        setSendingRequest(toUser);
+        dispatch(sendConnection(fromUser, toUser))
     }
     useEffect(()=>{
         getSuggestions()
     }, [])
+   
 
-    return (
+    return data?.length>0 && (
       <Container>
-
         <h2>People you may know</h2>
         <ParentDiv>
             {data.map((el)=>{

@@ -1,7 +1,11 @@
 import {
     CONNECTION_SUCCESS,
     CONNECTION_LOADING,
-    CONNECTION_FAILIURE 
+    CONNECTION_FAILIURE,
+    SUGGESTION_SUCCESS,
+    PENDING_SUCCESS,
+    SENT_SUCCESS,
+    USERACTIVITY_SUCCESS
 } from "../actions/actionTypes";
 
 
@@ -9,6 +13,10 @@ const init_state = {
     loading: false,
     error: false,
     errorMessage: null,
+    connections:[],
+    suggestions:[],
+    pending:[],
+    sent:[]
 }
 
 export const connectionReducer = (state = init_state, {
@@ -17,7 +25,6 @@ export const connectionReducer = (state = init_state, {
 }) => {
     switch (type) {
         case CONNECTION_LOADING:
-            console.log("hi");
             return {
        
       ...state,
@@ -35,8 +42,41 @@ export const connectionReducer = (state = init_state, {
           ...state,
           loading: false,
           error: false,
-          errorMessage: ""
+          errorMessage: "",
+          connections: payload
       }
+      case SUGGESTION_SUCCESS:
+          console.log("red", payload)
+        return {
+            ...state,
+            loading: false,
+            error: false,
+            errorMessage: "",
+            suggestions: payload
+        }
+        case PENDING_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                error: false,
+                errorMessage: "",
+                pending: payload
+            }
+            case SENT_SUCCESS:
+                return {
+                    ...state,
+                    loading: false,
+                    error: false,
+                    errorMessage: "",
+                    sent: payload
+                }
+                case USERACTIVITY_SUCCESS:
+                    return {
+                        ...state,
+                        loading: false,
+                        error: false,
+                        errorMessage: "",
+                    }
      
             default:
                 return state;

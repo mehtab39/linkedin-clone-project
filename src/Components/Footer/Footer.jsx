@@ -3,10 +3,9 @@ import logo from "./images/png0.png"
 import question from "./images/png1.png"
 import setting from "./images/png2.png"
 import styled from "styled-components"
-function Footer() {
+export const Footer = () => {
 	return (
-		<Box>
-			
+		<FooterBox>
 			<Image src={logo} alt="" />
 			<Main>
 
@@ -70,21 +69,24 @@ function Footer() {
 
 			</Main>
 
-		</Box>
+		</FooterBox>
 
 	);
 }
 
-const Box=styled.div `
-margin-top: 95%;
-margin-bottom: 10px;
+
+const FooterBox=styled.div `
+padding: 10px;
+margin-top: 40px;
 
 `
 ;
 const Image= styled.img`
 width:150px;
-height 40px;
-margin-left: 60px;
+
+height: 40px;
+margin-left: 50px;
+
 `
 ;
 
@@ -92,6 +94,7 @@ const Main= styled.div`
 display:flex;
 background-color: #E0E0E0;
 margin-left: 50px;
+padding: 40px;
 
 // @media (max-width: 700px) {
 //     flex-direction: column;
@@ -117,6 +120,3 @@ margin-left: 50px;
 
 
 `
-
-
-export default Footer

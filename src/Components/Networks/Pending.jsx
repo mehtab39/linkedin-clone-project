@@ -1,31 +1,39 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../../contexts/AuthContext";
 import { deletePending, acceptPending } from "../../redux/actions/connectionAction";
-import { pending } from "../../redux/actions/profileAction";
+import { pending } from "../../redux/actions/connectionAction";
 import styled from "styled-components";
 
-export const Pending = () => {
-    const { profile} = useAuth()
+export const Pending = ({profile}) => {
     const dispatch = useDispatch()
-    const [data, setData] = useState([]);
+    const [render, setRender] = useState()
+
+    const { data} = useSelector((state) => ({
+        data: state.connectionState.pending,
+      }));
+
     const getPending = ()=>{
-         dispatch(pending(profile.id, setData)); 
+
+         dispatch(pending(profile.id)); 
     }
-    console.log(data)
     const handleAccept = (toUser)=>{
+         setRender(toUser)
         const fromUser = profile.id;
         dispatch(acceptPending(fromUser, toUser))
+        getPending()
     }
     const handleDelete = (toUser)=>{
+        setRender(toUser)
         const fromUser = profile.id;
          dispatch(deletePending(fromUser, toUser))
+         getPending()
     }
-   
+
     useEffect(()=>{
         getPending()
-    }, [profile])
-    return (
+    }, [render])
+    return data?.length>0 && (
         <ParentDiv>
             <h1>Invitations</h1>
            <div>

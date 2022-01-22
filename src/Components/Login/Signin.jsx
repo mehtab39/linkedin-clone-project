@@ -1,42 +1,38 @@
 import styled from "styled-components";
-import React, { useRef, useState, useEffect } from "react"
+import React, { useRef, useEffect } from "react"
 import { signin,signInWithGoogle} from "../../redux/actions/userActions"
-import { useAuth } from "../../contexts/AuthContext"
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector  } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 export const Sign=(props)=>{
-    const { login, currentUser } = useAuth()
+    const {user} = useAuth()
     const emailRef = useRef()
     const passwordRef = useRef()
-    const [error, setError] = useState("")
     const dispatch = useDispatch();
-
     const navigate = useNavigate();
+    const { loading,error, errorMessage } = useSelector((state) => ({
+        loading: state.userState.loading,
+        error: state.userState.error,
+        errorMessage: state.userState.errorMessage
+      }));
+
     useEffect(() => {
         checkUser()
-    }, [currentUser]);
+    }, [user]);
     const checkUser = ()=>{
-        if(currentUser){
+        if(user){
             navigate("/home")
         }
     }
+    
   function handleSubmit(e) {
       e.preventDefault()
-      try {
-        setError("")
         dispatch(signin(emailRef.current.value, passwordRef.current.value)) 
-      } catch {
-       
-        setError("Failed to log in")
-        console.log(error)
-      }
-
     }
     const signInGoogle = ()=>{
       dispatch(signInWithGoogle())
     }
-    return (<>
-        
+    return (<> 
             <Logo>
             <a href="/">
                     <img src="/images/login-logo.svg" alt="" />
@@ -46,25 +42,23 @@ export const Sign=(props)=>{
             <Incontainer>
             <h3>Sign in</h3>
             <p>Stay updated on your professional world</p>
-            {error && <p>{error}</p>}
+
             <Form>
-           
+            {error && <ErrorTag>{errorMessage.code.split("/")[1]}</ErrorTag>}
                 <input type="email" ref={emailRef} required placeholder="Enter Email" />
                 <input type="password" ref={passwordRef} required placeholder="Password" />
-                <button onClick={handleSubmit} className="agreebtn">Sign in </button>
+                <button disabled={loading} onClick={handleSubmit} className="agreebtn">Sign in </button>
                 <span>
                     <hr/>
                 </span>
-                <button onClick={signInGoogle} className="glbtn">
+                <button disabled={loading} onClick={signInGoogle} className="glbtn">
                 <img src="/images/google.svg" alt="" /> 
                     Sign in with google</button>
             </Form>
-
-
             </Incontainer>
         </Container>
             <Out>
-            <p>New to LinkedIn? <span className="blue">Join now</span></p>
+            <p>New to LinkedIn? <span className="blue"><Link to="../join">Join now</Link></span></p>
             </Out>
         </>
     );
@@ -144,6 +138,14 @@ const Form= styled.div`
         vertical-align: middle;
         justify-content: center;
     }
+    button{
+        cursor: pointer;
+    }
+    button:disabled {
+    opacity: 0.5;
+    background-color: #c6d4e2;
+    cursor: not-allowed;
+  }
 `;
 
 const Logo=styled.div`
@@ -163,6 +165,11 @@ const Out=styled.div`
 
     .blue{
         color:#0a66c2;
+        text-decoration: none !important;
     }
+    
 `;
 
+const ErrorTag = styled.p`
+    color: red !important;
+`

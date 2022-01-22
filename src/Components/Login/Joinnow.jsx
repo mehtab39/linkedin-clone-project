@@ -1,45 +1,36 @@
 import styled from "styled-components";
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef} from "react"
 import { useDispatch} from "react-redux"
 import { createAccount, signInWithGoogle} from "../../redux/actions/userActions"
-import { useAuth } from "../../contexts/AuthContext"
 import { useNavigate } from "react-router-dom";
-
+import { useSelector } from "react-redux";
 export const Joinnow=()=>{
     const navigate = useNavigate();
-   
-    // bring loading state from redux useSelector
-    //loading will be used to disable signout button
-
     const emailRef = useRef()
     const passwordRef = useRef()
-    const { signup , currentUser } = useAuth()
-    const [error, setError] = useState("")
+    const { loading,error, errorMessage, isAuth } = useSelector((state) => ({
+        isAuth: state.userState.isAuth,
+        loading: state.userState.loading,
+        error: state.userState.error,
+        errorMessage: state.userState.errorMessage
+      }));
+
     useEffect(() => {
         checkUser()
-    }, [currentUser]);
+    }, [isAuth]);
     const checkUser = ()=>{
-        if(currentUser){
+        if(isAuth){
             navigate("/home")
         }
     }
-
+    
     const dispatch = useDispatch();
-
     const signInGoogle = ()=>{
         dispatch(signInWithGoogle())
       }
-     
-
     async function handleSubmit(e) {
       e.preventDefault()
-      try {
-        setError("")
-        dispatch(createAccount(emailRef.current.value, passwordRef.current.value, signup))
-
-       } catch {
-        setError("Failed to create an account")
-      }
+        dispatch(createAccount(emailRef.current.value, passwordRef.current.value))
     }
     return <>
      <Container>
@@ -50,7 +41,7 @@ export const Joinnow=()=>{
             </Logo>
             <Heading>Make the most of your professional life</Heading>
             <Form >
-            {error && <p>{error}</p>}
+            {error && <ErrorTag>{errorMessage.code.split("/")[1]}</ErrorTag>}
                 <InsideForm>
 
                 <label htmlFor="">Email or phone number</label>
@@ -60,9 +51,8 @@ export const Joinnow=()=>{
 
                 <p className="txt">By clicking Agree & Join, you agree to the LinkedIn <span className="blue">User Agreement, Privacy Policy</span>, and <span className="blue">Cookie Policy.</span></p>
 
-                <button onClick={handleSubmit} className="agreebtn">Agree & Join</button>
-
-                <button onClick={signInGoogle} className="glbtn">
+                <button disabled={loading} onClick={handleSubmit} className="agreebtn">Agree & Join</button>
+                <button disabled={loading} onClick={signInGoogle} className="glbtn">
                 <img src="/images/google.svg" alt="" /> 
                     Join with Google</button>
 
@@ -138,6 +128,7 @@ const InsideForm=styled.div`
     .blue{
         color: #0a66c2;
         font-weight: 100;
+        cursor: pointer;
     }
 
     .agreebtn{
@@ -182,6 +173,15 @@ const InsideForm=styled.div`
         width:100%;
         margin: auto;
     }
+   
+    button{
+        cursor: pointer;
+    }
+    button:disabled {
+    opacity: 0.5;
+    background-color: #c6d4e2;
+    cursor: not-allowed;
+  }
 
 `;
 
@@ -201,6 +201,14 @@ const Heading=styled.p`
 
     }
 `;
+
+
+const ErrorTag = styled.p`
+    color: red !important;
+    text-align: center;
+    padding: 2px;
+    margin: 10px;
+`
 
 
 

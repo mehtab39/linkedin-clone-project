@@ -1,22 +1,17 @@
 import styled from "styled-components";
-import { useAuth } from "../../contexts/AuthContext";
+export const Leftside = ({user, profile}) => {
 
-export const Leftside = (props) => {
-  const {currentUser} = useAuth();
-
- 
   return (
-
     <Container>
       <ArtCard>
         <UserInfo>
           <CardBackground />
           <a>
-            <Photo bg={(currentUser?.photoURL)?(currentUser?.photoURL):("/images/photo.svg")} />
+            <Photo bg={(user?.photoURL)?(user?.photoURL):(profile?.profile_img)?(profile?.profile_img):("/images/photo.svg")} />
             <Link>Welcome!</Link>
           </a>
           <a>
-            <AddPhotoText>{(currentUser?.displayName)?currentUser?.displayName:"Update your profile"}</AddPhotoText>
+            <AddPhotoText>{(user?.displayName)?user?.displayName:(profile?.first_name)?(profile?.first_name):"Update your profile"}</AddPhotoText>
           </a>
         </UserInfo>
         <Widget>

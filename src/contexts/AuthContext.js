@@ -1,53 +1,32 @@
 import React, { useContext, useState, useEffect } from "react"
-import { Navigate } from "react-router-dom"
+import { useDispatch } from "react-redux"
 import { auth } from "../Firebase/firebase"
-import { getProfile } from "../Firebase/Firestore/addProfile"
+import {  globalProfile } from "../redux/actions/profileAction"
 const AuthContext = React.createContext()
 
 export function useAuth() {
   return useContext(AuthContext)
 }
 export function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState()
-  const [profile, setProfile] = useState()
-  const [loading, setLoading] = useState(true)
-
-  function signup(email, password) {
-    return auth.createUserWithEmailAndPassword(email, password)
-  }
-
-  
-  function login(email, password) {
-    return auth.signInWithEmailAndPassword(email, password)
-  }
-
-  function logout() {
-       auth.signOut()
-     
-    }
- 
+  const [user, setUser] = useState()
+  const [profile, setProfile] = useState([])
   useEffect(() => {
-    if(currentUser){
-      getProfile(currentUser.uid, setProfile) 
-    }
-   
-  }, [currentUser])
-  
-  
-
+    if(user){
+      console.log('user:', user)
+      globalProfile(user.uid, setProfile)
+    }     
+  },[user])
+  const [loading, setLoading] = useState(true)
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(user => {
-      setCurrentUser(user)
+      setUser(user)
       setLoading(false)
     })
    return unsubscribe
   }, [])
 
   const value = {
-    currentUser,
-    login,
-    signup,
-    logout,
+    user,  
     profile
   }
 
