@@ -26,18 +26,21 @@ export const NetworkPage = () => {
             <Pending/>
             <Suggestions/>
             </Box>
-
         </NetworkPageMain>
     ): <div>Something went wrong...Please wait</div>
 }
 
 
 const NetworkPageMain = styled.div`
-
    display: grid;
-   grid-template-columns: 20% 80%
+   grid-template-columns: 20% 80%;
 `
 
+const Box= styled.div`
+    width:70%;
+    /* display: flex;
+    flex-direction: column; */
+`;
 // const LeftConnection = styled.div`
 //     display: flex;
 //     flex-direction: column
@@ -54,11 +57,7 @@ const NetworkPageMain = styled.div`
 //          height: 50px;
 //          width: 50px
 //      }
-`
+//`
 
-const Box= styled.div`
-    width:70%;
-    /* display: flex;
-    flex-direction: column; */
-`;
+
 

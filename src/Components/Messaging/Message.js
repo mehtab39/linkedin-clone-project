@@ -1,6 +1,6 @@
 import {Header} from "../Header/Header";
-import {Rightside} from "../Home/Rightside"
-import "./Message.css"
+import {Rightside} from "../Home/Rightside";
+import "./Message.css";
 import styled from "styled-components";
 import {BiDotsHorizontalRounded} from "react-icons/bi";
 import {useState, useEffect, useRef} from "react"
