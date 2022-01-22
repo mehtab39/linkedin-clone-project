@@ -53,7 +53,7 @@ export const Connections = () => {
              <div>
 
              <RemoveBtn onClick={()=>handleRemove(el.id)}>Remove</RemoveBtn>
-             <button onClick={()=>handleMessage(el.id)}>Message</button>
+             <Msg onClick={()=>handleMessage(el.id)}>Message</Msg>
 
               </div>
         </ChildDiv>
@@ -143,3 +143,5 @@ const Main= styled.div`
     margin-top:5%;
     justify-content: space-between;
 `;
+
+const Msg= styled(RemoveBtn)``;

@@ -3,7 +3,6 @@ import { Pending } from "./Pending"
 import { useAuth } from "../../contexts/AuthContext"
 import { useEffect } from "react"
 import styled from "styled-components"
-// import { RightConnection } from "./RightConnection"
 import { Rightside } from "../Home/Rightside"
 import {Header} from "../Header/Header"
 
@@ -32,8 +31,12 @@ export const NetworkPage = () => {
 
 
 const NetworkPageMain = styled.div`
-   display: grid;
-   grid-template-columns: 20% 80%;
+    width:90%;
+    margin: auto;
+    display: flex;
+    justify-content:space-between;
+    margin-top: 5%;
+    box-sizing: border-box;
 `
 
 const Box= styled.div`
