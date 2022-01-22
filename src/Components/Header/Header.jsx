@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useAuth } from "../../contexts/AuthContext";
 
+
 export const Header = (props) => {
   const {user} = useAuth()
   const dispatch = useDispatch()
@@ -25,6 +26,9 @@ export const Header = (props) => {
           <a href="/home">
             <img src="/images/home-logo.svg" alt="" />
           </a>
+          {/* <Tag>
+          <img src="/images/home-logo.svg" alt="" />
+          </Tag> */}
         </Logo>
         <Search>
           <div>
@@ -270,3 +274,8 @@ const User = styled(NavList)`
 const Work = styled(User)`
   border-left: 1px solid rgba(0, 0, 0, 0.08);
 `;
+
+
+// const Tag= styled(Link)`
+
+// `;

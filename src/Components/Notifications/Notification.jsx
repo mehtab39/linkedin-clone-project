@@ -8,19 +8,19 @@ import { useSelector } from "react-redux";
 
 export const Notification = () => {
     const [notifications, setNotifications] = useState([])
-    const { loading, error, isAuth, profile, user} = useSelector((state) => ({
-        isAuth: state.userState.isAuth,
-        loading: state.profileState.loading,
-        profile: state.profileState.profile,
-        error: state.profileState.error,
-        user: state.userState.user, 
-      }));
-    
+
+    const {profile} = useAuth();
+
+    console.log(profile);
+
     const check = ()=>{
         if(profile){
             setNotifications(profile.notifications)   
         }
     }
+
+    console.log(notifications);
+
     useEffect(() => {
             check()
     }, [profile], [])
@@ -29,28 +29,46 @@ export const Notification = () => {
         <Header/>
         <Container>
         <Rightside/>
-        {profile ? (
+        {profile.notifications ? (
         <Box>
-       
-        {notifications.slice(0).reverse().map((el, i)=>{
+        {notifications?.map((el, i)=>{
             return <Childcontainer key={i}>
                 <div>
                     {el.type==="welcome"? 
-                     el.description 
+
+                        <ImDe>
+
+                        <ImageBox>
+                            {el.image!=="" && <Image src="images/user.svg"/>}
+                        </ImageBox>
+                        <Des>
+                            {el.description}        
+                        </Des>
+                        </ImDe>
+
+                    //  <Text>el.description </Text>
                     : 
                     
                     el.type==="acceptRequest"? 
                 
                     <ImDe>
-                    <div>{el.image!=="" && <Image src={el.image}/>}</div>
-                    <div style={{marginTop:"30px"}}>
-                     {el.description}        </div>
+
+                        <ImageBox>
+                            {el.image!=="" && <Image src={el.image}/>}
+                        </ImageBox>
+                        <Des>
+                            {el.description}        
+                        </Des>
                     </ImDe>
                     : 
                     <Like>
-                        <div>{el.postImage!=="" && <Image src={ el.postImage}/>}</div>
+                        <ImageBox>
+                            {el.postImage!=="" && <Image src={ el.postImage}/>}
+                        </ImageBox>
 
-                     <div>{el.whoLiked} likes your post :-  {el.postTitle}</div>
+                        <Des>
+                            {el.whoLiked} likes your post :-  {el.postTitle}
+                        </Des>
                       
                     </Like>     }
                </div>
@@ -67,34 +85,56 @@ export const Notification = () => {
 
 
 const Container= styled.div`
-    margin-top:10%;
-    display: flex;
-    width:90%;
-    margin: auto;
-    justify-content: space-between;
+   width: 90%;
+   display: flex;
+   margin: auto;
+   margin-top:5%;
+   justify-content: space-between;
+   font-size: 12px;
 `;
 
 const Image = styled.img`
-    height: 80%;
-    width: 70%;
-    border-radius:40px;
 `
 ;
 const ImDe= styled.div`
     display: flex;
+   justify-content:space-between;
+
 `;
 
 const Like= styled.div`
-    width: 50%;
-    height: 40px;
-    display: flex;
+   display: flex;
+   justify-content:space-between;
 `;
 
 const Childcontainer = styled.div`
-   background-color:rgba(0,0,0,0.08);
+    width: 70%;
+    display: flex;
+    border: 2px solid rgba(0,0,0,0.06);
+    margin: auto;
+    margin-top: 2%;
+   border-radius:5px;
+   padding: 1%;
+
+  img {
+      width: 100%;
+      border-radius: 50%;
+  }
 `;
 
 const Box= styled.div`
-    background-color:#fff;
-    width: 60%;
+   width: 60%;
+   border-radius:5px;
+   background-color:#fff;
+`;
+const Text= styled.div``;
+
+const ImageBox= styled.div`
+    width: 40px;
+    align-items: center;
+    padding: 1%;
+`;
+
+const Des= styled.div`
+    width: 70%;
 `;
