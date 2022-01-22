@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "./images/png0.png"
-import setting from "./images/png1.png"
-import question from "./images/png2.png"
+import question from "./images/png1.png"
+import setting from "./images/png2.png"
 import styled from "styled-components"
 export const Footer = () => {
 	return (
@@ -31,7 +31,7 @@ export const Footer = () => {
 					<div >Small Business</div>
 				</div>
 
-				<div style={{marginRight:"10px"}}>
+				<div style={{marginRight:"0px"}}>
 					<div><img style={{height:"30px"}} src={question} alt="" /></div>
 					<div style={{marginTop:"17px"}}><img style={{height:"30px"}}src={setting} alt="" /></div>
 				</div>
@@ -46,7 +46,7 @@ export const Footer = () => {
 				</div>
 
 				<div>
-					<form>
+					<form >
 						<label style={{color:"#00000099", fontSize:"15px"}}>Select language</label><br />
 
 						<select style={{width:"250px", height:"30px", fontSize:"15px"}}>
@@ -74,8 +74,8 @@ export const Footer = () => {
 	);
 }
 
-const FooterBox=styled.div `
 
+const FooterBox=styled.div `
 padding: 10px;
 margin-top: 40px;
 
@@ -83,8 +83,10 @@ margin-top: 40px;
 ;
 const Image= styled.img`
 width:150px;
+
 height: 40px;
 margin-left: 50px;
+
 `
 ;
 
@@ -94,21 +96,27 @@ background-color: #E0E0E0;
 margin-left: 50px;
 padding: 40px;
 
-
 // @media (max-width: 700px) {
 //     flex-direction: column;
 //   }
+  
+
 
 & >div{
 	margin-right:60px;
+	padding:10px
+	// padding-left: 10px;
 	
 }
 
 & >div >div{
+	
 	
 	&:hover{
 		text-decoration: underline;
 		color:#536DFE;
 		}
 }
+
+
 `

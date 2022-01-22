@@ -6,7 +6,9 @@ import { RightConnection } from "./RightConnection"
 import { Rightside } from "../Home/Rightside";
 import {Header} from "../Header/Header";
 import {Loader} from "../Loader/Loader"
+
 import {useAuth} from "../../contexts/AuthContext"
+
 export const NetworkPage = () => {
   const {profile} = useAuth()
    
@@ -26,8 +28,12 @@ export const NetworkPage = () => {
 
 
 const NetworkPageMain = styled.div`
-   display: grid;
-   grid-template-columns: 20% 80%;
+    width:90%;
+    margin: auto;
+    display: flex;
+    justify-content:space-between;
+    margin-top: 5%;
+    box-sizing: border-box;
 `
 
 const Box= styled.div`
@@ -35,23 +41,7 @@ const Box= styled.div`
     display: flex;
     flex-direction: column;
 `;
-// const LeftConnection = styled.div`
-//     display: flex;
-//     flex-direction: column
-//     `
 
-//     width:90%;
-//     margin: auto;
-//     display: flex;
-//     justify-content:space-between;
-//     margin-top: 5%;
-//     box-sizing: border-box;
-// text-align: center;
-//     img{
-//          height: 50px;
-//          width: 50px
-//      }
-//`
 
 
 

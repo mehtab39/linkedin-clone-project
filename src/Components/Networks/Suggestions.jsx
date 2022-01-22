@@ -56,7 +56,7 @@ const Container = styled.div`
   box-sizing: border-box;
   background-color:#fff;
   border-radius:5px;
-  height:100%;
+  height:60%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   h2 {
     padding:10px;
@@ -66,7 +66,8 @@ const Container = styled.div`
 const ParentDiv= styled.div`
   display: grid;
   width:90%;
-  /* height: 100%; */
+  overflow: scroll;
+  height:90%;
   margin: auto;
   grid-template-columns: 22.5% 22.5% 22.5% 22.5%;
   grid-gap: 2%;
@@ -84,7 +85,6 @@ const Card  = styled.div`
     box-sizing: border-box;
     border-radius:5px;
     justify-content:space-between;
-    /* height: 100%; */
     h1{
       text-align: center;
     }
