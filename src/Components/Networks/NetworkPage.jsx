@@ -38,8 +38,8 @@ const NetworkPageMain = styled.div`
 
 const Box= styled.div`
     width:70%;
-    /* display: flex;
-    flex-direction: column; */
+    display: flex;
+    flex-direction: column;
 `;
 // const LeftConnection = styled.div`
 //     display: flex;
