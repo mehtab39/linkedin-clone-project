@@ -45,7 +45,6 @@ export const message_success = (data) => {
     dispatch(message_loading())
     try{
         const docid  = generateId(from, to)
-       
         const querySnap =  await db.collection('chatrooms')
         .doc(docid)
         .collection('messages')

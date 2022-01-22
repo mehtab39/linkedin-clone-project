@@ -1,12 +1,12 @@
 
 import { auth, googleProvider} from "../../Firebase/firebase";
-import { profileExist, createProfile } from "../../Firebase/Firestore/addProfile";
 import {
     SIGNIN_LOADING,
     SIGNIN_FAILIURE,
     SIGNIN_SUCCESS,
     SIGNOUT_SUCCESS
 } from "./actionTypes"
+import { createProfile, profileExist } from "./profileAction";
 
 
 export const signin_loading = () => {
@@ -20,10 +20,9 @@ export const signin_loading = () => {
        payload: error
     };
   };
-  export const signin_success = (user) => {
+  export const signin_success = () => {
     return {
        type:SIGNIN_SUCCESS,
-       payload: user
     };
   };
   export const signout = ()=>{
@@ -32,20 +31,11 @@ export const signin_loading = () => {
       } 
   }
 
-
- export const setUser = ()=>(dispatch) => {
-     auth.onAuthStateChanged(async (user) => {
-         if(user){
-             return dispatch(signin_success(user))
-         }
-         return dispatch(signout())
-      })
-   }
   export const logout = () => async (dispatch)=>{
     dispatch(signin_loading())
      try {
           await auth.signOut()
-          dispatch(setUser())
+          dispatch(signout())
         } catch(err){
             dispatch(signin_failiure(err));
       }
@@ -56,7 +46,7 @@ export const signin_loading = () => {
       dispatch(signin_loading())
        try{
            await auth.signInWithEmailAndPassword(email, password)
-            dispatch(setUser())
+           dispatch(signin_success())
        }
        catch(err){
              console.log(err);
@@ -64,12 +54,12 @@ export const signin_loading = () => {
        }
   }
 
-  export const createAccount = (email, password, signup) => async(dispatch) => {
+  export const createAccount = (email, password) => async(dispatch) => {
     dispatch(signin_loading())
      try{
-           const data =  await signup(email, password);
-          if(data) createProfile(data.user)
-          dispatch(setUser())
+    const data = await auth.createUserWithEmailAndPassword(email, password)
+     if(data) createProfile(data.user)
+     dispatch(signin_success())
      }
      catch(err){
            dispatch(signin_failiure(err));
@@ -83,16 +73,9 @@ export const signInWithGoogle = () => (dispatch) => {
         .then((res)=> {
              const user = res.user;
              profileExist(user)
-             dispatch(setUser())
      })
     }
      catch (error) {
-        console.log(error.message)
+      dispatch(signin_failiure(error))
       }
 }
-//If in future we need to do these tasks 
-
-//     return auth.sendPasswordResetEmail(email)
-//    return currentUser.updateEmail(email)
-//   return currentUser.updatePassword(password)
-  

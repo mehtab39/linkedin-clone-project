@@ -2,25 +2,29 @@ import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useAuth } from "../../contexts/AuthContext";
 import { deleteConnection } from "../../redux/actions/connectionAction";
-import { connections } from "../../redux/actions/profileAction";
+import { connections } from "../../redux/actions/connectionAction";
 import styled from "styled-components"
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {Header} from "../Header/Header"
 import {Rightside} from "../Home/Rightside";
+import { useSelector } from "react-redux";
+import { Loader } from "../Loader/Loader";
 
 
 export const Connections = () => {
-    const { profile} = useAuth()
-    const dispatch = useDispatch()
-    const [data, setData] = useState([]);
+    const dispatch = useDispatch();
+    const {profile}= useAuth()
+    const {  data} = useSelector((state) => ({
+        data: state.connectionState.connections
+      }));
     const getConnections = ()=>{
         if(profile){
-            dispatch(connections(profile?.id, setData)); 
+            dispatch(connections(profile?.id)); 
         }
     }
     useEffect(()=>{
         getConnections()
-    }, [profile]);
+    }, [data]);
 
     const navigate = useNavigate()
     const handleMessage = (to) =>{
@@ -32,10 +36,9 @@ export const Connections = () => {
     const handleRemove = (id)=>{
           dispatch(deleteConnection(profile.id, id))
     }
+    return  profile  ? (<Container>
 
-    return <Container>
         <Header/>
-    { profile ? (
          <Main>
          <Rightside/>
         <Box>
@@ -64,9 +67,7 @@ export const Connections = () => {
         
         </Box>
         </Main>
-        ):<div>Something went wrong...Please wait</div>}
-        </Container>
-        
+        </Container>):<Loader/>   
         
 }
 

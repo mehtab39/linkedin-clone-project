@@ -1,5 +1,7 @@
 import {Header} from "../Header/Header";
 import {Rightside} from "../Home/Rightside";
+import {Footer} from "../Footer/Footer"
+import {Loader} from "../Loader/Loader"
 import "./Message.css";
 import styled from "styled-components";
 import {BiDotsHorizontalRounded} from "react-icons/bi";
@@ -10,31 +12,33 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { ChatMessage } from "./Chat";
 import { useParams } from "react-router-dom";
-import { connections } from "../../redux/actions/profileAction";
 import { LeftMessage } from "./LeftMessage";
+import { connections } from "../../redux/actions/connectionAction";
 
 const goToBottom = ()=>{
     document.getElementsByClassName('chatDiv')[0].scrollTop = document.getElementsByClassName('chatDiv')[0].scrollHeight;
 }
 
-
 export const Message=()=>{
+    const dispatch = useDispatch();
     const {id} = useParams();
     const [chatter, setChatter] = useState({});
-    const {profile} = useAuth();
+    const {user, profile} = useAuth();
+    const { loading, messages,  myConnections} = useSelector((state) => ({
+        loading: state.messageState.loading,
+        messages: state.messageState.messages,
+        myConnections: state.connectionState.connections
+      }));
     
     const getConnections = ()=>{
         if(profile){
-            dispatch(connections(profile?.id, setMyConnections)); 
+            dispatch(connections(profile?.id)); 
         }
     }
     useEffect(()=>{
         getConnections()
     }, [profile]);
 
-    const dispatch = useDispatch();
-     const [myConnections, setMyConnections] = useState([]);
-  
      const chatFunction = (params)=>{
         console.log('params:', params)
         if(profile?.id){
@@ -46,11 +50,7 @@ export const Message=()=>{
         }
     }
      
-    const { loading,messages } = useSelector((state) => ({
-		loading: state.messageState.loading,
-        messages: state.messageState.messages,
-      }));
-
+   
     
     useEffect(()=>{
         if(myConnections.length > 0 && id==undefined){
@@ -103,8 +103,10 @@ const [formValue, setFormValue] = useState('');
             <Right>
             <Rightside/>
             </Right>
+            
         </Container>
-    </>) : <>Ok</>
+        <Footer/>
+    </>) : <Loader />
 }
 
 const Container=styled.div`
