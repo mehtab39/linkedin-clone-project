@@ -9,9 +9,10 @@ import { Sent } from './Components/Networks/Sent';
 import { Connections } from './Components/Networks/Connections';
 import PrivateRoute from './Components/Privateroute';
 import { Notification } from './Components/Notifications/Notification';
-// import { Loader } from './Components/Loader/Loader';
 import { PageNotFoundError } from './Components/PageNotFound/PageNotFound';
-import {Message} from "./Components/Messaging/Message";
+import { Message } from './Components/Messaging/Message';
+
+
 
 function App() {
   return (
@@ -50,6 +51,22 @@ function App() {
           element={
             <PrivateRoute>
            <Home/>
+            </PrivateRoute>
+          }
+        />
+            <Route
+         path="/messages"
+          element={
+            <PrivateRoute>
+           <Message/>
+            </PrivateRoute>
+          }
+        />
+         <Route
+         path="/messages/:id"
+          element={
+            <PrivateRoute>
+           <Message/>
             </PrivateRoute>
           }
         />

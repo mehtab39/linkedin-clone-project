@@ -7,6 +7,7 @@ import {Loader} from "../Loader/Loader"
 export const Home = (props) => {
 
 const {profile} = useAuth()
+console.log('profile:', profile)
 
   return  profile ?  (<Container>
       <Layout>

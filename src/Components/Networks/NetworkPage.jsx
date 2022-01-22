@@ -26,18 +26,29 @@ export const NetworkPage = () => {
             <Pending/>
             <Suggestions/>
             </Box>
+
         </NetworkPageMain>
     ): <div>Something went wrong...Please wait</div>
 }
 
 
 const NetworkPageMain = styled.div`
-    width:90%;
-    margin: auto;
-    display: flex;
-    justify-content:space-between;
-    margin-top: 5%;
-    box-sizing: border-box;
+
+   display: grid;
+   grid-template-columns: 20% 80%
+`
+
+// const LeftConnection = styled.div`
+//     display: flex;
+//     flex-direction: column
+//     `
+
+//     width:90%;
+//     margin: auto;
+//     display: flex;
+//     justify-content:space-between;
+//     margin-top: 5%;
+//     box-sizing: border-box;
 // text-align: center;
 //     img{
 //          height: 50px;
@@ -50,3 +61,4 @@ const Box= styled.div`
     /* display: flex;
     flex-direction: column; */
 `;
+

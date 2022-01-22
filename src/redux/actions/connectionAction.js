@@ -67,10 +67,10 @@ export const  deletePending = (from, to) => (dispatch)=>{
 
 
 export const  deleteSent = (from, to) => (dispatch)=>{
-    console.log('from, to:', from, to)
+
     dispatch(connection_loading)
   try{
-    console.log("hi")
+    
      deleteSentConnection(from, to)
       dispatch(connection_success)
   }
