@@ -2,18 +2,38 @@ import styled from "styled-components";
 import {Leftside} from "./Leftside";
 import {Main} from "./Main";
 import {Rightside} from "./Rightside";
-import { useAuth } from "../../contexts/AuthContext"
 import {Loader} from "../Loader/Loader"
-export const Home = (props) => {
+import {  useEffect  } from "react";
+import { fetchUserProfile } from "../../redux/actions/profileAction";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {useAuth} from "../../contexts/AuthContext"
+ 
 
-const {profile} = useAuth()
-console.log('profile:', profile)
+export const Home = (props) => {
+  const {user} = useAuth()
+   const dispatch = useDispatch()
+   const navigate = useNavigate()
+  const { loading, error, isAuth, profile} = useSelector((state) => ({
+    isAuth: state.userState.isAuth,
+    loading: state.profileState.loading,
+    profile: state.profileState.profile,
+    error: state.profileState.error,
+  }));
+
+
+useEffect(() => {
+  if(user){
+    dispatch(fetchUserProfile(user.uid))
+  }     
+},[user])
+
 
   return  profile ?  (<Container>
       <Layout>
-        <Leftside />
-        <Main />
-        <Rightside />
+        <Leftside user={user} profile={profile}/>
+        <Main user={user}  profile={profile}/>
+        <Rightside/>
       </Layout>
     </Container>
   ) : <Loader />

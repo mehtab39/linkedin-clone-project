@@ -5,14 +5,22 @@ import {MdPhotoSizeSelectActual} from "react-icons/md";
 import {AiFillYoutube} from "react-icons/ai";
 import ReactPlayer from "react-player";
 import { useDispatch } from "react-redux";
-import { useAuth } from "../../contexts/AuthContext";
 import { addNewPost } from "../../redux/actions/postActions";
+import { useSelector } from "react-redux";
+import { useAuth } from "../../contexts/AuthContext";
 
 
 export const PostModal=({handleClick,showModal})=>{
+    const { loading, error, isAuth, profile} = useSelector((state) => ({
+        isAuth: state.userState.isAuth,
+        loading: state.profileState.loading,
+        profile: state.profileState.profile,
+        error: state.profileState.error,
+      }));
+      const {user} = useAuth()
     const [editorText,setEditorText]=useState("");
 
-    const {currentUser, profile} = useAuth()
+   
 	const [imageFile, setImageFile] = useState("");
 	const [videoFile, setVideoFile] = useState("");
 	const [assetArea, setAssetArea] = useState("");
@@ -46,7 +54,7 @@ export const PostModal=({handleClick,showModal})=>{
 			image: imageFile,
 			video: videoFile,
 			description: editorText,
-			user: currentUser,
+			user: user,
             username: profile.username,
             userProfile: profile.id,
             userImage: profile.profile_img,
@@ -78,8 +86,8 @@ export const PostModal=({handleClick,showModal})=>{
             </Header>
             <SharedContent>
                 <UserInfo>
-                    <img src={(currentUser?.photoURL)?(currentUser?.photoURL):("/images/user.svg")} alt="" />
-                    <span>{currentUser.displayName ? currentUser.displayName : "Name"}</span>
+                    <img src={(user?.photoURL)?(user?.photoURL):("/images/user.svg")} alt="" />
+                    <span>{user.displayName ? user.displayName : "Name"}</span>
                 </UserInfo>
                 <Editor>
                     <>
@@ -157,6 +165,7 @@ const Container=styled.div`
     color:black;
     background-color:rgba(0, 0, 0, 0.8);
     animation: fadeIn 0.3s;
+    
 `;
 
 const Content = styled.div`
@@ -174,6 +183,7 @@ const Content = styled.div`
 `;
 
 const Header=styled.div`
+
     button>img {
         width:20px;
 

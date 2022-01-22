@@ -1,33 +1,27 @@
 import { Suggestions } from "./Suggestions"
-import { Pending } from "./Pending"
-import { useAuth } from "../../contexts/AuthContext"
-import { useEffect } from "react"
-import styled from "styled-components"
-// import { RightConnection } from "./RightConnection"
-import { Rightside } from "../Home/Rightside"
-import {Header} from "../Header/Header"
-
+import { Pending } from "./Pending";
+import styled from "styled-components";
+import { useSelector } from "react-redux";
+import { RightConnection } from "./RightConnection"
+import { Rightside } from "../Home/Rightside";
+import {Header} from "../Header/Header";
+import {Loader} from "../Loader/Loader"
+import {useAuth} from "../../contexts/AuthContext"
 export const NetworkPage = () => {
-    const {profile} = useAuth()
-    const check = ()=>{
-        if(profile){
-            console.log("got profile")
-        }
-    }
-    useEffect(() => {
-            check()
-    }, [profile], [])
+  const {profile} = useAuth()
    
-    return profile ? (
+     
+   
+    return profile?.id ? (
         <NetworkPageMain>
             <Header/>
             <Rightside/>
             <Box>
-            <Pending/>
-            <Suggestions/>
+            <Pending profile={profile}/>
+            <Suggestions profile={profile}/>
             </Box>
         </NetworkPageMain>
-    ): <div>Something went wrong...Please wait</div>
+    ): <Loader/>
 }
 
 

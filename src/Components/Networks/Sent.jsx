@@ -1,29 +1,36 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useAuth } from "../../contexts/AuthContext";
-import { deleteSent } from "../../redux/actions/connectionAction";
-import { sentRequests } from "../../redux/actions/profileAction";
+import { deleteSent, sentRequests } from "../../redux/actions/connectionAction";
 import styled from "styled-components"
+import { Loader } from "../Loader/Loader";
 
 export const Sent = () => {
-    const {profile} = useAuth()
-    const dispatch = useDispatch()
-    const [data, setData] = useState([]);
+    const [render, setRender] = useState()
+    const {profile}= useAuth()
+    const dispatch = useDispatch();
+    const {data} = useSelector((state) => ({
+        data: state.connectionState.sent,
+      }));
+
     const getSent = ()=>{
         if(profile){
-            dispatch(sentRequests(profile?.id, setData));   
+            dispatch(sentRequests(profile.id));   
         }
     }
    
     const handleDelete = (toUser)=>{
         const fromUser = profile.id;
-         dispatch(deleteSent(fromUser, toUser))
+        setRender(toUser)
+        dispatch(deleteSent(fromUser, toUser))
     }
+
+    console.log(data)
    
     useEffect(()=>{
         getSent()
-    }, [profile])
-    return    profile ? (
+    }, [render, data])
+    return data && (
 <div>
 <Heading>You sent requests to these people</Heading>
 <div>
@@ -48,7 +55,7 @@ export const Sent = () => {
 </div>
 
 </div>
-):<div>Something went wrong...Please wait</div>
+)
 
 }
 

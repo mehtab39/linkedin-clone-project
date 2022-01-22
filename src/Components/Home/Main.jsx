@@ -6,17 +6,15 @@ import {useState, useEffect} from "react";
 import { useDispatch } from "react-redux";
 import { getNewArticles, updateTheArticles, likeNotification , deletePost} from "../../redux/actions/postActions";
 import { useSelector } from "react-redux";
-import { useAuth } from "../../contexts/AuthContext";
 import ReactPlayer from "react-player";
 
-export const Main=()=>{
+export const Main=({user, profile})=>{
     const [showRemove, setShowRemove] = useState(false)
     const dispatch = useDispatch()
     useEffect(() => {
        dispatch(getNewArticles())
     }, [])
-     const {currentUser, profile} = useAuth()
-    const {  loading, posts, ids } = useSelector((state) => ({
+    const {  loading, posts, ids} = useSelector((state) => ({
 		loading: state.postState.loading,
 		posts: state.postState.articles,
         ids: state.postState.ids,
@@ -55,14 +53,14 @@ export const Main=()=>{
 		event.preventDefault();
 		let currentLikes = posts[postIndex].likes.count;
 		let whoLiked = posts[postIndex].likes.whoLiked;
-		let user = currentUser.email;
-		let userIndex = whoLiked.indexOf(user);
+		let userEmail = user.email;
+		let userIndex = whoLiked.indexOf(userEmail);
 		if (userIndex >= 0) {
 			currentLikes--;
 			whoLiked.splice(userIndex, 1);
 		} else if (userIndex === -1) {
 			currentLikes++;
-			whoLiked.push(user);
+			whoLiked.push(userEmail);
 		}
 
       
@@ -76,6 +74,7 @@ export const Main=()=>{
 			},
 			id: id,
 		};
+      
 		dispatch(updateTheArticles(payload));
         dispatch(likeNotification(profile.id, posts[postIndex]))  
 }
@@ -88,7 +87,9 @@ export const Main=()=>{
         <ShareBox>
             Share
         <div className="Mid1">
-        {currentUser?.photoURL ? <img src={currentUser?.photoURL} alt="" /> : <img src="/images/user.svg" alt="" />} 
+    
+
+        <img src={user?.photoURL ? user?.photoURL:(profile?.profile_img)?(profile?.profile_img): "/images/user.svg"} alt="" /> 
             <button onClick={handleClick}>Start a post</button>
         </div>
 
@@ -153,7 +154,7 @@ export const Main=()=>{
 							<SocialActions>
 			
                 
-                            <button onClick={(event) => likeHandler(event, key, ids[key])} className={posts[key].likes.whoLiked.indexOf(currentUser.email) >= 0 ? "active" : null}>
+                            <button onClick={(event) => likeHandler(event, key, ids[key])} className={posts[key].likes.whoLiked.indexOf(user.email) >= 0 ? "active" : null}>
                             <img src="/images/Like1.png" alt="" />
                             <span>Like</span>
                             </button>
@@ -357,7 +358,7 @@ const SocialCounts = styled.ul`
             background-color: white;
             font-size: 12px;
             img {
-                width:30px;
+                width:15px;
             }
 
         }

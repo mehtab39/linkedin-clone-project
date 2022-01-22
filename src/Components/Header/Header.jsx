@@ -1,25 +1,19 @@
 import styled from "styled-components";
 import { useDispatch } from "react-redux"
-import { useAuth } from "../../contexts/AuthContext"
 import { logout } from "../../redux/actions/userActions";
-import { useNavigate  } from "react-router-dom";
+import { Link, useNavigate  } from "react-router-dom";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useAuth } from "../../contexts/AuthContext";
 
 export const Header = (props) => {
-  const navigate = useNavigate()
-  const {currentUser} = useAuth()
-  useEffect(() => {
-      checkUser()
-  }, [currentUser]);
-  const checkUser = ()=>{
-      if(!currentUser){
-          navigate("/sign")
-      }
-  }
+  const {user} = useAuth()
   const dispatch = useDispatch()
-   
+  const { loading, error, isAuth, profile} = useSelector((state) => ({
+    profile: state.profileState.profile,
+  }));
+
     const handleLogout = ()=>{
-          navigate('/sign')
           dispatch(logout()) 
           window.location.reload()   
     }
@@ -79,7 +73,7 @@ export const Header = (props) => {
 
             <User>
               <a>
-               <img src= {currentUser?.photoURL ? currentUser?.photoURL:"/images/user.svg"} alt="" />
+               <img src= {user?.photoURL ? user?.photoURL:profile?.profile_img ? profile?.profile_img:"/images/user.svg"} alt="" />
                 <span>Me
                 <img src="/images/down-icon.svg" alt="" />
                 </span>
@@ -128,10 +122,12 @@ const Content = styled.div`
 const Logo = styled.span`
   margin-right: 8px;
   font-size: 0px;
+  cursor: pointer;
 `;
 
 const Search = styled.div`
   opacity: 1;
+  cursor: pointer;
   flex-grow: 1;
   position: relative;
   & > div {
@@ -202,6 +198,7 @@ const NavListWrap = styled.ul`
 const NavList = styled.li`
   display: flex;
   align-items: center;
+  cursor: pointer;
   a {
     align-items: center;
     background: transparent;
