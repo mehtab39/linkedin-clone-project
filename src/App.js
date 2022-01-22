@@ -82,10 +82,6 @@ function App() {
         <Route path="/message" element={<Message/>}></Route>
          <Route path='*' element={<PageNotFoundError/>} />
       </Routes>
-
-    
-  
-     
     </div>
   );
 }

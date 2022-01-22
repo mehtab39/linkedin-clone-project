@@ -2,6 +2,7 @@ import { useAuth } from "../../contexts/AuthContext"
 import { useEffect, useState } from "react"
 import styled from "styled-components";
 import {Header} from "../Header/Header";
+import {Rightside} from "../Home/Rightside";
 
 
 export const Notification = () => {
@@ -19,21 +20,23 @@ export const Notification = () => {
    
     return <>
         <Header/>
-    profile ? (
-       <Box>
+        <Container>
+        <Rightside/>
+        {profile ? (
+        <Box>
        
         {notifications.slice(0).reverse().map((el, i)=>{
-            return       <Childcontainer key={i}>
+            return <Childcontainer key={i}>
                 <div>
-                    {el.type=="welcome"? 
+                    {el.type==="welcome"? 
                      el.description 
                     : 
                     
-                    el.type=="acceptRequest"? 
+                    el.type==="acceptRequest"? 
                 
                     <ImDe>
-                        <div>    {el.image!=="" && <Image src={el.image}/>}    </div>
-                     <div style={{marginTop:"30px"}}>
+                    <div>{el.image!=="" && <Image src={el.image}/>}</div>
+                    <div style={{marginTop:"30px"}}>
                      {el.description}        </div>
                     </ImDe>
                     : 
@@ -44,78 +47,47 @@ export const Notification = () => {
                       
                     </Like>     }
                </div>
-               {/* <hr/> */}
             </Childcontainer>
         })
     }
     </Box>
 
 
-    ): <div>Something went wrong...Please wait</div>
+    ): <div>Something went wrong...Please wait</div>}
+    </Container>
     </>
 }
 
 
-const Image = styled.img`
-height: 80%;
-width: 70 %;
-margin-right:20px;
-// padding-top: 20px;
-// border: 2px solid black;
-border-radius:40px;
+const Container= styled.div`
+    margin-top:10%;
+    display: flex;
+    width:90%;
+    margin: auto;
+    justify-content: space-between;
+`;
 
+const Image = styled.img`
+    height: 80%;
+    width: 70%;
+    border-radius:40px;
 `
 ;
 const ImDe= styled.div`
-width: 50%;
-height: 100px;
-background-color: #E1F5FE;
-margin-top: 0px;
-margin-bottom: 0px;
-// margin-left: 400px;
-margin: auto;
-margin-top:10px;
+    display: flex;
+`;
 
-// text-align: center;
-// padding-bottom: 10px;
-display: flex;
-// flex-direction: vertical;
-// align-content: space-between;
-
-&>div{
-    
-}
-
-`
-;
 const Like= styled.div`
-background-color: #E1F5FE;
-margin-top: 0px;
-// margin-bottom: 30px;
-width: 50%;
-height: 40px;
-margin:auto;
-// margin-top:10px;
-
-overflow: hidden;
-
-display: flex;
-// flex-direction: vertical;
-
-`
-;
+    width: 50%;
+    height: 40px;
+    display: flex;
+`;
 
 const Childcontainer = styled.div`
-margin-top: 40px;
-// border-radius: 70px;
-// background-color: #E1F5FE;
-// // background-color: yellow;
-
-
-    
+   background-color:rgba(0,0,0,0.08);
 `;
 
 const Box= styled.div`
-margin-top: 60px;
-    
+    background-color:#fff;
+    width: 60%;
 `;
