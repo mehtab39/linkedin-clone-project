@@ -11,7 +11,7 @@ import PrivateRoute from './Components/Privateroute';
 import { Notification } from './Components/Notifications/Notification';
 import { PageNotFoundError } from './Components/PageNotFound/PageNotFound';
 import { Message } from './Components/Messaging/Message';
-
+import Profile from "./Components/Profile/Profile";
 
 
 function App() {
@@ -79,6 +79,7 @@ function App() {
             </PrivateRoute>
           }
         />
+        <Route path="/profile" element={<Profile/>}></Route>
         <Route path="/message" element={<Message/>}></Route>
          <Route path='*' element={<PageNotFoundError/>} />
       </Routes>
