@@ -1,9 +1,7 @@
 import React, { useContext, useState, useEffect } from "react"
-import { useDispatch } from "react-redux"
 import { auth } from "../Firebase/firebase"
 import {  globalProfile } from "../redux/actions/profileAction"
 const AuthContext = React.createContext()
-
 export function useAuth() {
   return useContext(AuthContext)
 }
@@ -12,7 +10,6 @@ export function AuthProvider({ children }) {
   const [profile, setProfile] = useState([])
   useEffect(() => {
     if(user){
-      console.log('user:', user)
       globalProfile(user.uid, setProfile)
     }     
   },[user])
