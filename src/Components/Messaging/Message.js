@@ -23,7 +23,7 @@ export const Message=()=>{
     const dispatch = useDispatch();
     const {id} = useParams();
     const [chatter, setChatter] = useState({});
-    const {user, profile} = useAuth();
+    const {profile} = useAuth();
     const { loading, messages,  myConnections} = useSelector((state) => ({
         loading: state.messageState.loading,
         messages: state.messageState.messages,

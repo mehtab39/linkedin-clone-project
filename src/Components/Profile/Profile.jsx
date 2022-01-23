@@ -20,7 +20,6 @@ const Profile = () => {
   const {username} = useParams();
   const {profile} = useAuth();
   const profileFunction = ()=>{
-    console.log('username || profile.username:', username || profile.username)
    if(username!==undefined && profile.username){
     dispatch(getProfileByUsername(username))
    }
@@ -36,10 +35,8 @@ const {data, noData} = useSelector((state) => ({
 
 useEffect(() => {
   profileFunction()
-}, [data, profile])
+}, [profile])
    
-console.log(data)
-
 
   return noData ?
    <div>No profile found</div>

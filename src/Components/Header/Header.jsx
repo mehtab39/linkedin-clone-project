@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import { useDispatch } from "react-redux"
 import { logout } from "../../redux/actions/userActions";
-import { Link, useNavigate  } from "react-router-dom";
-import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useAuth } from "../../contexts/AuthContext";
 

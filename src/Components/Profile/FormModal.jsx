@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useAuth } from "../../contexts/AuthContext";
 import { useDispatch } from "react-redux";
-import { updateData } from "../../redux/actions/profileAction";
+import { getProfileByUsername, updateData } from "../../redux/actions/profileAction";
 
 
 const obj={
@@ -16,8 +16,8 @@ export const FormModal=({setFlag})=>{
 
     const {profile} = useAuth();
     const dispatch = useDispatch()
-    const [form,setForm]=useState(obj)
-
+    const [form,setForm]=useState(obj);
+    const [isSubmit, setIsSubmit ] = useState(false)
 
     const handleChange=(e)=>
     {
@@ -36,11 +36,16 @@ export const FormModal=({setFlag})=>{
     const handleSubmit=(e)=>
     {
       e.preventDefault()
+      setIsSubmit(true);
       console.log(form);
       setFlag(false);
       dispatch(updateData(form, profile.id));
+      setIsSubmit(false);
 
     }
+    useEffect(()=>{
+        dispatch(getProfileByUsername(profile.username))
+    }, [isSubmit])
  
 
     return <>
