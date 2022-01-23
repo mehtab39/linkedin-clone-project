@@ -17,7 +17,9 @@ export const NetworkPage = () => {
     return profile?.id ? (
         <NetworkPageMain>
             <Header/>
+            <div className="right">
             <Rightside/>
+            </div>
             <Box>
             <Pending profile={profile}/>
             <Suggestions profile={profile}/>
@@ -34,12 +36,20 @@ const NetworkPageMain = styled.div`
     justify-content:space-between;
     margin-top: 5%;
     box-sizing: border-box;
+    @media(max-width: 768px){
+        .right{
+            display:none;
+        }
+    }
 `
 
 const Box= styled.div`
     width:70%;
     display: flex;
     flex-direction: column;
+    @media(max-width: 768px){
+        width:100%;
+    }
 `;
 
 

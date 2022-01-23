@@ -40,7 +40,9 @@ export const Connections = () => {
 
         <Header/>
          <Main>
+            <div className="right">
          <Rightside/>
+            </div>
         <Box>
         <Heading>Your connections</Heading>
         <div>
@@ -143,6 +145,13 @@ const Main= styled.div`
     display: flex;
     margin-top:5%;
     justify-content: space-between;
+
+    @media(max-width: 768px){
+        .right{
+            display:none;
+        }
+    }
+
 `;
 
 const Msg= styled(RemoveBtn)``;

@@ -28,7 +28,10 @@ export const Notification = () => {
     return <>
         <Header/>
         <Container>
+        <div className="right">
         <Rightside/>
+        </div>
+        
         {profile.notifications ? (
         <Box>
         {notifications?.map((el, i)=>{
@@ -91,6 +94,19 @@ const Container= styled.div`
    margin-top:5%;
    justify-content: space-between;
    font-size: 12px;
+   box-sizing: border-box;
+
+   @media(max-width: 768px){
+       /* &:nth-child(1){
+           display:none;
+       } */
+       .right{
+           display: none;
+       }
+
+       margin-top:15%;
+   }
+
 `;
 
 const Image = styled.img`
@@ -115,17 +131,33 @@ const Childcontainer = styled.div`
     margin-top: 2%;
    border-radius:5px;
    padding: 1%;
+   box-sizing: border-box;
+
 
   img {
       width: 100%;
       border-radius: 50%;
   }
+
+  @media (max-width: 768px){
+       width:100%;
+       
+   }
+
+
 `;
 
 const Box= styled.div`
    width: 60%;
    border-radius:5px;
    background-color:#fff;
+   box-sizing: border-box;
+
+   @media (max-width: 768px){
+       width:100%;
+
+   }
+
 `;
 const Text= styled.div``;
 

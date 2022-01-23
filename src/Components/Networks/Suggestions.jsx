@@ -72,6 +72,10 @@ const ParentDiv= styled.div`
   grid-template-columns: 22.5% 22.5% 22.5% 22.5%;
   grid-gap: 2%;
   box-sizing: border-box;
+  @media(max-width: 768px){
+    grid-template-columns:48% 48%;
+    grid-gap:2% ;
+  }
 `
 
 // const Name = styled.p`
@@ -106,14 +110,14 @@ const Card  = styled.div`
   
   const Button = styled.button`
   @media (max-width: 700px) {
-    color: white;
-    background-color: blue
+    /* padding:15%; */
+    width:80%;
   }
     border: 1px solid #126BC4;
     border-radius: 20px;
     color: #126BC4;
     background-color: #fff;
-    width: 60%;
+    width: 80%;
     height: 20%;
     display: flex;
     margin: auto;

@@ -39,9 +39,9 @@ export const Pending = ({profile}) => {
            <div>
             {data.map((el)=>{
              return  <ChildDiv key={el.id}>
-                  <div>
+                  <ImageBox>
                    <Image src={el.profile_img ?  el.profile_img : "/images/user.svg"} />
-                 </div>
+                 </ImageBox>
                  <User>
                    <p>{el.first_name} {el.last_name}</p>
                   <p>{el.job_title}</p>
@@ -84,6 +84,9 @@ const ChildDiv = styled.div`
     div{
         display: flex;   
     }
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
 `
 
     const Image = styled.img `
@@ -91,14 +94,12 @@ const ChildDiv = styled.div`
     height: 70px;
     border-radius: 100%;
     /* border: 1px solid black;   */
-
-
  `
  const User = styled.div`
  /* border: 1px solid black;   */
          text-align: left;
          height: 70px;
-         margin-left: 15px;
+         margin-left: 2%;
          display: flex;
          width: 45%;
          flex-direction: column;
@@ -106,34 +107,41 @@ const ChildDiv = styled.div`
              padding: 2px;
              margin-top: 10px;
          }
+         @media(max-width: 768px){
+             font-size: 10px;
+             margin: auto;
+             justify-content:center;
+             text-align: center;
+         }
  `
 
 
  const RemoveBtn = styled.button`
-   background-color: whitesmoke;
-   padding: 10px;
-   cursor: pointer;
- border: none;
-  width: 85px;
-margin: 20px;
-  height: 36px;
- margin-right: 30px;
- &:hover {
+    background-color: whitesmoke;
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    width: 50%;
+    margin: 20px;
+    height: 36px;
+    margin-right: 2%;
+    &:hover {
         /* opacity: 0.5;   */
-        background-color: lightgrey;
- border-radius: 3px;
-
-
+    background-color: lightgrey;
+    border-radius: 3px;
      }
+     /* @media (max-width: 768px) {
+        flex-direction: column;
+    } */
  `
  const ActiveBtn = styled.button`
- border: 1px solid #126BC4;
+    border: 1px solid #126BC4;
     border-radius: 20px;
     color: #126BC4;
     font-weight: bold;
     background-color: #fff;
     padding: 10px;
-    width: 100px;
+    width: 50%;
     margin-top: 20px;
     cursor: pointer;
     height: 36px;
@@ -141,3 +149,9 @@ margin: 20px;
        background-color: #e2edfa;  
      }
  `
+
+ const ImageBox=styled.div`
+    @media (max-width: 768px) {
+        margin: auto;
+    }
+ `;
