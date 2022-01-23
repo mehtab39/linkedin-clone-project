@@ -13,33 +13,38 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Loader } from '../Loader/Loader';
 import { getProfileByUsername } from '../../redux/actions/profileAction';
 import { useEffect } from 'react';
-import {Activity} from "./Activity";
+import { useDispatch, useSelector } from 'react-redux';
 
 
 const Profile = () => {
-  const [data, setData] = useState();
+  const dispatch= useDispatch()
   const {username} = useParams();
-  console.log('username:', username)
   const {profile} = useAuth();
   const profileFunction = ()=>{
-    if(username===undefined && profile.id){
-      setData(profile)
-    }
-    else if(username!==undefined){
-      getProfileByUsername(username, setData)
+    console.log('username || profile.username:', username || profile.username)
+   if(username!==undefined && profile.username){
+    dispatch(getProfileByUsername(username))
+   }
+   else if(profile.username && username==undefined){
+    dispatch(getProfileByUsername(profile.username))
+   }
+        
   }
-}
+const {data, noData} = useSelector((state) => ({
+  data : state.profileState.profileSection,
+  noData : state.profileState.profileError
+}))
 
-
-console.log(data)
 useEffect(() => {
   profileFunction()
 }, [data, profile])
    
+console.log(data)
 
 
-
-  return data?.id ? (
+  return noData ?
+   <div>No profile found</div>
+    : data?.id ? (
     <>
      <Header/>
       <Container>
@@ -49,7 +54,6 @@ useEffect(() => {
          <Experience data={data.experience}/>
          <Education data={data.education}/>
          <Skills data={data.skills}/>
-         <Activity data={data.activity}/>
         </Left>
        <Rightside/>
       </Container>

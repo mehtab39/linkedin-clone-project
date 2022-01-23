@@ -1,9 +1,11 @@
+import { v4 as uuid_v4 } from "uuid";
 import { db } from "../../Firebase/firebase";
 import {
   PROFILE_SUCCESS,
   PROFILE_LOADING,
   PROFILE_FAILIURE,
-  UPDATE_SUCCESS
+  UPDATE_SUCCESS,
+  PROFILE_FOUND_SUCCESS,
 } 
 from "./actionTypes"
 
@@ -12,6 +14,12 @@ export const profile_success = (profile) => {
  
   return {
     type: PROFILE_SUCCESS,
+    payload: profile   
+   };
+};
+export const profile_found_success = (profile) => {
+  return {
+    type: PROFILE_FOUND_SUCCESS,
     payload: profile   
    };
 };
@@ -37,9 +45,7 @@ export const update_success = (profile) => {
   };
 
   export const fetchUserProfile = (id)=> async(dispatch) => {
- 
-    
-       dispatch(profile_loading())
+     dispatch(profile_loading())
         try{
           await db.collection("profile")
           .where("userUID", "==", id)
@@ -60,8 +66,6 @@ export const update_success = (profile) => {
           dispatch(profile_failiure(e))
         }
   }
-
-
   export const globalProfile = async (id, setData) => {
        await db.collection("profile")
        .where("userUID", "==", id)
@@ -90,7 +94,7 @@ export const update_success = (profile) => {
 const initialProfile = (user) => ({
     first_name: user?.displayName?.split(" ")[0]||"",
     last_name: user?.displayName?.split(" ")[1]||"",
-    username: (user?.displayName?.split(" ")[0] + user?.displayName?.split(" ")[1])||user?.email?.split("@")[0]||"",
+    username: (user?.displayName?.split(" ")[0] + user?.displayName?.split(" ")[1])||user?.email?.split("@")[0]||uuid_v4(),
     email: user?.email||"",
     userUID: user?.uid,
     address: "",
@@ -127,7 +131,6 @@ export const profileExist = (user)=>{
 
 
  export const createProfile =  (user) =>{
-    console.log('user:', user)
     try{
     let newProfile = initialProfile(user);
        console.log('newProfile:', newProfile)
@@ -141,11 +144,10 @@ export const profileExist = (user)=>{
       console.log('e:', e)
 
    }
- 
 }
 
 
-export const  getProfileByUsername = async (username, setData) =>{
+export const  getProfileByUsername =  (username) => async(dispatch) =>{
     await db.collection("profile")
     .where("username", "==", username)
     .get()
@@ -153,9 +155,8 @@ export const  getProfileByUsername = async (username, setData) =>{
     const data = querySnapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
-    })); 
-
-    setData(data[0])
+    }));
+    dispatch(profile_found_success(data[0]))
   });         
 }
 
