@@ -49,6 +49,7 @@ LinkedIn is an American business- and employment-oriented online service that op
 * Create an account, login or logout using email and password or google authentication
 * can post images, share a post, see other people's post and like their posts.
 * can find other people's profiles
+* can update their profiles
 * can send, recieve, ignore and accept invitation requests.
 * can send and recieve messages in realtime 
 * recieve notifications
