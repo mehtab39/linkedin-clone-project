@@ -7,7 +7,7 @@ export const Experience=({data})=>{
             <Head>
             <Title>My Resume</Title>      
             </Head>
-            <Text href={data?data.resume_path:""}>{data.username}</Text>
+            <Text href={data?data.resume_path:""} target="_blank">{data.username}</Text>
         </Div>
     </Abt>
 }

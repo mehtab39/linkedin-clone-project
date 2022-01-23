@@ -48,6 +48,7 @@ img{
 }
 `;
 const UserProfile=styled.div`
+width:10%;
 position: absolute; 
 margin-top:-6%;
 margin-left:1.2%;
