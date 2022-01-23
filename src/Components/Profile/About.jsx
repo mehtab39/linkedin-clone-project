@@ -12,12 +12,9 @@ export const About=({data})=>{
 }
 
 const Abt=styled.div`
-max-width: 100%;
-margin-top:-170px;
 `;
 
 const Div=styled.div`
-    margin-top:30px;
     border-radius: 5px;
     display: flex;
     background-color:white;

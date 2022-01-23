@@ -74,7 +74,7 @@ export const Header = (props) => {
             </NavList>
 
             <User>
-              <a>
+              <a href="/profile">
                <img src= {user?.photoURL ? user?.photoURL:profile?.profile_img ? profile?.profile_img:"/images/user.svg"} alt="" />
                 <span>Me
                 <img src="/images/down-icon.svg" alt="" />

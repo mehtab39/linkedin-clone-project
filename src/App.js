@@ -12,6 +12,7 @@ import { Notification } from './Components/Notifications/Notification';
 import { PageNotFoundError } from './Components/PageNotFound/PageNotFound';
 import { Message } from './Components/Messaging/Message';
 import Profile from "./Components/Profile/Profile";
+// import Footer from "./Components/Footer/Rightfooter"
 
 
 function App() {
@@ -96,7 +97,7 @@ function App() {
           }
         />
 
-
+          {/* <Route path="/foot" element={<Footer/>}></Route> */}
          <Route path='*' element={<PageNotFoundError/>} />
       </Routes>
     </div>
