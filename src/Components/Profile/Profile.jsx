@@ -13,6 +13,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import { Loader } from '../Loader/Loader';
 import { getProfileByUsername } from '../../redux/actions/profileAction';
 import { useEffect } from 'react';
+import {Activity} from "./Activity";
 
 
 const Profile = () => {
@@ -21,7 +22,7 @@ const Profile = () => {
   console.log('username:', username)
   const {profile} = useAuth();
   const profileFunction = ()=>{
-    if(username==undefined && profile.id){
+    if(username===undefined && profile.id){
       setData(profile)
     }
     else if(username!==undefined){
@@ -48,6 +49,7 @@ useEffect(() => {
          <Experience data={data.experience}/>
          <Education data={data.education}/>
          <Skills data={data.skills}/>
+         <Activity data={data.activity}/>
         </Left>
        <Rightside/>
       </Container>
