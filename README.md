@@ -14,31 +14,25 @@ This is the clone of [LinkedIn](linkedin.com) build using Reactjs, styled compon
 
 ## Demo
 
-![Home-Page](https://github.com/Smrutiranjan-Patra/shopper-stop-clone-public/blob/main/images/home.png?raw=true)
+![Home-Page](https://github.com/mehtab39/linkedin-clone-project/blob/master/public/images/Home.png)
 
-The application is deployed to Heroku and can be accessed through the following link:
-[Shoppers Stop](https://shopper-stop-clone.herokuapp.com)
+The application is deployed to Firebase and can be accessed through the following link:
+[LinkedIn-clone](https://linkedin-production-app.web.app/)
 
-The website resembles a real store and you can login using google authentication or can create new account. You can add products to your wishlist or move to the cart and can virtually pay for them.
 
 
 ## How to run the app
 
-To run this application, you have to set your own environmental variables. For security reasons, some variables have been hidden from view and used as environmental variables with the help of dotenv package. Below are the variables that you need to set in order to run the application:
+To run this application, you have to set your own firebase configurations. For security reasons, these configurations have been hidden from view and used as environmental variables with the help of dotenv file. You can simply create a new project in ![firebase](https://console.firebase.google.com/) by following the instructions provided by Firebase docs. After creating a project. you will recieve your configurations in the firebase console that you can use to initialize your application. Create a new .env file in the root folder of the application and keep the configurations keys there.
 
-* MONGO_URI: this is the connection string of your MongoDB Atlas database.
-* JWT_ACCESS_KEY: This is a key which is used to authencticate user. You can put any strings here.
-* JsonWebToken: This is a token created by JWT library used to authenticate user. You can put any strings here.
-* GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET: These credentials can be created using Google cloud platform. This helps to authenticate a user using Google OAuth.4
-
-After you've set these environmental variables in the .env file at the root of the project, you need to fill your empty MongoDB Atlas database by creating new products in the Products collection.
+After initializing your application, you need to select the Sign-in providers you want. We are using Email and password, and Google provider for authentication. You also need to create a new firestore database. All these steps are straight forward. 
 
 Now you can run "npm start" in the terminal and the application should work.
 
 
 ## Basic inference about the company
 
-Shoppers Stop is an Indian department store chain, owned by the K Raheja Corp. There are 86 stores across 40 cities in India, with clothing, accessories, handbags, shoes, jewellery, fragrances, cosmetics, health and beauty products, home furnishing, and decor products.
+Hi
 
 ## Technology
 ### The application is built with:
