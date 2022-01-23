@@ -13,7 +13,7 @@ export const Activity=({data})=>{
                             <Image>
                                 <img src="" alt="" />
                             </Image>
-                            <Text>{e.postTitle}</Text>
+                            <Text>{e.postTitle? e.postTitle: ""}</Text>
                             </div>
                         ))}
                     </ChildContainer>
