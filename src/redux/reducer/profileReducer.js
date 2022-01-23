@@ -2,6 +2,7 @@
 import {
     PROFILE_SUCCESS,
     PROFILE_FOUND_SUCCESS,
+    PROFILE_NOT_FOUND,
     UPDATE_SUCCESS,
     PROFILE_LOADING,
     PROFILE_FAILIURE 
@@ -14,6 +15,7 @@ const init_state = {
     profile: null,
     errorMessage: "",
     profileSection:{},
+    profileError: false
 }
 
 export const profileReducer = (state = init_state, {
@@ -47,6 +49,13 @@ export const profileReducer = (state = init_state, {
             error: false,
             profileSection: payload
         }
+        case PROFILE_NOT_FOUND:
+            return {
+                ...state,
+                loading: false,
+                profileError: true,
+
+            }
       case UPDATE_SUCCESS:
         return {
             ...state,

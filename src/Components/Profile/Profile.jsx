@@ -30,8 +30,9 @@ const Profile = () => {
    }
         
   }
-const {data} = useSelector((state) => ({
-  data : state.profileState.profileSection
+const {data, noData} = useSelector((state) => ({
+  data : state.profileState.profileSection,
+  noData : state.profileState.profileError
 }))
 
 useEffect(() => {
@@ -41,7 +42,9 @@ useEffect(() => {
 console.log(data)
 
 
-  return data?.id ? (
+  return noData ?
+   <div>No profile found</div>
+    : data?.id ? (
     <>
      <Header/>
       <Container>
