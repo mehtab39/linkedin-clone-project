@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
-export const Education=()=>{
+export const Education=({data})=>{
     return <Abt>
         <Div>
             <Head>
             <Title>Education</Title>      
             </Head>
-            <Text>Add Education</Text>
+            {/* <Text>{data?.education ? data?.education : "Add Education"}</Text> */}
         </Div>
     </Abt>
 }

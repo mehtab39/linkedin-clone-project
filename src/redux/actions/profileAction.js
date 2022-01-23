@@ -63,7 +63,6 @@ export const update_success = (profile) => {
 
 
   export const globalProfile = async (id, setData) => {
-       console.log('id, setData:', id, setData)
        await db.collection("profile")
        .where("userUID", "==", id)
        .get()
@@ -73,8 +72,7 @@ export const update_success = (profile) => {
            ...doc.data(),
        })); 
        setData(data[0])
-     });
-            
+     });         
 }
 
   export const updateData = (collection, data, id)=>(dispatch)=>{
@@ -147,6 +145,19 @@ export const profileExist = (user)=>{
 }
 
 
+export const  getProfileByUsername = async (username, setData) =>{
+    await db.collection("profile")
+    .where("username", "==", username)
+    .get()
+    .then((querySnapshot) => {
+    const data = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+    })); 
+
+    setData(data[0])
+  });         
+}
 
 
 
@@ -155,7 +166,7 @@ export const profileExist = (user)=>{
 
 
 
-export const updateProfile = async (collection, id, data) =>{
-   const Ref = db.collection(collection).doc(id);
+export const updateProfile = async (data, id) =>{
+   const Ref = db.collection("profile").doc(id);
    const res = await Ref.update(data);
 }

@@ -1,13 +1,13 @@
 import React from 'react'
 import styled from "styled-components";
 
-export const Experience=()=>{
+export const Experience=({data})=>{
     return <Abt>
         <Div>
             <Head>
             <Title>Experience</Title>      
             </Head>
-            <Text>Write your Experience Here</Text>
+            {/* <Text>{data?.experience[0]  ? data?.experience[0] : "Write your Experience Here"}</Text> */}
         </Div>
     </Abt>
 }

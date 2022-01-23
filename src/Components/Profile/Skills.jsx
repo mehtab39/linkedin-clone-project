@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Skills=()=>{
+export const Skills=({data})=>{
     return <Abt>
         <Div>
             <Head>

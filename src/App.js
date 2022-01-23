@@ -79,8 +79,24 @@ function App() {
             </PrivateRoute>
           }
         />
-        <Route path="/profile" element={<Profile/>}></Route>
-        <Route path="/message" element={<Message/>}></Route>
+         <Route
+         path="/profile"
+          element={
+            <PrivateRoute>
+               <Profile/>
+            </PrivateRoute>
+          }
+        />
+        <Route
+         path="/profile/:username"
+          element={
+            <PrivateRoute>
+               <Profile/>
+            </PrivateRoute>
+          }
+        />
+
+
          <Route path='*' element={<PageNotFoundError/>} />
       </Routes>
     </div>
