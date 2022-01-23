@@ -46,7 +46,6 @@ export const connectionReducer = (state = init_state, {
           connections: payload
       }
       case SUGGESTION_SUCCESS:
-          console.log("red", payload)
         return {
             ...state,
             loading: false,

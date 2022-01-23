@@ -2,8 +2,7 @@ import styled from "styled-components";
 
 export const Activity=({data})=>{
 
-    // console.log(data);
-
+    
     return <Conatainer>
             <Activity>
                 {

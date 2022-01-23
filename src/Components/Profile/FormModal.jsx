@@ -38,16 +38,12 @@ export const FormModal=({setFlag,data})=>{
     const handleSubmit=(e)=>
     {
       e.preventDefault()
-      setIsSubmit(true);
-      console.log(form);
       setFlag(false);
       dispatch(updateData(form, profile.id));
-      setIsSubmit(false);
+      window.location.reload();
 
     }
-    useEffect(()=>{
-        dispatch(getProfileByUsername(profile.username))
-    }, [isSubmit])
+ 
  
 
     return <>

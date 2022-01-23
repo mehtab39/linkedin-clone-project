@@ -50,7 +50,7 @@ export const message_success = (data) => {
         .collection('messages')
         .orderBy('createdAt',"desc")
         .get()
-        console.log(querySnap)
+
        const allmsg = querySnap?.docs?.map(docsnap=>{
             return {
                 ...docsnap.data()
@@ -59,7 +59,7 @@ export const message_success = (data) => {
         dispatch(message_success(allmsg))
     }
     catch(e){
-      console.log('p:', e)
+
       dispatch(message_failiure(e))
     }
 }
@@ -74,7 +74,7 @@ export const sendTheMessage = (value, from, to )=>(dispatch) => {
           sentTo:  to.id || to,
           createdAt:new Date()
       }
-      console.log(mymsg)
+
      const docid  = generateId(mymsg.sentBy, mymsg.sentTo)
      db.collection('chatrooms')
      .doc(docid)

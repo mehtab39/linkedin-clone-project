@@ -11,7 +11,6 @@ export const Notification = () => {
 
     const {profile} = useAuth();
 
-    console.log(profile);
 
     const check = ()=>{
         if(profile){
@@ -19,7 +18,6 @@ export const Notification = () => {
         }
     }
 
-    console.log(notifications);
 
     useEffect(() => {
             check()
