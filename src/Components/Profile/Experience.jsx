@@ -5,9 +5,9 @@ export const Experience=({data})=>{
     return <Abt>
         <Div>
             <Head>
-            <Title>Experience</Title>      
+            <Title>My Resume</Title>      
             </Head>
-            {/* <Text>{data?.experience[0]  ? data?.experience[0] : "Write your Experience Here"}</Text> */}
+            <Text href={data?data.resume_path:""}>{data.username}</Text>
         </Div>
     </Abt>
 }
@@ -38,7 +38,8 @@ const Head=styled.div`
     justify-content: space-between;
 `;
 
-const Text=styled.p`
+const Text=styled.a`
     font-size:13px;
     color: rgba(0, 0, 0, 0.6);
+    text-decoration: none;
 `;

@@ -47,11 +47,13 @@ useEffect(() => {
         <Left>
          <ProfilePic data={data}/>
          <About data={data}/>
-         <Experience data={data.experience}/>
+         <Experience data={data}/>
          <Education data={data.education}/>
          <Skills data={data.skills}/>
         </Left>
+        <div className="right">
        <Rightside/>
+        </div>
       </Container>
    </>
   ) : <Loader/>
@@ -61,11 +63,20 @@ const Container = styled.div`
   padding-top: 62px;
   max-width: 100%;
   display: flex;
+  @media (max-width: 768px){
+    .right{
+      display: none;
+    }
+  }
 `;
 const Left = styled.div`
 width:55%;
 margin-left:140px;
 margin-right:20px;
-`
+  @media(max-width: 768px){ 
+    width: 100%;
+    margin-left:0px;
+  }
+`;
 
 export default Profile

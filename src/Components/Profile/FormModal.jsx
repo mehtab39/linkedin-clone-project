@@ -5,14 +5,16 @@ import { useDispatch } from "react-redux";
 import { getProfileByUsername, updateData } from "../../redux/actions/profileAction";
 
 
-const obj={
-    experience: [],
-    education: [],
-    skills: [],
-}
 
 
-export const FormModal=({setFlag})=>{
+
+export const FormModal=({setFlag,data})=>{
+
+    const obj={
+        experience: data.experience,
+        education: data.education,
+        skills: data.skills,
+    }
 
     const {profile} = useAuth();
     const dispatch = useDispatch()
@@ -55,7 +57,7 @@ export const FormModal=({setFlag})=>{
         <Head>
         <div>Enter your details</div>
         <Btn onClick={()=>setFlag(false)}>
-        <img src="/images/close.png" alt="" />
+        X
         </Btn>
         </Head>
         <form action="" onSubmit={handleSubmit}>
@@ -70,9 +72,9 @@ export const FormModal=({setFlag})=>{
 
             <label htmlFor="">About</label>
             <textarea name="profile_summary" onChange={handleChange}></textarea>
-
+            <br/>
              <label htmlFor="">Education</label>            
-            <select name="education" value="Senior_Secondary" id="" onChange={handleChange}>
+            <select name="education" id="" onChange={handleChange}>
                 <option value="Secondary">Secondary</option>
                 <option value="Senior_Secondary">Senior Secondary</option>
                 <option value="M.E">B.tech(Mechanical Engineering)</option>
@@ -82,9 +84,9 @@ export const FormModal=({setFlag})=>{
                 <option value="B.CA">B.CA</option>
                 <option value="others">Others</option>
             </select>
-
+            <br/>
             <label htmlFor="">Skills</label>            
-            <select name="skills" value="js" id="" onChange={handleChange}>
+            <select name="skills" id="" onChange={handleChange}>
                 <option value="js">Javascript</option>
                 <option value="react">React</option>
                 <option value="mongodb">Mongodb</option>
@@ -95,12 +97,12 @@ export const FormModal=({setFlag})=>{
                 <option value="c++">C++</option>
                 <option value="ps">Problem Solver</option>
             </select>
-
+            <br/>
             <label htmlFor="">Company</label>            
             <input name="company" onChange={handleChange} type="text" />
 
-            <label htmlFor="">Experience</label>            
-            <input name="experience" onChange={handleChange} type="text" />
+            <label htmlFor="">ResumePath</label>            
+            <input name="resume_path" onChange={handleChange} type="text" />
 
             <label htmlFor="">Current Position</label>            
             <input name="job_title" onChange={handleChange} type="text" />
@@ -133,6 +135,7 @@ const FormData=styled.div`
     margin-top:8%;
     display: flex;
     overflow: scroll;
+    color: #041C32;
     height:400px;
     flex-direction: column;
     background-color: white;
@@ -147,9 +150,29 @@ const FormData=styled.div`
     input,textarea{
         margin-bottom: 15px;
         border: none;
-        background-color:rgba(0, 0, 0, 0.06);
+        background-color:#d9e7f5;
         border-radius: 4px;
         outline-color: #0a66c2;
+    }
+
+    input[type="submit"] {
+        background-color: #0a66c2;
+        color:#fff;
+    }
+
+    select{
+        width:100%;
+        margin-bottom: 15px;
+        padding: 2%;
+        outline-color: #0a66c2;
+        border:1px solid #0a66c2;
+    }
+
+    option {
+        width: 100%;
+        outline-color: #0a66c2;
+
+        
     }
 
 `;
@@ -165,7 +188,7 @@ const Head=styled.div`
 `;
 
 const Btn= styled.button`
-    img {
-        width: 100%;
-    }
+    display: flex;
+    justify-content:center;
+    width:3%;
 `;

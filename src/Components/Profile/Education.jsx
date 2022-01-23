@@ -6,6 +6,11 @@ export const Education=({data})=>{
             <Head>
             <Title>Education</Title>      
             </Head>
+            {
+                data.map(e=>(
+                    <Text>{e}</Text>
+                ))
+            }
             {/* <Text>{data?.education ? data?.education : "Add Education"}</Text> */}
         </Div>
     </Abt>
