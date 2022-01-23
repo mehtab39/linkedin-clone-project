@@ -124,7 +124,6 @@ const initialProfile = (user) => ({
 
 export const profileExist = (user)=>{
    let newProfile = initialProfile(user);
-   console.log('newProfile:', newProfile)
  db.collection("profile")
    .where("userUID", "==", user.uid)
   .get()
@@ -139,10 +138,9 @@ export const profileExist = (user)=>{
  export const createProfile =  (user) =>{
     try{
     let newProfile = initialProfile(user);
-       console.log('newProfile:', newProfile)
        db.collection("profile").add(newProfile)
         .then((ref) => {
-       console.log("Added doc with ID: ", ref.id);
+       console.log("Added new profile with ID: ", ref.id);
 
     });
    }

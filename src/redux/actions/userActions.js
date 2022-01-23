@@ -49,7 +49,7 @@ export const signin_loading = () => {
            dispatch(signin_success())
        }
        catch(err){
-             console.log(err);
+
              dispatch(signin_failiure(err));
        }
   }

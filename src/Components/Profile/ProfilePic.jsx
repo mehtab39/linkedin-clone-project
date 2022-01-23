@@ -4,7 +4,7 @@ import { useAuth } from "../../contexts/AuthContext"
 import { FormModal } from './FormModal';
 import {useState} from "react";
 const ProfilePic = ({data}) => {
-  console.log('data:', data)
+
   const {profile} = useAuth()
   const [flag,setFlag]=useState(false);
   return (

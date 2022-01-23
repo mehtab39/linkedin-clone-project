@@ -40,7 +40,6 @@ export const Message=()=>{
     }, [profile]);
 
      const chatFunction = (params)=>{
-        console.log('params:', params)
         if(profile?.id){
         if(params) setChatter(params);
         else if(id) setChatter(id);

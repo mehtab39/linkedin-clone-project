@@ -178,7 +178,7 @@ export const acceptRequestNotification = async(from, to) =>{
   });
   }
   catch(e){
-      console.log('e:', e)
+    
       return
   }
 
@@ -225,7 +225,7 @@ export const connections = (id)=>async(dispatch)=>{
 }
 
 export const pending = (id)=>async(dispatch)=>{
-  console.log('lets find ourid:', id)
+
   dispatch(connection_loading())
   try{
       await db.collection("profile")
@@ -255,7 +255,7 @@ export const sentRequests = (id)=>async(dispatch)=>{
         id: doc.id,
         ...doc.data(),
     })); 
-    console.log("seee", data)
+  
     dispatch(sent_success(data))
    })  
   }

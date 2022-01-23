@@ -109,7 +109,7 @@ export const likeNotification = (from, to)=>(dispatch) => {
 }
 
 export const deletePost = (id) => async(dispatch) => {
-  console.log('id:', id)
+
   dispatch(setpost_loading())
   try{
     const res = await db.collection("articles").doc(id).delete();
@@ -130,7 +130,7 @@ export const addPost = (payload) =>{
 				"state_changed",
 				(snapshot) => {
 					const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-					console.log('progress:', progress)
+				
 				},
 				(err) => alert(err),
 				async () => {
@@ -218,7 +218,7 @@ export const sendLikeNotification = async (user, post) => {
 			sendActivity(user, post)
 			}
 			catch(e){
-				console.log('e:', e)
+			
 				return
 		
 			}
@@ -238,7 +238,7 @@ export const sendLikeNotification = async (user, post) => {
 			});
 			}
 			catch(e){
-				console.log('e:', e)
+				
 				return
 		
 			}
