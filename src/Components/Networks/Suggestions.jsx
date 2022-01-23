@@ -4,6 +4,7 @@ import { sendConnection, suggestions } from "../../redux/actions/connectionActio
 import styled from "styled-components"
 import { useSelector } from "react-redux";
 import {useAuth} from "../../contexts/AuthContext"
+import { useNavigate } from "react-router-dom";
 
 export const Suggestions = () => {
   const {user, profile} = useAuth();
@@ -17,6 +18,10 @@ export const Suggestions = () => {
     const getSuggestions = ()=>{
       dispatch(suggestions(user.uid));
 }
+const navigate = useNavigate()
+ const gotouser = (username)=>{
+    navigate(`../profile/${username}`)
+ }
 
     const handleConnect = (toUser)=>{
         const fromUser = profile.id;
@@ -35,7 +40,7 @@ export const Suggestions = () => {
             {data.map((el)=>{
             return( <Card key={el.userUID}>
             <Image>
-            <img src={el.profile_img ?  el.profile_img : "/images/user.svg"} alt="" />
+            <img onClick={()=>gotouser(el?.username)} src={el.profile_img ?  el.profile_img : "/images/user.svg"} alt="" />
             </Image>
             <h1>{el?.username}</h1>
             {/* <Name>{el.first_name} {el.last_name}</Name> */}
