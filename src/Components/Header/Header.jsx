@@ -39,14 +39,14 @@ export const Header = (props) => {
         <Nav>
           <NavListWrap>
             <NavList className="active">
-              <a>
+              <a href="/home">
                 <img src="/images/nav-home.svg" alt="" />
                 <span>Home</span>
               </a>
             </NavList>
 
             <NavList>
-              <a>
+              <a href="/networks">
                 <img src="/images/nav-network.svg" alt="" />
                 <span>My Network</span>
               </a>
@@ -60,14 +60,14 @@ export const Header = (props) => {
             </NavList>
 
             <NavList>
-              <a>
+              <a href="/messages">
                 <img src="/images/nav-messaging.svg" alt="" />
                 <span>Messaging</span>
               </a>
             </NavList>
 
             <NavList>
-              <a>
+              <a href="/notification">
                 <img src="/images/nav-notifications.svg" alt="" />
                 <span>Notifications</span>
               </a>

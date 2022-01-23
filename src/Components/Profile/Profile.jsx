@@ -15,7 +15,6 @@ import { getProfileByUsername } from '../../redux/actions/profileAction';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-
 const Profile = () => {
   const dispatch= useDispatch()
   const {username} = useParams();

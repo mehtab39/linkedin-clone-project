@@ -4,9 +4,15 @@ export const Skills=({data})=>{
     return <Abt>
         <Div>
             <Head>
-            <Title>Skills</Title>      
+                <Title>Skills</Title> 
             </Head>
-            <Text>Add Skills</Text>
+
+            {
+                data.map(e=>(
+                    <Text>{e}</Text>
+                ))
+            }
+
         </Div>
     </Abt>
 }
@@ -40,8 +46,6 @@ const Img = styled.div`
 `;
 
 const Head=styled.div`
-    display:flex;
-    justify-content: space-between;
 `;
 
 const Text=styled.p`
