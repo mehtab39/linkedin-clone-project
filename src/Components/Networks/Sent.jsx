@@ -25,11 +25,10 @@ export const Sent = () => {
         dispatch(deleteSent(fromUser, toUser))
     }
 
-    console.log(data)
    
     useEffect(()=>{
         getSent()
-    }, [render, data])
+    }, [render, data, profile])
     return data && (
 <div>
 <Heading>You sent requests to these people</Heading>

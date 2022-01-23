@@ -184,7 +184,7 @@ export const acceptRequestNotification = async(from, to) =>{
 
 }
 
-export const sent = (id)=>async(dispatch)=>{
+export const suggestions = (id)=>async(dispatch)=>{
   dispatch(connection_loading())
   try{
   db.collection("profile")
@@ -255,6 +255,7 @@ export const sentRequests = (id)=>async(dispatch)=>{
         id: doc.id,
         ...doc.data(),
     })); 
+    console.log("seee", data)
     dispatch(sent_success(data))
    })  
   }
@@ -263,26 +264,7 @@ export const sentRequests = (id)=>async(dispatch)=>{
   }
 }
 
-export const suggestions = (id) => async(dispatch)=>{
-  dispatch(connection_loading())
-  try{
-    db.collection("profile")
-    .where("userUID", "!=", id)
-    .get()
-    .then((querySnapshot) => {
-    const data = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-    }));
-    console.log(data) 
-    dispatch(suggestions_success(data))
-  })
-  }
-  catch(e){
-    dispatch(connection_failiure(e))
-  }
 
-}
 
 
 
