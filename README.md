@@ -8,7 +8,6 @@ This is the clone of [LinkedIn](linkedin.com) build using Reactjs, styled compon
 * [Technology](#technology)
 * [Added Functionalities](#added-functionalities)
 * [Database](#database)
-* [added Features](#added-features)
 * [Contributors](#contributors)
 * [Glimpse of our work](#glimpse-of-our-work)
 
