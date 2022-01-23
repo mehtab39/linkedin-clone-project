@@ -8,7 +8,7 @@ export const Leftside = ({user, profile}) => {
           <CardBackground />
           <a>
             <Photo bg={(user?.photoURL)?(user?.photoURL):(profile?.profile_img)?(profile?.profile_img):("/images/photo.svg")} />
-            <Link>Welcome!</Link>
+            <Link>Welcome!!</Link>
           </a>
           <a>
             <AddPhotoText>{(user?.displayName)?user?.displayName:(profile?.first_name)?(profile?.first_name):"Update your profile"}</AddPhotoText>
