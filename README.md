@@ -8,111 +8,114 @@ This is the clone of [LinkedIn](linkedin.com) build using Reactjs, styled compon
 * [Technology](#technology)
 * [Added Functionalities](#added-functionalities)
 * [Database](#database)
-* [added Features](#added-features)
 * [Contributors](#contributors)
 * [Glimpse of our work](#glimpse-of-our-work)
 
 ## Demo
 
-![Home-Page](https://github.com/Smrutiranjan-Patra/shopper-stop-clone-public/blob/main/images/home.png?raw=true)
+![Home-Page](https://github.com/mehtab39/linkedin-clone-project/blob/master/public/images/Home.png)
 
-The application is deployed to Heroku and can be accessed through the following link:
-[Shoppers Stop](https://shopper-stop-clone.herokuapp.com)
+The application is deployed to Firebase and can be accessed through the following link:
+[LinkedIn-clone](https://linkedin-production-app.web.app/)
 
-The website resembles a real store and you can login using google authentication or can create new account. You can add products to your wishlist or move to the cart and can virtually pay for them.
 
 
 ## How to run the app
 
-To run this application, you have to set your own environmental variables. For security reasons, some variables have been hidden from view and used as environmental variables with the help of dotenv package. Below are the variables that you need to set in order to run the application:
+To run this application, you have to set your own firebase configurations. For security reasons, these configurations have been hidden from view and used as environmental variables with the help of dotenv file. You can simply create a new project in [firebase](https://console.firebase.google.com/) by following the instructions provided by Firebase docs. After creating a project. you will recieve your configurations in the firebase console that you can use to initialize your application. Create a new .env file in the root folder of the application and keep the configurations keys there.
 
-* MONGO_URI: this is the connection string of your MongoDB Atlas database.
-* JWT_ACCESS_KEY: This is a key which is used to authencticate user. You can put any strings here.
-* JsonWebToken: This is a token created by JWT library used to authenticate user. You can put any strings here.
-* GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET: These credentials can be created using Google cloud platform. This helps to authenticate a user using Google OAuth.4
+After initializing your application, you need to enable the Sign-in providers you want. We are using Email and password, and Google provider for authentication. You also need to create a new firestore database. All these steps are straight forward. 
 
-After you've set these environmental variables in the .env file at the root of the project, you need to fill your empty MongoDB Atlas database by creating new products in the Products collection.
-
-Now you can run "npm start" in the terminal and the application should work.
+Now you can run "npm i" and "npm start" in the terminal and the application should work.
 
 
 ## Basic inference about the company
 
-Shoppers Stop is an Indian department store chain, owned by the K Raheja Corp. There are 86 stores across 40 cities in India, with clothing, accessories, handbags, shoes, jewellery, fragrances, cosmetics, health and beauty products, home furnishing, and decor products.
+LinkedIn is an American business- and employment-oriented online service that operates via websites and mobile apps. The platform is primarily used for professional networking and career development, and allows job seekers to post their CVs and employers to post jobs.
 
 ## Technology
 ### The application is built with:
 
-* Node.js version 12.16.3
-* Mongoose 6.1.1
-* Express version 4.17.1
-* Passport: 0.5.0 used for authentication
-* Express Validator: used for form validation
-* EJS 2.1.6
+* React 17.0.2
+* Firebase 7.20.0
+* Redux 4.1.2
+* Styled-components 5.3.3
+
 
 ## Added Functionalities
 
-### The application displays a virtual bags store that contains virtual products and contact information. User can do the following:
+### The application includes number of functionalities. User can do the following:
 
-* Create an account, login or logout
-* Browse available products
-* Add products to the shopping cart and wishlist
-* Delete products from the shopping cart and wishlist
-* Display the shopping cart and wishlist.
-* To checkout, a user must be logged in
+* Create an account, login or logout using email and password or google authentication
+* can post images, share a post, see other people's post and like their posts.
+* can find other people's profiles
+* can update their profiles
+* can send, recieve, ignore and accept invitation requests.
+* can send and recieve messages in realtime 
+* recieve notifications
 
-
-## Added features
-* Search feature with searching suggestions for any available item 
-* Sort by brand, colour, price, popularity, discount or type
-* Sign-in / Sign up authentication
-* Pagination
 
 
 ## Database
 
-### All the models can be found in the models directory created using mongoose.
+### All the collections are created using Firestore database.
 
-#### User Schema:
+#### User Collection:
 * email (String)
 * password (String)
 
-#### Category Schema:
-* title (String)
-* slug (String)
+#### Profile Collection:
+* user_uid (String) - a reference to the user collection
+* name (string)
+* email (string)
+* notifications (array)
+* activities (array)
+* connections (array)
+* pending_invitations (array)
+* waiting_invitations (array)
+* sent_invitations (array)
+* profile_img (string)
+* about (string)
+* skills (array)
+* education (array)
+* experience (array)
+* location (string)
+* resume_path (string)
 
-#### Product Schema:
-* Product_Id (String)
-* title (String)
-* imagePath (Array)
-* description (String)
-* price (Number)
-* discount (Number)
-* category (ObjectId - a reference to the category schema)
+#### Article collection:
+* Author_details (object) - reference to the post collection
+* image (string) - stored in firebase storage
+* video (string)
+* createdAt (date)
+
+#### Article collection:
+* Author_details (object) - reference to the post collection
+* image (string) - stored in firebase storage
+* video (string)
+* createdAt (date)
+
+#### Message collection:
+* data (object)
+
 
 ## Contributors
 
-
-
 * [Mehtab Singh Gill](https://github.com/mehtab39)
-* [vipul chodhari](https://github.com/vipchoudhary13)
-* [Shubham Bhagwatrao Tammewar](https://github.com/Shubhamtammewar)
-* [Swathi Kummara](https://github.com/swathi191254)
-* [Smrutiranjan Patra](https://github.com/Smrutiranjan-Patra)
-* [Shahid Ansari](https://github.com/Shahid321fw11)
+* [Pummy Sharma](https://github.com/pummysh)
+* [Meera Mendhe](https://github.com/MeeraMendhe)
+* [Anand Kumar](https://github.com/anandKmrSharma)
+
 
 
 
 ## Glimpse of our work
 
 
-![Beauty](https://github.com/Smrutiranjan-Patra/shopper-stop-clone-public/blob/main/images/beautypage.png?raw=true)
+![Message](https://github.com/mehtab39/linkedin-clone-project/blob/master/public/images/Message.png)
 
 
-![Wishlist](https://github.com/Smrutiranjan-Patra/shopper-stop-clone-public/blob/main/images/wishlist.png?raw=true)
+![Connections](https://github.com/mehtab39/linkedin-clone-project/blob/master/public/images/Connection.png)
 
-
-![Product Description](https://github.com/Smrutiranjan-Patra/shopper-stop-clone-public/blob/main/images/description.png?raw=true)
 
 
 
