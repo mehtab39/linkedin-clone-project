@@ -6,6 +6,7 @@ import {
   PROFILE_FAILIURE,
   UPDATE_SUCCESS,
   PROFILE_FOUND_SUCCESS,
+  PROFILE_NOT_FOUND
 } 
 from "./actionTypes"
 
@@ -21,6 +22,11 @@ export const profile_found_success = (profile) => {
   return {
     type: PROFILE_FOUND_SUCCESS,
     payload: profile   
+   };
+};
+export const profile_not_found = (profile) => {
+  return {
+    type: PROFILE_NOT_FOUND,
    };
 };
 
@@ -156,7 +162,12 @@ export const  getProfileByUsername =  (username) => async(dispatch) =>{
         id: doc.id,
         ...doc.data(),
     }));
+    if(data.length===0){
+       dispatch(profile_not_found())
+       return
+    }
     dispatch(profile_found_success(data[0]))
+
   });         
 }
 
