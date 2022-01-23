@@ -8,13 +8,13 @@ export const Activity=({data})=>{
             <Activity>
                 {
                     <ChildContainer>
-                        {data?.map(e=>(
-                            <>
+                        {data?.map((e,i)=>(
+                            <div key={i}>
                             <Image>
                                 <img src="" alt="" />
                             </Image>
-                            <Text>{e?.postTitle}</Text>
-                            </>
+                            <Text>{e.postTitle}</Text>
+                            </div>
                         ))}
                     </ChildContainer>
                 }

@@ -37,6 +37,8 @@ export const FormModal=({setFlag})=>{
     {
       e.preventDefault()
       setIsSubmit(true);
+      console.log(form);
+      setFlag(false);
       dispatch(updateData(form, profile.id));
       setIsSubmit(false);
 
