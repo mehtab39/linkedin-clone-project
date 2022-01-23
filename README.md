@@ -23,26 +23,25 @@ The application is deployed to Firebase and can be accessed through the followin
 
 ## How to run the app
 
-To run this application, you have to set your own firebase configurations. For security reasons, these configurations have been hidden from view and used as environmental variables with the help of dotenv file. You can simply create a new project in ![firebase](https://console.firebase.google.com/) by following the instructions provided by Firebase docs. After creating a project. you will recieve your configurations in the firebase console that you can use to initialize your application. Create a new .env file in the root folder of the application and keep the configurations keys there.
+To run this application, you have to set your own firebase configurations. For security reasons, these configurations have been hidden from view and used as environmental variables with the help of dotenv file. You can simply create a new project in [firebase](https://console.firebase.google.com/) by following the instructions provided by Firebase docs. After creating a project. you will recieve your configurations in the firebase console that you can use to initialize your application. Create a new .env file in the root folder of the application and keep the configurations keys there.
 
 After initializing your application, you need to select the Sign-in providers you want. We are using Email and password, and Google provider for authentication. You also need to create a new firestore database. All these steps are straight forward. 
 
-Now you can run "npm start" in the terminal and the application should work.
+Now you can run "npm i" and "npm start" in the terminal and the application should work.
 
 
 ## Basic inference about the company
 
-Hi
+LinkedIn is an American business- and employment-oriented online service that operates via websites and mobile apps. The platform is primarily used for professional networking and career development, and allows job seekers to post their CVs and employers to post jobs.
 
 ## Technology
 ### The application is built with:
 
-* Node.js version 12.16.3
-* Mongoose 6.1.1
-* Express version 4.17.1
-* Passport: 0.5.0 used for authentication
-* Express Validator: used for form validation
-* EJS 2.1.6
+* React 17.0.2
+* Firebase 7.20.0
+* Redux 4.1.2
+* Styled-components 5.3.3
+
 
 ## Added Functionalities
 
@@ -89,24 +88,21 @@ Hi
 
 
 * [Mehtab Singh Gill](https://github.com/mehtab39)
-* [vipul chodhari](https://github.com/vipchoudhary13)
-* [Shubham Bhagwatrao Tammewar](https://github.com/Shubhamtammewar)
-* [Swathi Kummara](https://github.com/swathi191254)
-* [Smrutiranjan Patra](https://github.com/Smrutiranjan-Patra)
-* [Shahid Ansari](https://github.com/Shahid321fw11)
+* [Pummy Sharma](https://github.com/vipchoudhary13)
+* [Meera](https://github.com/Shubhamtammewar)
+* [Anand Kumar](https://github.com/swathi191254)
+
 
 
 
 ## Glimpse of our work
 
 
-![Beauty](https://github.com/Smrutiranjan-Patra/shopper-stop-clone-public/blob/main/images/beautypage.png?raw=true)
+![Message](https://github.com/mehtab39/linkedin-clone-project/blob/master/public/images/Message.png)
 
 
-![Wishlist](https://github.com/Smrutiranjan-Patra/shopper-stop-clone-public/blob/main/images/wishlist.png?raw=true)
+![Connections](https://github.com/mehtab39/linkedin-clone-project/blob/master/public/images/Connection.png)
 
-
-![Product Description](https://github.com/Smrutiranjan-Patra/shopper-stop-clone-public/blob/main/images/description.png?raw=true)
 
 
 
