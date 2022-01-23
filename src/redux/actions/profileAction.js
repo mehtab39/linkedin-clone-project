@@ -160,11 +160,14 @@ export const  getProfileByUsername =  (username) => async(dispatch) =>{
         id: doc.id,
         ...doc.data(),
     }));
-    if(data.length===0){
+    console.log("profile", data)
+    if(data.length==0){
        dispatch(profile_not_found())
-       return
     }
-    dispatch(profile_found_success(data[0]))
+    else{
+      dispatch(profile_found_success(data[0]))
+    }
+    
 
   });         
 }

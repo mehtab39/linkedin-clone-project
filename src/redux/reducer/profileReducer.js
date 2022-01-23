@@ -40,14 +40,16 @@ export const profileReducer = (state = init_state, {
           ...state,
           loading: false,
           error: false,
-          profile: payload
+          profile: payload,
+          profileError: false
       }
       case PROFILE_FOUND_SUCCESS:
         return {
             ...state,
             loading: false,
             error: false,
-            profileSection: payload
+            profileSection: payload,
+            profileError: false
         }
         case PROFILE_NOT_FOUND:
             return {
