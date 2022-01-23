@@ -45,52 +45,65 @@ LinkedIn is an American business- and employment-oriented online service that op
 
 ## Added Functionalities
 
-### The application displays a virtual bags store that contains virtual products and contact information. User can do the following:
+### The application includes number of functionalities. User can do the following:
 
-* Create an account, login or logout
-* Browse available products
-* Add products to the shopping cart and wishlist
-* Delete products from the shopping cart and wishlist
-* Display the shopping cart and wishlist.
-* To checkout, a user must be logged in
+* Create an account, login or logout using email and password or google authentication
+* can post images, share a post, see other people's post and like their posts.
+* can find other people's profiles
+* can send, recieve, ignore and accept invitation requests.
+* can send and recieve messages in realtime 
+* recieve notifications
 
-
-## Added features
-* Search feature with searching suggestions for any available item 
-* Sort by brand, colour, price, popularity, discount or type
-* Sign-in / Sign up authentication
-* Pagination
 
 
 ## Database
 
-### All the models can be found in the models directory created using mongoose.
+### All the collections are created using Firestore database.
 
-#### User Schema:
+#### User Collection:
 * email (String)
 * password (String)
 
-#### Category Schema:
-* title (String)
-* slug (String)
+#### Profile Collection:
+* user_uid (String) - a reference to the user collection
+* name (string)
+* email (string)
+* notifications (array)
+* activities (array)
+* connections (array)
+* pending_invitations (array)
+* waiting_invitations (array)
+* sent_invitations (array)
+* profile_img (string)
+* about (string)
+* skills (array)
+* education (array)
+* experience (array)
+* location (string)
+* resume_path (string)
 
-#### Product Schema:
-* Product_Id (String)
-* title (String)
-* imagePath (Array)
-* description (String)
-* price (Number)
-* discount (Number)
-* category (ObjectId - a reference to the category schema)
+#### Article collection:
+* Author_details (object) - reference to the post collection
+* image (string) - stored in firebase storage
+* video (string)
+* createdAt (date)
+
+#### Article collection:
+* Author_details (object) - reference to the post collection
+* image (string) - stored in firebase storage
+* video (string)
+* createdAt (date)
+
+#### Message collection:
+* data (object)
+
 
 ## Contributors
 
-
-
 * [Mehtab Singh Gill](https://github.com/mehtab39)
-* [Pummy Sharma](https://github.com/vipchoudhary13)
-* [Meera](https://github.com/Shubhamtammewar)
-* [Anand Kumar](https://github.com/swathi191254)
+* [Pummy Sharma](https://github.com/pummysh)
+* [Meera Mendhe](https://github.com/MeeraMendhe)
+* [Anand Kumar](https://github.com/anandKmrSharma)
 
 
 
