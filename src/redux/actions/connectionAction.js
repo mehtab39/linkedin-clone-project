@@ -12,7 +12,8 @@ import firebase from "firebase/app"
     SUGGESTION_SUCCESS,
     PENDING_SUCCESS,
     SENT_SUCCESS,
-    USERACTIVITY_SUCCESS
+    USERACTIVITY_SUCCESS,
+    NO_CONNECTIONS
   } 
   from "./actionTypes"
   
@@ -36,6 +37,14 @@ import firebase from "firebase/app"
       return {
         type: PENDING_SUCCESS,
         payload: payload,
+      };
+    };
+
+    
+
+    export const no_connections = () => {
+      return {
+        type: NO_CONNECTIONS,
       };
     };
 
@@ -216,6 +225,7 @@ export const connections = (id)=>async(dispatch)=>{
               id: doc.id,
               ...doc.data(),
           })); 
+          if(data.length===0){ dispatch(no_connections()) }
           dispatch(connection_success(data))
       })
       }

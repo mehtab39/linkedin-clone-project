@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { getNewArticles, updateTheArticles, likeNotification , deletePost} from "../../redux/actions/postActions";
 import { useSelector } from "react-redux";
 import ReactPlayer from "react-player";
+import { useNavigate } from "react-router-dom";
 
 export const Main=({user, profile})=>{
     const [showRemove, setShowRemove] = useState(false)
@@ -49,6 +50,10 @@ export const Main=({user, profile})=>{
            return;
         }
     }
+const navigate = useNavigate()
+    const gotouser = (username)=>{
+  navigate(`../profile/${username}`)
+    }
     function likeHandler(event, postIndex, id) {
 		event.preventDefault();
 		let currentLikes = posts[postIndex].likes.count;
@@ -89,7 +94,7 @@ export const Main=({user, profile})=>{
         <div className="Mid1">
     
 
-        <img src={user?.photoURL ? user?.photoURL:(profile?.profile_img)?(profile?.profile_img): "/images/user.svg"} alt="" /> 
+        <img src={(profile?.profile_img)?(profile?.profile_img): "/images/user.svg"} alt="" /> 
             <button onClick={handleClick}>Start a post</button>
         </div>
 
@@ -119,7 +124,7 @@ export const Main=({user, profile})=>{
 					posts.map((article, key) => (
 						<Article key={key}>
 							<SharedActor>
-								<a>
+								<a onClick={()=>gotouser(article?.actor?.title)}>
 									{article.actor.image ? <img src={article.actor.image} alt="" /> : <img src="/images/user.svg" alt="" />}
 									<div>
 										<span>{article?.actor?.title}</span>

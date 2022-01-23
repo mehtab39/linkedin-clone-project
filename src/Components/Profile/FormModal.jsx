@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { useAuth } from "../../contexts/AuthContext";
 import { useDispatch } from "react-redux";
-import { getProfileByUsername, updateData } from "../../redux/actions/profileAction";
+import { updateData } from "../../redux/actions/profileAction";
 
 
 const obj={
@@ -17,7 +17,7 @@ export const FormModal=({setFlag})=>{
     const {profile} = useAuth();
     const dispatch = useDispatch()
     const [form,setForm]=useState(obj);
-    const [isSubmit, setIsSubmit ] = useState(false)
+    
 
     const handleChange=(e)=>
     {

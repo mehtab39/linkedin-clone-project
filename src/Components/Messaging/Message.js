@@ -24,10 +24,11 @@ export const Message=()=>{
     const {id} = useParams();
     const [chatter, setChatter] = useState({});
     const {profile} = useAuth();
-    const { loading, messages,  myConnections} = useSelector((state) => ({
+    const { loading, messages,  myConnections, no_connection} = useSelector((state) => ({
         loading: state.messageState.loading,
         messages: state.messageState.messages,
-        myConnections: state.connectionState.connections
+        myConnections: state.connectionState.connections,
+        no_connection: state.connectionState.no_connections,
       }));
     
     const getConnections = ()=>{
@@ -105,7 +106,7 @@ const [formValue, setFormValue] = useState('');
             
         </Container>
         <Footer/>
-    </>) : <Loader />
+    </>) : no_connection ? <p>You don't have any connections</p> : <Loader />
 }
 
 const Container=styled.div`

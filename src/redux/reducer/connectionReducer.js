@@ -5,6 +5,7 @@ import {
     SUGGESTION_SUCCESS,
     PENDING_SUCCESS,
     SENT_SUCCESS,
+    NO_CONNECTIONS,
     USERACTIVITY_SUCCESS
 } from "../actions/actionTypes";
 
@@ -13,6 +14,7 @@ const init_state = {
     loading: false,
     error: false,
     errorMessage: null,
+    noconnection: false,
     connections:[],
     suggestions:[],
     pending:[],
@@ -45,6 +47,12 @@ export const connectionReducer = (state = init_state, {
           errorMessage: "",
           connections: payload
       }
+      case NO_CONNECTIONS:
+        return {
+            ...state,
+            loading: false,
+            no_connections: true,
+        }
       case SUGGESTION_SUCCESS:
         return {
             ...state,
